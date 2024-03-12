@@ -31,7 +31,7 @@ export function ChatMessage({ message, ...props }: ChatMessageProps) {
       >
         {message.role === 'user' ? <IconUser /> : <IconOpenAI />}
       </div>
-      <div className="flex-1 px-1 ml-4 space-y-2 overflow-hidden">
+      <div className="flex-1 ml-4 space-y-2 overflow-hidden min-h-[calc(2rem+theme(spacing[3.5])*2)] min-w-[60px] break-words rounded-md border border-gray-100 bg-gradient-to-br from-gray-50 px-5 py-3.5 text-gray-600 prose-pre:my-2 dark:border-gray-800 dark:from-gray-800/40 dark:text-gray-300">
         <MemoizedReactMarkdown
           className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
           remarkPlugins={[remarkGfm, remarkMath]}

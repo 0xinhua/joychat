@@ -19,7 +19,8 @@ export async function ChatHistory({ userId }: ChatHistoryProps) {
           href="/"
           className={cn(
             buttonVariants({ variant: 'outline' }),
-            'h-10 w-full justify-start bg-zinc-50 px-4 shadow-none transition-colors hover:bg-zinc-200/40 dark:bg-zinc-900 dark:hover:bg-zinc-300/10'
+            'border border-gray-100',
+            'h-10 w-full justify-start bg-zinc-50 px-4 shadow-none transition-colors hover:bg-gray-100/40 dark:bg-zinc-900 dark:hover:bg-zinc-300/10'
           )}
         >
           <IconPlus className="-translate-x-2 stroke-2" />
@@ -32,7 +33,7 @@ export async function ChatHistory({ userId }: ChatHistoryProps) {
             {Array.from({ length: 10 }).map((_, i) => (
               <div
                 key={i}
-                className="w-full h-6 rounded-md shrink-0 animate-pulse bg-zinc-200 dark:bg-zinc-800"
+                className="w-full h-6 rounded-md shrink-0 animate-pulse bg-gray-100 dark:bg-zinc-800"
               />
             ))}
           </div>
