@@ -11,10 +11,10 @@ import { Header } from '@/components/header'
 export const metadata = {
   metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
   title: {
-    default: 'Next.js AI Chatbot',
-    template: `%s - Next.js AI Chatbot`
+    default: 'JoyChat',
+    template: `%s - AI Chatbot`
   },
-  description: 'An AI-powered chatbot template built with Next.js and Vercel.',
+  description: 'An AI-powered chatbot built with love by 0xinhua.',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
@@ -54,7 +54,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <Header />
             <main className="flex flex-col flex-1">{children}</main>
           </div>
-          <TailwindIndicator />
+          {/* <TailwindIndicator /> */}
         </Providers>
       </body>
     </html>

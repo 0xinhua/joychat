@@ -28,10 +28,10 @@ export function UserMenu({ user }: UserMenuProps) {
     <div className="flex items-center justify-between">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="pl-0">
+          <div className="pl-0 flex cursor-pointer">
             {user?.image ? (
               <Image
-                className="size-6 transition-opacity duration-300 rounded-full select-none ring-1 ring-zinc-100/10 hover:opacity-80"
+                className="size-7 transition-opacity duration-300 rounded-full select-none ring-1 ring-zinc-100/10 hover:opacity-80"
                 src={user?.image ? `${user.image}&s=60` : ''}
                 alt={user.name ?? 'Avatar'}
                 height={48}
@@ -42,8 +42,8 @@ export function UserMenu({ user }: UserMenuProps) {
                 {user?.name ? getUserInitials(user?.name) : null}
               </div>
             )}
-            <span className="ml-2">{user?.name}</span>
-          </Button>
+            {/* <span className="ml-2">{user?.name}</span> */}
+          </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent sideOffset={8} align="start" className="w-[180px]">
           <DropdownMenuItem className="flex-col items-start">
@@ -51,14 +51,14 @@ export function UserMenu({ user }: UserMenuProps) {
             <div className="text-xs text-zinc-500">{user?.email}</div>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem asChild>
+          <DropdownMenuItem asChild className="cursor-pointer">
             <a
-              href="https://vercel.com"
+              href="https://github.com/0xinhua/ai-chatbot"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-between w-full text-xs"
             >
-              Vercel Homepage
+              GitHub
               <IconExternalLink className="size-3 ml-auto" />
             </a>
           </DropdownMenuItem>
@@ -68,7 +68,7 @@ export function UserMenu({ user }: UserMenuProps) {
                 callbackUrl: '/'
               })
             }
-            className="text-xs"
+            className="text-xs cursor-pointer"
           >
             Log Out
           </DropdownMenuItem>

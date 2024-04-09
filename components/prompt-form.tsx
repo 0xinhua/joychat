@@ -35,6 +35,7 @@ export function PromptForm({
 
   return (
     <form
+      className="w-full"
       onSubmit={async e => {
         e.preventDefault()
         if (!input?.trim()) {
@@ -45,7 +46,7 @@ export function PromptForm({
       }}
       ref={formRef}
     >
-      <div className="relative flex flex-col w-full px-8 overflow-hidden max-h-60 grow bg-background sm:rounded-md sm:border sm:px-1">
+      <div className="relative flex flex-col w-full overflow-hidden max-h-60 grow sm:rounded-md sm:px-1">
         <Textarea
           ref={inputRef}
           tabIndex={0}
@@ -53,11 +54,11 @@ export function PromptForm({
           rows={1}
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder="Send a message."
+          placeholder="Ask me anything"
           spellCheck={false}
-          className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
+          className="min-h-[20px] w-full resize-none bg-transparent px-1 py-2 focus-within:outline-none sm:text-sm"
         />
-        <div className="absolute right-0 top-4 sm:right-4">
+        <div className="absolute right-0 top-0.5 sm:right-2">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -66,10 +67,10 @@ export function PromptForm({
                 disabled={isLoading || input === ''}
               >
                 <IconArrowElbow />
-                <span className="sr-only">Send message</span>
+                <span className="sr-only">Ask me anything</span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Send message</TooltipContent>
+            <TooltipContent>Ask me anything</TooltipContent>
           </Tooltip>
         </div>
       </div>

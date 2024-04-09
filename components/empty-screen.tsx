@@ -6,48 +6,49 @@ import { IconArrowRight } from '@/components/ui/icons'
 
 const exampleMessages = [
   {
-    heading: 'Explain technical concepts',
-    message: `What is a "serverless function"?`
+    heading: '💡 Data analysis',
+    message: `Summarize the key characteristics of this dataset. Include information on data types, missing values, and basic statistics. The following dataset: \n `
   },
   {
-    heading: 'Summarize an article',
+    heading: '📖 Summarize an article',
     message: 'Summarize the following article for a 2nd grader: \n'
   },
   {
-    heading: 'Draft an email',
-    message: `Draft an email to my boss about the following: \n`
+    heading: '📧 Format and correct email',
+    message: `Proofread and format [email]. Also, give suggestions for getting the point across effectively.
+
+[email] following: \n`
   }
 ]
 
 export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   return (
-    <div className="mx-auto max-w-2xl px-4">
-      <div className="rounded-lg border bg-background p-8">
+    <div className="mx-auto max-w-3xl pb-4">
+      <div className="rounded-lg bg-background pb-8">
         <h1 className="mb-2 text-lg font-semibold">
-          Welcome to Next.js AI Chatbot!
+          Welcome to JoyChat
         </h1>
         <p className="mb-2 leading-normal text-muted-foreground">
-          This is an open source AI chatbot app template built with{' '}
-          <ExternalLink href="https://nextjs.org">Next.js</ExternalLink> and{' '}
-          <ExternalLink href="https://vercel.com/storage/kv">
-            Vercel KV
+          This is an open source AI chatbot app built by {' '}
+          <ExternalLink href="https://twitter.com/0xinhua">
+            0xinhua
           </ExternalLink>
           .
         </p>
         <p className="leading-normal text-muted-foreground">
-          You can start a conversation here or try the following examples:
+          You can start a conversation here or try with the following prompts.
         </p>
-        <div className="mt-4 flex flex-col items-start space-y-2">
+      </div>
+      <div className="py-2">
+        <div className="mt-4 grid gap-3 lg:grid-cols-3 lg:gap-5">
           {exampleMessages.map((message, index) => (
-            <Button
+            <button
               key={index}
-              variant="link"
-              className="h-auto p-0 text-base"
+              className="rounded-md border bg-gray-50 p-2.5 px-3 text-gray-600 hover:bg-gray-100 max-xl:text-sm dark:border-gray-800 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 text-left"
               onClick={() => setInput(message.message)}
             >
-              <IconArrowRight className="mr-2 text-muted-foreground" />
               {message.heading}
-            </Button>
+            </button>
           ))}
         </div>
       </div>

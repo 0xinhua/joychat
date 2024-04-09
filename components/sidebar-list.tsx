@@ -3,6 +3,7 @@ import { ClearHistory } from '@/components/clear-history'
 import { SidebarItems } from '@/components/sidebar-items'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { cache } from 'react'
+import { auth } from '@/auth'
 
 interface SidebarListProps {
   userId?: string
@@ -15,7 +16,7 @@ const loadChats = cache(async (userId?: string) => {
 
 export async function SidebarList({ userId }: SidebarListProps) {
   const chats = await loadChats(userId)
-
+  const session = await auth()
   return (
     <div className="flex flex-1 flex-col overflow-hidden">
       <div className="flex-1 overflow-auto">
@@ -30,7 +31,7 @@ export async function SidebarList({ userId }: SidebarListProps) {
         )}
       </div>
       <div className="flex items-center justify-between p-4">
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
         <ClearHistory clearChats={clearChats} isEnabled={chats?.length > 0} />
       </div>
     </div>

@@ -43,7 +43,7 @@ export function ChatPanel({
       dark:from-background/10 dark:from-10%
       dark:to-background/80 peer-[[data-state=open]]:group-[]:lg:pl-[200px] peer-[[data-state=open]]:group-[]:xl:pl-[250px]">
       <ButtonScrollToBottom />
-      <div className="mx-auto sm:max-w-2xl sm:px-1">
+      <div className="mx-auto sm:max-w-3xl sm:px-1">
         <div className="flex items-center justify-center h-12">
           {isLoading ? (
             <Button
@@ -57,7 +57,7 @@ export function ChatPanel({
           ) : (
             messages?.length >= 2 && (
               <div className="flex space-x-2">
-                <Button variant="outline" onClick={() => reload()}>
+                <Button className="shadow-none" variant="outline" onClick={() => reload()}>
                   <IconRefresh className="mr-2" />
                   Regenerate response
                 </Button>
@@ -87,7 +87,9 @@ export function ChatPanel({
             )
           )}
         </div>
-        <div className="px-4 py-2 space-y-4 border-t shadow-lg bg-background sm:rounded-t-xl sm:border md:py-4">
+        <div className="p-2 space-y-4 sm:border md:py-2 sm:mb-2
+          relative flex w-full max-w-4xl flex-1 items-center sm:rounded-xl border bg-gray-100 focus-within:border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:focus-within:border-gray-500 
+        ">
           <PromptForm
             onSubmit={async value => {
               await append({
