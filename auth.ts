@@ -1,5 +1,6 @@
 import NextAuth, { type DefaultSession } from 'next-auth'
 import GitHub from 'next-auth/providers/github'
+import { SupabaseAdapter } from "@auth/supabase-adapter"
 
 declare module 'next-auth' {
   interface Session {
@@ -15,6 +16,11 @@ export const {
   auth
 } = NextAuth({
   providers: [GitHub],
+  //@ts-ignore
+  adapter: SupabaseAdapter({
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+    secret: process.env.SUPABASE_SERVICE_ROLE_KEY as string,
+  }),
   callbacks: {
     jwt({ token, profile }) {
       if (profile) {
