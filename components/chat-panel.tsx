@@ -8,6 +8,7 @@ import { ButtonScrollToBottom } from '@/components/button-scroll-to-bottom'
 import { IconRefresh, IconShare, IconStop } from '@/components/ui/icons'
 import { FooterText } from '@/components/footer'
 import { ChatShareDialog } from '@/components/chat-share-dialog'
+import { usePathname, useRouter } from 'next/navigation'
 
 export interface ChatPanelProps
   extends Pick<
@@ -36,6 +37,8 @@ export function ChatPanel({
   messages
 }: ChatPanelProps) {
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
 
   return (
     <div className="fixed inset-x-0 bottom-4 w-full from-muted/30
@@ -97,6 +100,10 @@ export function ChatPanel({
                 content: value,
                 role: 'user'
               })
+              if (pathname !== `/chat/${id}`) {
+                router.push(`/chat/${id}`);
+                router.refresh();
+              }
             }}
             input={input}
             setInput={setInput}
