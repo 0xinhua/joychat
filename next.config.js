@@ -10,7 +10,9 @@ module.exports = {
       },
       {
         protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
+        hostname: '**.googleusercontent.com',
+        port: '',
+        pathname: '**'
       }
     ]
   }
