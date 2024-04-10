@@ -31,9 +31,14 @@ export const {
       }
       return token
     },
-    session: ({ session, token }) => {
+    session: ({ session, token, user }) => {
+      console.log('session -> /n', session, token, user)
       if (session?.user && token?.id) {
         session.user.id = String(token.id)
+      }
+
+      if (session?.user && token?.sub) {
+        session.user.id = String(token.sub)
       }
       return session
     },
@@ -42,7 +47,7 @@ export const {
     },
     async signIn({ user, account, profile, email, credentials }) {
       const isAllowedToSignIn = true
-      console.log('email',user)
+      console.log('email', user)
       if (user.email === 'wuxinhua.cn@gmail.com' || user.email === 'kvwu4704@gmail.com') {
         return isAllowedToSignIn
       }
