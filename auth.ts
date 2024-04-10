@@ -35,10 +35,12 @@ export const {
       console.log('session -> /n', session, token, user)
       if (session?.user && token?.id) {
         session.user.id = String(token.id)
+        return session
       }
 
       if (session?.user && token?.sub) {
         session.user.id = String(token.sub)
+        return session
       }
       return session
     },
