@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
@@ -37,8 +37,17 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
   )
   const [previewTokenDialog, setPreviewTokenDialog] = useState(IS_PREVIEW)
   const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '')
+
+  const [model, setModel] = useLocalStorage<string | null>('selected-model', 'gpt-4')
+  const [apiRoute, setApiRoute] = useState(model === 'gpt-4' ? '/api/chat' : '/api/chat/gemini')
+
+  useEffect(() => {
+    setApiRoute(model === 'gpt-4' ? '/api/chat' : '/api/chat/gemini')
+  }, [model])
+
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
+      api: apiRoute,
       initialMessages,
       id,
       body: {

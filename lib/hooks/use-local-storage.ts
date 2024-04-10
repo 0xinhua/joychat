@@ -4,21 +4,25 @@ export const useLocalStorage = <T>(
   key: string,
   initialValue: T
 ): [T, (value: T) => void] => {
-  const [storedValue, setStoredValue] = useState(initialValue)
-
-  useEffect(() => {
-    // Retrieve from localStorage
-    const item = window.localStorage.getItem(key)
-    if (item) {
-      setStoredValue(JSON.parse(item))
+  const [storedValue, setStoredValue] = useState(() => {
+    try {
+      const item = window.localStorage.getItem(key)
+      return item ? JSON.parse(item) : initialValue
+    } catch (error) {
+      console.log(error)
+      return initialValue
     }
-  }, [key])
+  })
 
   const setValue = (value: T) => {
-    // Save state
-    setStoredValue(value)
-    // Save to localStorage
-    window.localStorage.setItem(key, JSON.stringify(value))
+    try {
+      const valueToStore = value instanceof Function ? value(storedValue) : value
+      setStoredValue(valueToStore)
+      window.localStorage.setItem(key, JSON.stringify(valueToStore))
+    } catch (error) {
+      console.log(error)
+    }
   }
+
   return [storedValue, setValue]
 }
