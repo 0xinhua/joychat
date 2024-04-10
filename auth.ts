@@ -43,7 +43,7 @@ export const {
     async signIn({ user, account, profile, email, credentials }) {
       const isAllowedToSignIn = true
       console.log('email',user)
-      if (user.email === 'wuxinhua.cn@gmail.com') {
+      if (user.email === 'wuxinhua.cn@gmail.com' || user.email === 'kvwu4704@gmail.com') {
         return isAllowedToSignIn
       }
       return false
