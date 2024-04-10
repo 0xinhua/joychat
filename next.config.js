@@ -4,13 +4,13 @@ module.exports = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'avatars.githubusercontent.com',
+        hostname: '**.googleusercontent.com',
         port: '',
         pathname: '**'
       },
       {
         protocol: 'https',
-        hostname: '**.googleusercontent.com',
+        hostname: 'avatars.githubusercontent.com',
         port: '',
         pathname: '**'
       }
