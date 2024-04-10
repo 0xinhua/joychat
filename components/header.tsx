@@ -34,7 +34,7 @@ async function UserOrLogin() {
       )}
       <div className="flex items-center">
         <IconSeparator className="size-6 text-muted-foreground/50" />
-        MyChat
+        JoyChat
       </div>
     </>
   )
