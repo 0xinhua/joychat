@@ -38,7 +38,7 @@ export function ChatPanel({
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
 
   return (
-    <div className="fixed inset-x-0 bottom-0 w-full from-muted/30
+    <div className="fixed inset-x-0 bottom-4 w-full from-muted/30
       from-0% to-muted/30 to-50% animate-in duration-300 ease-in-out
       dark:from-background/10 dark:from-10%
       dark:to-background/80 peer-[[data-state=open]]:group-[]:lg:pl-[200px] peer-[[data-state=open]]:group-[]:xl:pl-[250px]">

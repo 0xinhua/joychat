@@ -26,7 +26,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
     <div className="mx-auto max-w-3xl pb-4">
       <div className="rounded-lg bg-background pb-8">
         <h1 className="mb-2 text-lg font-semibold">
-          Welcome to JoyChat
+          Welcome to JoyChat <span className="font-normal ml-2 inline-flex h-6 items-center rounded-lg border border-gray-100 bg-gray-50 px-2 text-base text-gray-400 dark:border-gray-700/60 dark:bg-gray-800">v0.0.1</span>
         </h1>
         <p className="mb-2 leading-normal text-muted-foreground">
           This is an open source AI chatbot app built by {' '}
