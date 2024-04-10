@@ -100,10 +100,6 @@ export function ChatPanel({
                 content: value,
                 role: 'user'
               })
-              if (pathname !== `/chat/${id}`) {
-                router.push(`/chat/${id}`);
-                router.refresh();
-              }
             }}
             input={input}
             setInput={setInput}
