@@ -26,7 +26,7 @@ const exampleMessages = [
     \n `
   },
   {
-    heading: `📖 Summarize an article`,
+    heading: `📖 Summarize content`,
     message: `Summarize content you are provided with for a second-grade student : 
     
     \n`
