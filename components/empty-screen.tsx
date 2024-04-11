@@ -49,7 +49,7 @@ const exampleMessages = [
   },
   {
     heading: '🈳 Translate Chinese',
-    message: `You will be provided with statements, and your task is to convert them to simplified Chinese.
+    message: `You will be provided with statements, and your task is to convert them to simplified Chinese, In the translated text, English words and numbers should be preceded and followed by a space.
 
 [statements] following: 
 
