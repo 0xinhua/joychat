@@ -11,7 +11,8 @@ declare module 'next-auth' {
   }
 }
 
-const allowedEmails = (process.env.ALLOWED_EMAILS ?? '').split(',') as string[]
+// toLowerCase email from env
+const allowedEmails = (process.env.ALLOWED_EMAILS ?? '').toLowerCase().split(',')
 
 export const {
   handlers: { GET, POST },
@@ -48,7 +49,7 @@ export const {
       const isAllowedToSignIn = true
       console.log('email', user, allowedEmails)
       // add a whitelist
-      if (user.email && allowedEmails.includes(user.email)) {
+      if (user.email && allowedEmails.includes(user.email.toLowerCase())) {
         return isAllowedToSignIn
       }
       return false
