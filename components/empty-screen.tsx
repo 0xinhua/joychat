@@ -22,14 +22,14 @@ const exampleMessages = [
   {
     heading: '💡 Data analysis',
     message: `Summarize the key characteristics of this dataset. Include information on data types, missing values, and basic statistics. The following dataset: 
-    
-    \n `
+
+\n`
   },
   {
     heading: `📖 Summarize content`,
-    message: `Summarize content you are provided with for a second-grade student : 
-    
-    \n`
+    message: `Summarize content you are provided with for a second-grade student: 
+
+\n`
   },
   {
     heading: '📧 Format and correct email',
