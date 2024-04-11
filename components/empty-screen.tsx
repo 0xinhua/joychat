@@ -21,17 +21,39 @@ import { IconGoogle, IconOpenai } from '@/components/ui/icons'
 const exampleMessages = [
   {
     heading: '💡 Data analysis',
-    message: `Summarize the key characteristics of this dataset. Include information on data types, missing values, and basic statistics. The following dataset: \n `
+    message: `Summarize the key characteristics of this dataset. Include information on data types, missing values, and basic statistics. The following dataset: 
+    
+    \n `
   },
   {
-    heading: '📖 Summarize an article',
-    message: 'Summarize the following article for a 2nd grader: \n'
+    heading: `📖 Summarize an article`,
+    message: `Summarize content you are provided with for a second-grade student : 
+    
+    \n`
   },
   {
     heading: '📧 Format and correct email',
     message: `Proofread and format [email]. Also, give suggestions for getting the point across effectively.
 
-[email] following: \n`
+[email] following: 
+
+\n`
+  },
+  {
+    heading: '🔠 Translate English',
+    message: `You will be provided with statements, and your task is to convert them to standard English.
+
+[statements] following: 
+
+\n`
+  },
+  {
+    heading: '🈳 Translate Chinese',
+    message: `You will be provided with statements, and your task is to convert them to simplified Chinese.
+
+[statements] following: 
+
+\n`
   }
 ]
 
@@ -44,7 +66,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
       <div className="grid md:grid-cols-10 grid-cols-1">
         <div className="rounded-lg bg-background pb-8 md:col-span-7">
           <h1 className="mb-2 text-lg font-semibold">
-            Welcome to JoyChat <span className="font-normal ml-2 inline-flex items-center rounded-md border border-gray-100 bg-gray-50 px-2 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-gray-800">v0.0.1</span>
+            👋 Welcome to JoyChat <span className="font-normal ml-2 inline-flex items-center rounded-md border border-gray-100 bg-gray-50 px-2 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-gray-800">v0.0.1</span>
           </h1>
           <p className="mb-2 leading-normal text-muted-foreground">
             This is an open source AI chatbot built by {' '}
@@ -78,6 +100,9 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
         </div>
       </div>
       <div className="py-2">
+        <h1 className="mb-2 text-lg font-semibold">
+          💬 Prompts
+        </h1>
         <div className="mt-4 grid gap-3 lg:grid-cols-3 lg:gap-5">
           {exampleMessages.map((message, index) => (
             <button
