@@ -23,6 +23,13 @@ const buildGoogleGenAIPrompt = (messages: Message[]) => ({
 export async function POST(req: Request) {
 
   const userId = (await auth())?.user.id
+
+  if (!userId) {
+    return new Response('Unauthorized', {
+      status: 401
+    })
+  }
+
   // Extract the `prompt` from the body of the request
   const json = await req.json()
 
