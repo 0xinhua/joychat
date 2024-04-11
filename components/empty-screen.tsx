@@ -89,10 +89,10 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
               <SelectGroup>
                 {/* <SelectLabel>Fruits</SelectLabel> */}
                 <SelectItem value="gpt-4" className="cursor-pointer">
-                  <div className="flex items-center justify-center gap-x-1"><IconOpenai />GPT-4</div>
+                  <div className="flex items-center justify-center gap-x-1"><IconOpenai />gpt-4-turbo</div>
                 </SelectItem>
                 <SelectItem value="gemini-1.5-pro" className="cursor-pointer">
-                  <div className="flex items-center justify-center gap-x-1 cursor-pointer"><IconGoogle />Gemini-pro</div>
+                  <div className="flex items-center justify-center gap-x-1 cursor-pointer"><IconGoogle />gemini-pro</div>
                 </SelectItem>
               </SelectGroup>
             </SelectContent>
