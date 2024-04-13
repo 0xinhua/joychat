@@ -35,7 +35,6 @@ export const {
       return token
     },
     session: ({ session, token, user }) => {
-      console.log('session -> /n', session, token, user)
 
       if (session?.user && token?.sub) {
         session.user.id = String(token.sub)

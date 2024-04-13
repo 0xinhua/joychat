@@ -2,6 +2,9 @@ import { kv } from '@vercel/kv'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
 
+import { GoogleGenerativeAI } from '@google/generative-ai'
+import { GoogleGenerativeAIStream, Message } from 'ai'
+
 import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 
@@ -11,17 +14,71 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 })
 
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || '')
+
+const buildGoogleGenAIPrompt = (messages: Message[]) => ({
+  contents: messages
+    .filter(message => message.role === 'user' || message.role === 'assistant')
+    .map(message => ({
+      role: message.role === 'user' ? 'user' : 'model',
+      parts: [{ text: message.content }],
+    })),
+})
+
 export async function POST(req: Request) {
   const json = await req.json()
-  const { messages, previewToken } = json
+  const { messages, previewToken, model } = json
   const userId = (await auth())?.user.id
-
-  console.log('userId', userId)
 
   if (!userId) {
     return new Response('Unauthorized', {
       status: 401
     })
+  }
+
+  // use google gemini provider
+  if (model === 'gemini-pro') {
+
+    console.log('gemini model')
+
+    const geminiStream = await genAI
+    .getGenerativeModel({ model: 'gemini-pro' })
+    .generateContentStream(buildGoogleGenAIPrompt(messages))
+
+    // Convert the response into a friendly text-stream
+    const stream = GoogleGenerativeAIStream(geminiStream, {
+      onCompletion: async (completion: string) => {
+        // This callback is called when the completion is ready
+        // You can use this to save the final completion to your database
+        const title = messages[0].content.substring(0, 100)
+        const id = json.id ?? nanoid()
+        const createdAt = Date.now()
+        const path = `/chat/${id}`
+        const payload = {
+          id,
+          title,
+          userId,
+          createdAt,
+          path,
+          messages: [
+            ...messages,
+            {
+              content: completion,
+              role: 'assistant'
+            }
+          ]
+        }
+
+        await kv.hmset(`chat:${id}`, payload)
+        await kv.zadd(`user:chat:${userId}`, {
+          score: createdAt,
+          member: `chat:${id}`
+        })
+      },
+    })
+
+    // Respond with the stream
+    return new StreamingTextResponse(stream)
   }
 
   if (previewToken) {
