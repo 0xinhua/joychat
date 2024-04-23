@@ -1,5 +1,6 @@
 import { type Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
+import Mixpanel from 'mixpanel'
 
 import { auth } from '@/auth'
 import { getChat } from '@/app/actions'
@@ -42,6 +43,17 @@ export default async function ChatPage({ params }: ChatPageProps) {
   if (chat?.userId !== session?.user?.id) {
     notFound()
   }
+
+  const mixpanel = Mixpanel.init('aa4a031ffe173cb6eeb91bac9aa81f19', { debug: true })
+
+  mixpanel.people.set(session?.user.id, {
+    $name: session.user.name,
+    $email: session.user.email
+  })
+
+  mixpanel.track('Chat Page', {
+    distinct_id: session?.user.id
+  })
 
   return <Chat id={chat.id} initialMessages={chat.messages} />
 }

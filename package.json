@@ -34,6 +34,8 @@
     "framer-motion": "^10.18.0",
     "geist": "^1.2.1",
     "lucide-react": "^0.356.0",
+    "mixpanel": "^0.18.0",
+    "mixpanel-browser": "^2.49.0",
     "nanoid": "^5.0.4",
     "next": "14.1.0",
     "next-auth": "5.0.0-beta.4",
@@ -51,6 +53,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "@types/mixpanel-browser": "^2.49.0",
     "@types/node": "^20.11.5",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
