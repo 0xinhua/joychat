@@ -341,27 +341,28 @@ function IconSun({ className, ...props }: React.ComponentProps<'svg'>) {
 function IconCopy({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 256 256"
-      fill="currentColor"
+      fill="none"
       className={cn('size-4', className)}
       {...props}
-    >
-      <path d="M216 32H88a8 8 0 0 0-8 8v40H40a8 8 0 0 0-8 8v128a8 8 0 0 0 8 8h128a8 8 0 0 0 8-8v-40h40a8 8 0 0 0 8-8V40a8 8 0 0 0-8-8Zm-56 176H48V96h112Zm48-48h-32V88a8 8 0 0 0-8-8H96V48h112Z" />
+      xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+      stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+     >
+      <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
     </svg>
   )
 }
 
 function IconCheck({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 256 256"
-      fill="currentColor"
+    <svg xmlns="http://www.w3.org/2000/svg"
+      fill="none"
       className={cn('size-4', className)}
       {...props}
-    >
-      <path d="m229.66 77.66-128 128a8 8 0 0 1-11.32 0l-56-56a8 8 0 0 1 11.32-11.32L96 188.69 218.34 66.34a8 8 0 0 1 11.32 11.32Z" />
+      width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m12 15 2 2 4-4"/>
+      <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
     </svg>
   )
 }

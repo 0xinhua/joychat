@@ -9,6 +9,8 @@ import { IconRefresh, IconShare, IconStop } from '@/components/ui/icons'
 import { FooterText } from '@/components/footer'
 import { ChatShareDialog } from '@/components/chat-share-dialog'
 import { usePathname, useRouter } from 'next/navigation'
+import { useSidebar } from '@/lib/hooks/use-sidebar'
+import { cn } from '@/lib/utils'
 
 export interface ChatPanelProps
   extends Pick<
@@ -39,12 +41,15 @@ export function ChatPanel({
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
   const router = useRouter()
   const pathname = usePathname()
+  const { isSidebarOpen } = useSidebar()
 
   return (
-    <div className="fixed inset-x-0 bottom-4 w-full from-muted/30
+    <div className={cn(`fixed inset-x-0 bottom-4 w-full from-muted/30
       from-0% to-muted/30 to-50% animate-in duration-300 ease-in-out
       dark:from-background/10 dark:from-10%
-      dark:to-background/80 peer-[[data-state=open]]:group-[]:lg:pl-[200px] peer-[[data-state=open]]:group-[]:xl:pl-[250px]">
+      dark:to-background/80`,
+      isSidebarOpen && 'lg:pl-[200px] xl:pl-[250px]'
+      )}>
       <ButtonScrollToBottom />
       <div className="mx-auto sm:max-w-3xl sm:px-1">
         <div className="flex items-center justify-center h-12">
