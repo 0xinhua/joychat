@@ -93,8 +93,8 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
                     <IconOpenai />gpt-4-turbo
                   </div>
                 </SelectItem>
-                <SelectItem value="gemini-pro" className="cursor-pointer">
-                  <div className="flex items-center justify-center gap-x-1.5">
+                <SelectItem value="gemini-pro" disabled className="cursor-not-allowed">
+                  <div className="flex items-center justify-center gap-x-1.5 cursor-not-allowed">
                     <IconBard />gemini-pro
                   </div>
                 </SelectItem>
