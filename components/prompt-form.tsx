@@ -56,21 +56,22 @@ export function PromptForm({
           onChange={e => setInput(e.target.value)}
           placeholder="Ask me anything"
           spellCheck={false}
-          className="min-h-[20px] w-full resize-none bg-transparent px-1 py-2 focus-within:outline-none sm:text-sm"
+          className="min-h-[30px] w-full resize-none bg-transparent px-1 py-2 focus-within:outline-none sm:text-sm"
         />
-        <div className="absolute right-0 top-0.5 sm:right-2">
+        <div className="absolute right-1 bottom-0 mb-0.5">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 type="submit"
                 size="icon"
+                className="shadow-none"
                 disabled={isLoading || input === ''}
               >
                 <IconArrowElbow />
                 <span className="sr-only">Ask me anything</span>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Ask me anything</TooltipContent>
+            <TooltipContent>Click to send or press Enter</TooltipContent>
           </Tooltip>
         </div>
       </div>
