@@ -69,7 +69,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             👋 Welcome to JoyChat <span className="font-normal ml-2 inline-flex items-center rounded-md border border-gray-100 bg-gray-50 px-2 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-gray-800">v0.0.1</span>
           </h1>
           <p className="mb-2 leading-normal text-muted-foreground">
-            This is an open source AI chatbot built by {' '}
+            An open source AI chatbot built by {' '}
             <ExternalLink href="https://twitter.com/0xinhua">
               0xinhua
             </ExternalLink>
