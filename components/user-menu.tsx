@@ -54,7 +54,7 @@ export function UserMenu({ user }: UserMenuProps) {
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild className="cursor-pointer">
             <a
-              href="https://github.com/0xinhua/ai-chatbot"
+              href="https://github.com/0xinhua/joychat"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-between w-full text-xs"

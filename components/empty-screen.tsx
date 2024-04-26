@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
-import { IconGoogle, IconOpenai } from '@/components/ui/icons'
+import { IconBard, IconOpenai } from '@/components/ui/icons'
 
 const exampleMessages = [
   {
@@ -64,12 +64,12 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   return (
     <div className="mx-auto max-w-3xl pb-4 sm:px-0 px-4">
       <div className="grid md:grid-cols-10 grid-cols-1">
-        <div className="rounded-lg bg-background pb-4 sm:pb-8 md:col-span-7">
+        <div className="rounded-lg bg-background pb-4 sm:pb-8 md:col-span-8">
           <h1 className="mb-2 text-lg font-semibold">
             👋 Welcome to JoyChat <span className="font-normal ml-2 inline-flex items-center rounded-md border border-gray-100 bg-gray-50 px-2 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-gray-800">v0.0.1</span>
           </h1>
           <p className="mb-2 leading-normal text-muted-foreground">
-            An open source AI chatbot built by {' '}
+            A beautiful open source AI chatbot built by {' '}
             <ExternalLink href="https://twitter.com/0xinhua">
               0xinhua
             </ExternalLink>
@@ -79,20 +79,24 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             You can start a conversation here or try with the following prompts.
           </p>
         </div>
-        <div className="col-span-1 md:col-span-3 flex flex-col gap-y-1 leading-normal text-muted-foreground sm:pb-0 pb-4">
+        <div className="col-span-1 md:col-span-2 flex flex-col gap-y-1 leading-normal text-muted-foreground sm:pb-0 pb-4">
           <h1 className="mb-2 text-lg font-semibold text-foreground">✨ Model</h1>
           <Select defaultValue={model} onValueChange={setModel}>
-            <SelectTrigger className="w-[160px] shadow-none">
+            <SelectTrigger className="w-[154px] shadow-none">
               <SelectValue placeholder="Select a model" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 {/* <SelectLabel>Fruits</SelectLabel> */}
                 <SelectItem value="gpt-4" className="cursor-pointer">
-                  <div className="flex items-center justify-center gap-x-1"><IconOpenai />gpt-4-turbo</div>
+                  <div className="flex items-center justify-center gap-x-1.5">
+                    <IconOpenai />gpt-4-turbo
+                  </div>
                 </SelectItem>
                 <SelectItem value="gemini-pro" className="cursor-pointer">
-                  <div className="flex items-center justify-center gap-x-1 cursor-pointer"><IconGoogle />gemini-pro</div>
+                  <div className="flex items-center justify-center gap-x-1.5">
+                    <IconBard />gemini-pro
+                  </div>
                 </SelectItem>
               </SelectGroup>
             </SelectContent>
