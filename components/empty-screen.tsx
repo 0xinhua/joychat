@@ -4,7 +4,7 @@ import { UseChatHelpers } from 'ai/react'
 
 import { Button } from '@/components/ui/button'
 import { ExternalLink } from '@/components/external-link'
-import { IconArrowRight } from '@/components/ui/icons'
+import { IconArrowRight, IconChatBot } from '@/components/ui/icons'
 
 import {
   Select,
@@ -65,8 +65,8 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
     <div className="mx-auto max-w-3xl pb-4 sm:px-0 px-4">
       <div className="grid md:grid-cols-10 grid-cols-1">
         <div className="rounded-lg bg-background pb-4 sm:pb-8 md:col-span-8">
-          <h1 className="mb-2 text-lg font-semibold">
-            👋 Welcome to JoyChat <span className="font-normal ml-2 inline-flex items-center rounded-md border border-gray-100 bg-gray-50 px-2 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-gray-800">v0.0.1</span>
+          <h1 className="mb-2 text-lg font-semibold flex items-center">
+            👋 Welcome to JoyChat <IconChatBot className='ml-1 mt-0.5' /> <span className="font-normal ml-2 inline-flex items-center rounded-md border border-gray-100 bg-gray-50 px-2 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-gray-800">v0.0.1</span>
           </h1>
           <p className="mb-2 leading-normal text-muted-foreground">
             A beautiful open source AI chatbot built by {' '}
