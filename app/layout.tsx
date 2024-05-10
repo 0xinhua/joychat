@@ -16,7 +16,7 @@ export const metadata = {
     default: 'JoyChat',
     template: `%s - AI Chatbot`
   },
-  description: 'An AI-powered chatbot built with love by 0xinhua.',
+  description: 'Talk with JoyChat, an AI assistant powered by OpenAI GPT-4-turbo built with love by 0xinhua.',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
