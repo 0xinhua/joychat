@@ -14,16 +14,16 @@ interface ChatHistoryProps {
 export async function ChatHistory({ userId }: ChatHistoryProps) {
   return (
     <div className="flex flex-col h-full">
-      <div className="px-2 my-4 mt-10 md:mt-4">
+      <div className="px-5 my-4 mt-10 md:mt-4">
         <Link
           href="/"
           className={cn(
             buttonVariants({ variant: 'outline' }),
             'border border-gray-100',
-            'h-10 w-full justify-start bg-zinc-50 px-4 shadow-none transition-colors hover:bg-gray-100/40 dark:bg-zinc-900 dark:hover:bg-zinc-300/10'
+            'h-9 w-full justify-start bg-gray-50 font-normal border bg-gray-50 px-3 shadow-none transition-colors text-gray-600 hover:bg-gray-100 max-xl:text-sm dark:border-gray-800 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
           )}
         >
-          <IconPlus className="-translate-x-2 stroke-2" />
+          <IconPlus className="-translate-x-1 stroke-2" />
           New Chat
         </Link>
       </div>

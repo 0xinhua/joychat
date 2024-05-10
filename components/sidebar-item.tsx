@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 
 import { buttonVariants } from '@/components/ui/button'
-import { IconMessage, IconUsers } from '@/components/ui/icons'
+import { IconChatBubbleLeft, IconMessage, IconUsers } from '@/components/ui/icons'
 import {
   Tooltip,
   TooltipContent,
@@ -53,26 +53,22 @@ export function SidebarItem({ index, chat, children }: SidebarItemProps) {
         ease: 'easeIn'
       }}
     >
-      <div className="absolute left-2 top-1 flex size-6 items-center justify-center">
-        {chat.sharePath ? (
-          <Tooltip delayDuration={1000}>
-            <TooltipTrigger
-              tabIndex={-1}
-              className="focus:bg-muted focus:ring-1 focus:ring-ring"
-            >
-              <IconUsers className="mr-2" />
-            </TooltipTrigger>
-            <TooltipContent>This is a shared chat.</TooltipContent>
-          </Tooltip>
-        ) : (
-          <IconMessage className="mr-2" />
-        )}
-      </div>
+      {chat.sharePath ? <div className="absolute left-2 top-1 flex size-6 items-center justify-center">
+        <Tooltip delayDuration={1000}>
+          <TooltipTrigger
+            tabIndex={-1}
+            className="focus:bg-muted focus:ring-1 focus:ring-ring"
+          >
+            <IconUsers className="mr-2" />
+          </TooltipTrigger>
+          <TooltipContent>This is a shared chat.</TooltipContent>
+        </Tooltip>
+      </div> : null}
       <Link
         href={chat.path}
         className={cn(
           buttonVariants({ variant: 'ghost' }),
-          'group w-full px-8 transition-colors hover:bg-gray-100/40 dark:hover:bg-zinc-300/10',
+          'group w-full font-normal px-2 transition-colors hover:bg-gray-100 dark:hover:bg-zinc-300/10',
           isActive && 'bg-gray-100/80 pr-16 font-semibold dark:bg-zinc-800'
         )}
       >
