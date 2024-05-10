@@ -51,7 +51,7 @@ export function ChatPanel({
       isSidebarOpen && 'lg:pl-[200px] xl:pl-[250px]'
       )}>
       <ButtonScrollToBottom />
-      <div className="mx-auto sm:max-w-3xl sm:px-1">
+      <div className="mx-auto sm:max-w-3xl">
         <div className="flex items-center justify-center md:h-12 h-10">
           {isLoading ? (
             <Button
@@ -95,7 +95,7 @@ export function ChatPanel({
             )
           )}
         </div>
-        <div className="p-2 space-y-4 border border-r-0 border-l-0 md:py-2 sm:mb-2
+        <div className="p-2 space-y-4 border border-x-0 md:py-2 sm:mb-2
           relative flex w-full max-w-4xl flex-1 items-center sm:rounded-xl md:border bg-gray-100 focus-within:border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:focus-within:border-gray-500
         ">
           <PromptForm

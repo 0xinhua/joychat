@@ -19,8 +19,8 @@ export async function ChatHistory({ userId }: ChatHistoryProps) {
           href="/"
           className={cn(
             buttonVariants({ variant: 'outline' }),
-            'border border-gray-100',
-            'h-9 w-full justify-start bg-gray-50 font-normal border bg-gray-50 px-3 shadow-none transition-colors text-gray-600 hover:bg-gray-100 max-xl:text-sm dark:border-gray-800 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
+            'border',
+            'h-9 w-full justify-start bg-gray-50 font-normal bg-gray-50 px-3 shadow-none transition-colors text-gray-600 hover:bg-gray-100 max-xl:text-sm dark:border-gray-800 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
           )}
         >
           <IconPlus className="-translate-x-1 stroke-2" />

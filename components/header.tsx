@@ -29,7 +29,7 @@ async function UserOrLogin() {
         </>
       ) : (
         <Link href="/" target="_blank" rel="nofollow">
-          <IconChatBot className='mt-0.5 w-6 h-6' />
+          <IconChatBot className='mt-0.5 mr-1 size-6' />
         </Link>
       )}
       <div className="flex items-center font-medium">
