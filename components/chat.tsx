@@ -21,6 +21,7 @@ import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
 import { usePathname, useRouter } from 'next/navigation'
+import useChatStore from '@/store/useChatStore'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
@@ -37,6 +38,10 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
   )
   const [previewTokenDialog, setPreviewTokenDialog] = useState(IS_PREVIEW)
   const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '')
+
+  const { fetchHistory } = useChatStore(state => ({
+    fetchHistory: state.fetchHistory
+  }))
 
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
@@ -56,12 +61,13 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         if (!path.includes('chat')) {
           router.push(`/chat/${id}`)
           router.refresh()
+          fetchHistory()
         }
       }
     })
   return (
     <>
-      <div className={cn('md:pb-[200px] pt-4', className)}>
+      <div className={cn('md:pb-[200px]', className)}>
         {messages.length ? (
           <>
             <ChatList messages={messages} />

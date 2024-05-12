@@ -4,9 +4,11 @@ import { SidebarItems } from '@/components/sidebar-items'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { cache } from 'react'
 import { auth } from '@/auth'
+import { Chat } from '@/lib/types'
 
 interface SidebarListProps {
-  userId?: string
+  userId?: string,
+  chats: Chat[],
   children?: React.ReactNode
 }
 
@@ -14,14 +16,12 @@ const loadChats = cache(async (userId?: string) => {
   return await getChats(userId)
 })
 
-export async function SidebarList({ userId }: SidebarListProps) {
-  const chats = await loadChats(userId)
-  const session = await auth()
+export function SidebarList({ chats }: SidebarListProps) {
   return (
     <div className="flex flex-1 flex-col overflow-hidden">
       <div className="flex-1 overflow-auto">
         {chats?.length ? (
-          <div className="space-y-2 px-3">
+          <div className="space-y-1 px-3">
             <SidebarItems chats={chats} />
           </div>
         ) : (

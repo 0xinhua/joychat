@@ -345,7 +345,7 @@ function IconCopy({ className, ...props }: React.ComponentProps<'svg'>) {
       className={cn('size-4', className)}
       {...props}
       xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-      stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
      >
       <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
       <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
@@ -373,7 +373,7 @@ function IconCopied({ className, ...props }: React.ComponentProps<'svg'>) {
       fill="none"
       className={cn('size-4', className)}
       {...props}
-      width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
       <path d="m12 15 2 2 4-4"/>
       <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
       <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
@@ -539,19 +539,19 @@ function IconBard({
     <svg xmlns="http://www.w3.org/2000/svg" className={cn("h-4 w-4", className)} width="256" height="258" preserveAspectRatio="xMidYMid" viewBox="0 0 256 258">
       <defs>
         <radialGradient id="a" cx="78.302%" cy="55.52%" r="78.115%" fx="78.302%" fy="55.52%" gradientTransform="scale(.99947 1) rotate(78.858 .783 .555)">
-        <stop offset="0%" stop-color="#1BA1E3"/><stop offset=".01%" stop-color="#1BA1E3"/>
-        <stop offset="30.022%" stop-color="#5489D6"/>
-        <stop offset="54.552%" stop-color="#9B72CB"/>
-        <stop offset="82.537%" stop-color="#D96570"/>
-        <stop offset="100%" stop-color="#F49C46"/>
+        <stop offset="0%" stopColor="#1BA1E3"/><stop offset=".01%" stopColor="#1BA1E3"/>
+        <stop offset="30.022%" stopColor="#5489D6"/>
+        <stop offset="54.552%" stopColor="#9B72CB"/>
+        <stop offset="82.537%" stopColor="#D96570"/>
+        <stop offset="100%" stopColor="#F49C46"/>
         </radialGradient>
         <radialGradient id="b" cx="-3.409%" cy="-54.219%" r="169.363%" fx="-3.409%" fy="-54.219%" gradientTransform="scale(.99946 1) rotate(78.858 -.034 -.542)">
-          <stop offset="0%" stop-color="#1BA1E3"/>
-          <stop offset=".01%" stop-color="#1BA1E3"/>
-          <stop offset="30.022%" stop-color="#5489D6"/>
-          <stop offset="54.552%" stop-color="#9B72CB"/>
-          <stop offset="82.537%" stop-color="#D96570"/>
-          <stop offset="100%" stop-color="#F49C46"/>
+          <stop offset="0%" stopColor="#1BA1E3"/>
+          <stop offset=".01%" stopColor="#1BA1E3"/>
+          <stop offset="30.022%" stopColor="#5489D6"/>
+          <stop offset="54.552%" stopColor="#9B72CB"/>
+          <stop offset="82.537%" stopColor="#D96570"/>
+          <stop offset="100%" stopColor="#F49C46"/>
         </radialGradient>
         </defs>
         <path fill="url(#a)" d="m122.062 172.77-10.27 23.52c-3.947 9.042-16.459 9.042-20.406 0l-10.27-23.52c-9.14-20.933-25.59-37.595-46.108-46.703L6.74 113.52c-8.987-3.99-8.987-17.064 0-21.053l27.385-12.156C55.172 70.97 71.917 53.69 80.9 32.043L91.303 6.977c3.86-9.303 16.712-9.303 20.573 0l10.403 25.066c8.983 21.646 25.728 38.926 46.775 48.268l27.384 12.156c8.987 3.99 8.987 17.063 0 21.053l-28.267 12.547c-20.52 9.108-36.97 25.77-46.109 46.703Z"/>
@@ -568,11 +568,11 @@ function IconChatBot({
   return (
     <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)}>
       <rect x="37" y="145" width="440" height="222" rx="62" fill="black"/>
-      <rect x="37" y="145" width="440" height="222" rx="62" stroke="white" stroke-width="42"/>
-      <rect x="37" y="145" width="440" height="222" rx="62" stroke="black" stroke-opacity="0.2" stroke-width="42"/>
+      <rect x="37" y="145" width="440" height="222" rx="62" stroke="white" strokeWidth="42"/>
+      <rect x="37" y="145" width="440" height="222" rx="62" stroke="black" strokeOpacity="0.2" strokeWidth="42"/>
       <circle cx="164" cy="256" r="47" fill="white"/>
       <circle cx="344" cy="256" r="47" fill="white"/>
-      <path d="M192 46C192 34.9543 200.954 26 212 26H303C314.046 26 323 34.9543 323 46V54C323 65.0457 314.046 74 303 74H212C200.954 74 192 65.0457 192 54V46Z" fill="black" fill-opacity="0.85"/>
+      <path d="M192 46C192 34.9543 200.954 26 212 26H303C314.046 26 323 34.9543 323 46V54C323 65.0457 314.046 74 303 74H212C200.954 74 192 65.0457 192 54V46Z" fill="black" fillOpacity="0.85"/>
       <path d="M344.364 268.364L332.682 256.682C331.75 255.75 331.129 254.667 330.818 253.432C330.515 252.197 330.519 250.97 330.83 249.75C331.14 248.523 331.758 247.455 332.682 246.545C333.629 245.614 334.708 244.996 335.92 244.693C337.14 244.383 338.356 244.383 339.568 244.693C340.788 245.004 341.871 245.621 342.818 246.545L344.364 248.045L345.909 246.545C346.864 245.621 347.947 245.004 349.159 244.693C350.371 244.383 351.583 244.383 352.795 244.693C354.015 244.996 355.098 245.614 356.045 246.545C356.97 247.455 357.587 248.523 357.898 249.75C358.208 250.97 358.208 252.197 357.898 253.432C357.595 254.667 356.977 255.75 356.045 256.682L344.364 268.364Z" fill="black"/>
       <path d="M164.568 276.568L146.315 258.315C144.859 256.859 143.889 255.167 143.403 253.237C142.93 251.308 142.936 249.39 143.421 247.484C143.906 245.567 144.871 243.898 146.315 242.477C147.795 241.021 149.482 240.057 151.376 239.583C153.281 239.098 155.181 239.098 157.075 239.583C158.981 240.068 160.674 241.033 162.153 242.477L164.568 244.821L166.983 242.477C168.474 241.033 170.167 240.068 172.061 239.583C173.955 239.098 175.849 239.098 177.743 239.583C179.649 240.057 181.341 241.021 182.821 242.477C184.265 243.898 185.23 245.567 185.715 247.484C186.201 249.39 186.201 251.308 185.715 253.237C185.242 255.167 184.277 256.859 182.821 258.315L164.568 276.568Z" fill="black"/>
       <path d="M344.568 276.568L326.315 258.315C324.859 256.859 323.889 255.167 323.403 253.237C322.93 251.308 322.936 249.39 323.421 247.484C323.906 245.567 324.871 243.898 326.315 242.477C327.795 241.021 329.482 240.057 331.376 239.583C333.281 239.098 335.181 239.098 337.075 239.583C338.981 240.068 340.674 241.033 342.153 242.477L344.568 244.821L346.983 242.477C348.474 241.033 350.167 240.068 352.061 239.583C353.955 239.098 355.849 239.098 357.743 239.583C359.649 240.057 361.341 241.021 362.821 242.477C364.265 243.898 365.23 245.567 365.715 247.484C366.201 249.39 366.201 251.308 365.715 253.237C365.242 255.167 364.277 256.859 362.821 258.315L344.568 276.568Z" fill="black"/>
@@ -585,8 +585,43 @@ function IconChatBubbleLeft({
   ...props
 }: React.ComponentProps<'svg'>) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className={cn("h-5 w-5", className)}>
-      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={cn("h-5 w-5", className)}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+    </svg>
+  )
+}
+
+function IconChevronFirst({
+  className,
+  ...props
+}: React.ComponentProps<'svg'>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" >
+      <path d="m17 18-6-6 6-6"/><path d="M7 6v12"/>
+    </svg>
+  )
+}
+
+function IconChevronLast({
+  className,
+  ...props
+}: React.ComponentProps<'svg'>) {
+  return (
+<svg xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+  <path d="m7 18 6-6-6-6"/>
+  <path d="M17 6v12"/>
+  </svg>
+  )
+}
+
+function IconSquarePen({
+  className,
+  ...props
+}: React.ComponentProps<'svg'>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+      <path d="M18.375 2.625a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4Z"/>
     </svg>
   )
 }
@@ -626,5 +661,8 @@ export {
   IconBot,
   IconBard,
   IconChatBot,
-  IconChatBubbleLeft
+  IconChatBubbleLeft,
+  IconChevronFirst,
+  IconChevronLast,
+  IconSquarePen
 }

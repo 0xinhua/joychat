@@ -8,7 +8,7 @@ import { ButtonScrollToBottom } from '@/components/button-scroll-to-bottom'
 import { IconRefresh, IconShare, IconStop } from '@/components/ui/icons'
 import { FooterText } from '@/components/footer'
 import { ChatShareDialog } from '@/components/chat-share-dialog'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useSidebar } from '@/lib/hooks/use-sidebar'
 import { cn } from '@/lib/utils'
 
@@ -40,7 +40,6 @@ export function ChatPanel({
 }: ChatPanelProps) {
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
   const router = useRouter()
-  const pathname = usePathname()
   const { isSidebarOpen } = useSidebar()
 
   return (
@@ -65,7 +64,7 @@ export function ChatPanel({
           ) : (
             messages?.length >= 2 && (
               <div className="flex space-x-2">
-                <Button className="shadow-none bg-gray-100" variant="outline" onClick={() => reload()}>
+                <Button className="shadow-none bg-gray-100 dark:bg-gray-700 hover:dark:bg-gray-700/80" variant="outline" onClick={() => reload()}>
                   <IconRefresh className="mr-2" />
                   Regenerate response
                 </Button>

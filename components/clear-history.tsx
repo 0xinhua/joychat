@@ -18,6 +18,7 @@ import {
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
 import { IconSpinner } from '@/components/ui/icons'
+import useChatStore from '@/store/useChatStore'
 
 interface ClearHistoryProps {
   isEnabled: boolean
@@ -31,6 +32,9 @@ export function ClearHistory({
   const [open, setOpen] = React.useState(false)
   const [isPending, startTransition] = React.useTransition()
   const router = useRouter()
+  const { removeChats } = useChatStore(state => ({
+    removeChats: state.removeChats
+  }))
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -60,8 +64,8 @@ export function ClearHistory({
                     toast.error(result.error)
                     return
                   }
-
                   setOpen(false)
+                  removeChats()
                   router.push('/')
                 })
               })

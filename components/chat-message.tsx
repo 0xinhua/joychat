@@ -32,7 +32,7 @@ export function ChatMessage({ message, ...props }: ChatMessageProps) {
       >
         {message.role === 'user' ? <IconUser /> : <IconBot />}
       </div>
-      <div className="group flex-1 ml-4 space-y-2 overflow-hidden min-h-[calc(2rem+theme(spacing[3.5])*2)] min-w-[60px] break-words rounded-xl border border-gray-100 bg-gradient-to-br from-gray-50 px-5 py-4 text-gray-600 prose-pre:my-2 dark:border-gray-800 dark:from-gray-800/40 dark:text-gray-300 hover:bg-gray-100/80 transition-all">
+      <div className="group flex-1 ml-4 space-y-2 overflow-hidden min-h-[calc(2rem+theme(spacing[3.5])*2)] min-w-[60px] break-words rounded-xl border border-gray-100 bg-gradient-to-br from-gray-50 px-5 py-4 text-gray-600 prose-pre:my-2 dark:border-gray-800 dark:from-gray-800/40 dark:text-gray-300 hover:bg-gray-100/20 transition-all">
         <MemoizedReactMarkdown
           className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
           remarkPlugins={[remarkGfm, remarkMath]}

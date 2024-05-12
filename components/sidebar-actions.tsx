@@ -23,6 +23,7 @@ import {
   TooltipContent,
   TooltipTrigger
 } from '@/components/ui/tooltip'
+import useChatStore from '@/store/useChatStore'
 
 interface SidebarActionsProps {
   chat: Chat
@@ -39,6 +40,9 @@ export function SidebarActions({
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false)
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
   const [isRemovePending, startRemoveTransition] = React.useTransition()
+  const { deleteChat } = useChatStore(state => ({
+    deleteChat: state.deleteChat
+  }))
 
   return (
     <>
@@ -110,6 +114,7 @@ export function SidebarActions({
                   setDeleteDialogOpen(false)
                   router.refresh()
                   router.push('/')
+                  deleteChat(chat.id)
                   toast.success('Chat deleted')
                 })
               }}

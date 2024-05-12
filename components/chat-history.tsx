@@ -1,20 +1,49 @@
-import * as React from 'react'
+"use client"
 
-import Link from 'next/link'
+import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 import { SidebarList } from '@/components/sidebar-list'
-import { buttonVariants } from '@/components/ui/button'
-import { IconPlus } from '@/components/ui/icons'
+import { useSidebar } from '@/lib/hooks/use-sidebar'
+import { useEffect, useState } from 'react'
+import useChatStore, { ChatState } from '@/store/useChatStore'
+import useStore from '@/store/useStore'
+import { Chat } from '@/lib/types'
+import Link from 'next/link'
+import { buttonVariants } from './ui/button'
+import { IconPlus } from './ui/icons'
 
 interface ChatHistoryProps {
   userId?: string
 }
 
-export async function ChatHistory({ userId }: ChatHistoryProps) {
+export function ChatHistory({ userId }: ChatHistoryProps) {
+  const { isSidebarOpen, isLoading, toggleSidebar } = useSidebar()
+
+  // const fetchHistory = async () => {
+  //   const res = await fetch('/api/history')
+  //   const { data } = await res.json()
+  //   setChats(data)
+  // }
+
+  const { chats, fetchHistory } = useChatStore(state => ({
+    chats: state.chats,
+    fetchHistory: state.fetchHistory
+  }))
+
+  useEffect(() => {
+    console.log('chats', chats)
+    // 检查是否已经有聊天历史，如果为空，则尝试从服务器获取
+    if (chats.length === 0) {
+      fetchHistory()
+    }
+  }, [fetchHistory, chats.length]);
+
+  console.log('chats', chats)
+
   return (
     <div className="flex flex-col h-full">
-      <div className="px-5 my-4 mt-10 md:mt-4">
+      <div className="px-5 my-4 mt-10 md:mt-4 lg:hidden flex">
         <Link
           href="/"
           className={cn(
@@ -40,7 +69,16 @@ export async function ChatHistory({ userId }: ChatHistoryProps) {
         }
       >
         {/* @ts-ignore */}
-        <SidebarList userId={userId} />
+        <SidebarList userId={userId} chats={chats} />
+        <div className="fixed left-0 top-1/2 z-40 transform xl:translate-x-[256px] lg:translate-x-[220px]">
+          <button onClick={() => {
+            toggleSidebar()
+          }} className="absolute inset-y-0 z-10 my-auto left-0 *:transition-transform group flex h-16 w-6 flex-col items-center justify-center -space-y-1 outline-none *:h-3 *:w-1 *:rounded-full *:hover:bg-gray-300 max-md:hidden dark:*:hover:bg-gray-600 *:bg-gray-200 dark:*:bg-gray-700">
+            <div className={cn(isSidebarOpen ? "group-hover:rotate-[20deg]": "group-hover:-rotate-[20deg]")}></div>
+            <div className={cn(isSidebarOpen ? "group-hover:-rotate-[20deg]": "group-hover:rotate-[20deg]")}></div>
+            <span className="sr-only">Toggle Sidebar</span>
+          </button>
+        </div>
       </React.Suspense>
     </div>
   )
