@@ -64,4 +64,4 @@ Your app template should now be running on [localhost:3000](http://localhost:300
 
 ## License
 
-MIT
+[MIT](https://github.com/0xinhua/joychat?tab=MIT-1-ov-file)
