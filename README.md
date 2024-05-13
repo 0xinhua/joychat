@@ -1,5 +1,5 @@
 <a href="https://joy-chat.vercel.app">
-  <img alt="Next.js 14 and App Router-ready AI chatbot." src="https://chat.vercel.ai/screenshot.png">
+  <img alt="An beautiful open-source AI chatbot." src="https://joy-chat.vercel.app/screenshot.png">
   <h1 align="center">JoyChat</h1>
 </a>
 
