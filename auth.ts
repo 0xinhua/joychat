@@ -27,10 +27,10 @@ export const {
     })
   ],
   //@ts-ignore
-  adapter: SupabaseAdapter({
-    url: process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-    secret: process.env.SUPABASE_SERVICE_ROLE_KEY as string,
-  }),
+  // adapter: SupabaseAdapter({
+  //   url: process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+  //   secret: process.env.SUPABASE_SERVICE_ROLE_KEY as string,
+  // }),
   //@ts-ignore
   callbacks: {
     jwt({ token, profile }) {
