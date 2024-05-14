@@ -50,8 +50,9 @@ export const {
       // add a whitelist
       if (user.email && allowedEmails.includes(user.email.toLowerCase())) {
         return isAllowedToSignIn
+      } else {
+        throw new Error('apply for permission.')
       }
-      return false
     },
   },
   pages: {
