@@ -28,7 +28,7 @@ export function LoginButton({
         signIn('github', { callbackUrl: `/` })
       }}
       disabled={isLoading}
-      className={cn('shadow-none', className)}
+      className={cn('shadow-none py-5', className)}
       {...props}
     >
       {isLoading ? (
@@ -57,7 +57,7 @@ export function LoginGoogleButton({
         signIn('google', { callbackUrl: `/`, redirect: true })
       }}
       disabled={isLoading}
-      className={cn('shadow-none', className)}
+      className={cn('shadow-none py-5', className)}
       {...props}
     >
       {isLoading ? (
