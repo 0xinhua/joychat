@@ -59,7 +59,7 @@ const exampleMessages = [
 
 export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
 
-  const [model, setModel] = useLocalStorage('selected-model', 'gpt-4');
+  const [model, setModel] = useLocalStorage('selected-model', 'gpt-4o');
 
   return (
     <div className="mx-auto max-w-3xl pb-4 sm:px-0 px-4">
@@ -88,6 +88,11 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             <SelectContent>
               <SelectGroup>
                 {/* <SelectLabel>Fruits</SelectLabel> */}
+                <SelectItem value="gpt-4o" className="cursor-pointer">
+                  <div className="flex items-center justify-center gap-x-1.5">
+                    <IconOpenai />gpt-4o
+                  </div>
+                </SelectItem>
                 <SelectItem value="gpt-4" className="cursor-pointer">
                   <div className="flex items-center justify-center gap-x-1.5">
                     <IconOpenai />gpt-4-turbo

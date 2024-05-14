@@ -32,14 +32,11 @@ export function ChatHistory({ userId }: ChatHistoryProps) {
   }))
 
   useEffect(() => {
-    console.log('chats', chats)
     // 检查是否已经有聊天历史，如果为空，则尝试从服务器获取
     if (chats.length === 0) {
       fetchHistory()
     }
-  }, [fetchHistory, chats.length]);
-
-  console.log('chats', chats)
+  }, [fetchHistory, chats.length])
 
   return (
     <div className="flex flex-col h-full">

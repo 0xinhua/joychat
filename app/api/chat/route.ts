@@ -27,7 +27,7 @@ const buildGoogleGenAIPrompt = (messages: Message[]) => ({
 
 export async function POST(req: Request) {
   const json = await req.json()
-  const { messages, previewToken, model } = json
+  let { messages, previewToken, model } = json
   const userId = (await auth())?.user.id
 
   if (!userId) {
@@ -35,6 +35,8 @@ export async function POST(req: Request) {
       status: 401
     })
   }
+
+  console.log('model', model)
 
   // use google gemini provider
   if (model === 'gemini-pro') {
@@ -85,8 +87,12 @@ export async function POST(req: Request) {
     openai.apiKey = previewToken
   }
 
+  if (model === 'gpt-4') {
+    model = 'gpt-4-turbo'
+  }
+
   const res = await openai.chat.completions.create({
-    model: 'gpt-4-turbo',
+    model,
     messages,
     temperature: 0.7,
     stream: true
