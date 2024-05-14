@@ -9,7 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import { IconArrowElbow, IconPlus } from '@/components/ui/icons'
+import { IconArrowElbow } from '@/components/ui/icons'
 import { useRouter } from 'next/navigation'
 
 export interface PromptProps
