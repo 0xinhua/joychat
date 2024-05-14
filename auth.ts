@@ -54,6 +54,9 @@ export const {
         return false
       }
     },
+    redirect: async (params: { url: string; baseUrl: string; }) => {
+      return Promise.resolve(params.url)
+    }
   },
   pages: {
     signIn: '/sign-in', // overrides the next-auth default signin page https://authjs.dev/guides/basics/pages
