@@ -39,7 +39,7 @@ export async function POST(req: Request) {
   console.log('model', model)
 
   // use google gemini provider
-  if (model === 'gemini-pro') {
+  if (model.startsWith('gemini')) {
 
     console.log('gemini model')
 
