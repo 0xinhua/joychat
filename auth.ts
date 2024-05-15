@@ -1,8 +1,8 @@
 import NextAuth, { type DefaultSession } from 'next-auth'
 import GitHub from 'next-auth/providers/github'
 import GoogleProvider from "next-auth/providers/google"
+import type { Adapter } from 'next-auth/adapters'
 import { SupabaseAdapter } from "@auth/supabase-adapter"
-import type { Adapter } from '@auth/core/adapters'
 
 declare module 'next-auth' {
   interface Session {
@@ -27,11 +27,10 @@ export const {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET
     })
   ],
-  //@ts-ignore
-  // adapter: SupabaseAdapter({
-  //   url: process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-  //   secret: process.env.SUPABASE_SERVICE_ROLE_KEY as string,
-  // }),
+  adapter: SupabaseAdapter({
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+    secret: process.env.SUPABASE_SERVICE_ROLE_KEY as string,
+  }) as Adapter,
   //@ts-ignore
   callbacks: {
     jwt({ token, profile }) {
