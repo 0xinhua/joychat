@@ -1,3 +1,5 @@
+"use server"
+
 import { kv } from '@vercel/kv'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
@@ -8,7 +10,7 @@ import { GoogleGenerativeAIStream, Message } from 'ai'
 import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 
-export const runtime = 'edge'
+// export const runtime = 'edge'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -29,6 +31,8 @@ export async function POST(req: Request) {
   const json = await req.json()
   let { messages, previewToken, model } = json
   const userId = (await auth())?.user.id
+
+  console.log('userId -> ', userId)
 
   if (!userId) {
     return new Response('Unauthorized', {
