@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@auth/core':
+    specifier: ^0.31.0
+    version: 0.31.0
   '@auth/supabase-adapter':
     specifier: ^1.1.0
     version: 1.1.0(@supabase/supabase-js@2.43.1)
