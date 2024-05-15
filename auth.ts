@@ -2,6 +2,7 @@ import NextAuth, { type DefaultSession } from 'next-auth'
 import GitHub from 'next-auth/providers/github'
 import GoogleProvider from "next-auth/providers/google"
 import { SupabaseAdapter } from "@auth/supabase-adapter"
+import type { Adapter } from '@auth/core/adapters'
 
 declare module 'next-auth' {
   interface Session {
