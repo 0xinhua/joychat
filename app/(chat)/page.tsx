@@ -1,3 +1,5 @@
+"use client"
+
 import { nanoid } from '@/lib/utils'
 import { Chat } from '@/components/chat'
 

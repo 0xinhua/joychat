@@ -31,6 +31,12 @@ export function ChatHistory({ userId }: ChatHistoryProps) {
     fetchHistory: state.fetchHistory
   }))
 
+  // useEffect(() => {
+  //   fetch('/api/chats', {
+  //     method: 'POST'
+  //   })
+  // }, [])
+
   useEffect(() => {
     // 检查是否已经有聊天历史，如果为空，则尝试从服务器获取
     if (chats.length === 0) {

@@ -6,6 +6,7 @@ import { kv } from '@vercel/kv'
 
 import { auth } from '@/auth'
 import { type Chat } from '@/lib/types'
+import { pgPool } from '@/lib/pg'
 
 export async function getChats(userId?: string | null) {
   if (!userId) {
@@ -30,16 +31,21 @@ export async function getChats(userId?: string | null) {
   }
 }
 
-export async function getChat(id: string, userId: string) {
-  const chat = await kv.hgetall<Chat>(`chat:${id}`)
+export async function getChat(chatId: string, userId: string) {
 
-  console.log('chat ->', chat, userId)
+  console.log('chat ->', chatId, userId)
 
-  if (!chat || (userId && chat.userId !== userId)) {
-    return null
-  }
+  const query = `
+  SELECT * 
+  FROM chat_dataset.chats
+  WHERE user_id = $1 and chat_id =$2;
+  `
+  const { rows } = await pgPool.query(query, [
+    userId,
+    chatId
+  ])
 
-  return chat
+  return rows[0]
 }
 
 export async function removeChat({ id, path }: { id: string; path: string }) {
@@ -76,18 +82,11 @@ export async function clearChats() {
     }
   }
 
-  const chats: string[] = await kv.zrange(`user:chat:${session.user.id}`, 0, -1)
-  if (!chats.length) {
-    return redirect('/')
-  }
-  const pipeline = kv.pipeline()
-
-  for (const chat of chats) {
-    pipeline.del(chat)
-    pipeline.zrem(`user:chat:${session.user.id}`, chat)
-  }
-
-  await pipeline.exec()
+  const query = `
+  DELETE FROM chat_dataset.chats 
+  WHERE user_id = $1;
+  `
+  await pgPool.query(query, [session?.user?.id])
 
   revalidatePath('/')
   return redirect('/')
@@ -96,15 +95,27 @@ export async function clearChats() {
 export async function getSharedChat(id: string) {
   const chat = await kv.hgetall<Chat>(`chat:${id}`)
 
-  if (!chat || !chat.sharePath) {
+  const queryStr = `
+  SELECT * 
+  FROM chat_dataset.chats
+  WHERE chat_id =$1;
+  `
+
+  const { rows } = await pgPool.query(queryStr, [
+    id
+  ])
+
+  if (!rows || !rows?.length) {
     return null
   }
 
-  return chat
+  return rows[0]
 }
 
 export async function shareChat(id: string) {
   const session = await auth()
+
+  console.log('share id', id)
 
   if (!session?.user?.id) {
     return {
@@ -112,20 +123,43 @@ export async function shareChat(id: string) {
     }
   }
 
-  const chat = await kv.hgetall<Chat>(`chat:${id}`)
+  const userId = session?.user?.id
 
-  if (!chat || chat.userId !== session.user.id) {
+  const queryStr = `
+  SELECT * 
+  FROM chat_dataset.chats
+  WHERE user_id = $1 and chat_id =$2;
+  `
+
+  const { rows } = await pgPool.query(queryStr, [
+    userId,
+    id
+  ])
+
+  if (!rows || !rows?.length) {
     return {
-      error: 'Something went wrong'
+      error: 'The chat has since been removed'
     }
   }
 
-  const payload = {
-    ...chat,
-    sharePath: `/share/${chat.id}`
+  if (rows[0].user_id !== userId) {
+    return {
+      error: 'You do not have permission to share this chat'
+    }
   }
 
-  await kv.hmset(`chat:${chat.id}`, payload)
+  const sharePath = `/share/${id}`
 
-  return payload
+  const query = `
+  UPDATE chat_dataset.chats
+  SET share_path = $1
+  WHERE chat_id = $2
+  AND user_id = $3 
+  RETURNING *;
+  `
+  const { rows: updatedRows } = await pgPool.query(query, [sharePath, id, userId])
+
+  console.log('updatedRows', updatedRows[0])
+
+  return updatedRows[0]
 }

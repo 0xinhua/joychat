@@ -27,10 +27,10 @@ export const {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET
     })
   ],
-  // adapter: process.env.NODE_ENV === 'production' ? SupabaseAdapter({
-  //   url: process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-  //   secret: process.env.SUPABASE_SERVICE_ROLE_KEY as string,
-  // }) as Adapter : undefined,
+  adapter: process.env.NODE_ENV === 'production' ? SupabaseAdapter({
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+    secret: process.env.SUPABASE_SERVICE_ROLE_KEY as string,
+  }) as Adapter : undefined,
   //@ts-ignore
   callbacks: {
     jwt({ token, profile }) {
@@ -43,8 +43,9 @@ export const {
     session: ({ session, token, user }) => {
 
       if (session?.user && token?.sub) {
-        session.user.id = String(token.sub)
+        session.user.id = process.env.NODE_ENV === 'production' ? String(token.sub) : process.env.MOCK_USERID as string
       }
+      console.log('auth session => ', session)
       return session
     },
     authorized({ auth }) {

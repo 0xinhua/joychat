@@ -9,6 +9,7 @@ import { GoogleGenerativeAIStream, Message } from 'ai'
 
 import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
+import { pgPool } from '@/lib/pg'
 
 // export const runtime = 'edge'
 
@@ -29,10 +30,9 @@ const buildGoogleGenAIPrompt = (messages: Message[]) => ({
 
 export async function POST(req: Request) {
   const json = await req.json()
+
   let { messages, previewToken, model } = json
   const userId = (await auth())?.user.id
-
-  console.log('userId -> ', userId)
 
   if (!userId) {
     return new Response('Unauthorized', {
@@ -105,28 +105,42 @@ export async function POST(req: Request) {
   const stream = OpenAIStream(res, {
     async onCompletion(completion) {
       const title = json.messages[0].content.substring(0, 100)
-      const id = json.id ?? nanoid()
+      const chatId = json.id ?? nanoid()
       const createdAt = Date.now()
-      const path = `/chat/${id}`
-      const payload = {
-        id,
+      const path = `/chat/${chatId}`
+      const newMessage = {
+        content: completion,
+        role: 'assistant',
+      }
+
+      const updatedMessages = JSON.stringify([
+        ...messages,
+        newMessage,
+      ])
+
+      // 插入数据或更新 messages 字段
+        const query = `
+        INSERT INTO chat_dataset.chats (chat_id, title, user_id, created_at, path, messages, share_path)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        ON CONFLICT (chat_id) DO UPDATE
+        SET messages = EXCLUDED.messages
+      `
+      const values = [
+        chatId,
         title,
         userId,
         createdAt,
         path,
-        messages: [
-          ...messages,
-          {
-            content: completion,
-            role: 'assistant'
-          }
-        ]
+        updatedMessages,
+        null, // Assuming share_path is null for now
+      ]
+
+      try {
+        await pgPool.query(query, values)
+        console.log(`Chat ${chatId} inserted or updated successfully`)
+      } catch (err) {
+        console.error('Error inserting or updating chat:', err)
       }
-      await kv.hmset(`chat:${id}`, payload)
-      await kv.zadd(`user:chat:${userId}`, {
-        score: createdAt,
-        member: `chat:${id}`
-      })
     }
   })
 

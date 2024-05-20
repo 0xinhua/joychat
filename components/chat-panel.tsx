@@ -83,7 +83,7 @@ export function ChatPanel({
                       onCopy={() => setShareDialogOpen(false)}
                       shareChat={shareChat}
                       chat={{
-                        id,
+                        chat_id: id,
                         title,
                         messages
                       }}

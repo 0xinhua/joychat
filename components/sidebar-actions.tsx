@@ -24,6 +24,7 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip'
 import useChatStore from '@/store/useChatStore'
+import { revalidatePath } from 'next/cache'
 
 interface SidebarActionsProps {
   chat: Chat
@@ -33,7 +34,6 @@ interface SidebarActionsProps {
 
 export function SidebarActions({
   chat,
-  removeChat,
   shareChat
 }: SidebarActionsProps) {
   const router = useRouter()
@@ -42,6 +42,10 @@ export function SidebarActions({
   const [isRemovePending, startRemoveTransition] = React.useTransition()
   const { deleteChat } = useChatStore(state => ({
     deleteChat: state.deleteChat
+  }))
+
+  const { removeChat } = useChatStore(state => ({
+    removeChat: state.removeChat
   }))
 
   return (
@@ -101,19 +105,10 @@ export function SidebarActions({
                 event.preventDefault()
                 // @ts-ignore
                 startRemoveTransition(async () => {
-                  const result = await removeChat({
-                    id: chat.id,
-                    path: chat.path
-                  })
-
-                  if (result && 'error' in result) {
-                    toast.error(result.error)
-                    return
-                  }
-
+                  const result = await removeChat(chat.chat_id)
                   setDeleteDialogOpen(false)
-                  router.refresh()
                   router.push('/')
+                  router.refresh()
                   deleteChat(chat.id)
                   toast.success('Chat deleted')
                 })
