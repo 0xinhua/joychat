@@ -71,9 +71,10 @@ export function UserMenu({ user }: UserMenuProps) {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-                reset()
                 signOut({
                   callbackUrl: '/'
+                }).then(() => {
+                  reset()
                 })
               }
             }
