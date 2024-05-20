@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { IconExternalLink } from '@/components/ui/icons'
+import useChatStore from '@/store/useChatStore'
 
 export interface UserMenuProps {
   user: Session['user']
@@ -24,6 +25,11 @@ function getUserInitials(name: string) {
 }
 
 export function UserMenu({ user }: UserMenuProps) {
+
+  const { reset } = useChatStore(state => ({
+    reset: state.reset,
+  }))
+
   return (
     <div className="flex items-center justify-between">
       <DropdownMenu>
@@ -64,10 +70,12 @@ export function UserMenu({ user }: UserMenuProps) {
             </a>
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() =>
-              signOut({
-                callbackUrl: '/'
-              })
+            onClick={() => {
+                reset()
+                signOut({
+                  callbackUrl: '/'
+                })
+              }
             }
             className="text-xs cursor-pointer"
           >

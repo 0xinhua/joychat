@@ -13,6 +13,7 @@ export interface ChatState {
   chat: Chat | null
   fetchChatById: (id: string) => Promise<void>
   removeChat: (chatId: string) => Promise<void>
+  reset: () => void
 }
 
 const useChatStore = create<ChatState>()(
@@ -48,6 +49,9 @@ const useChatStore = create<ChatState>()(
           const { data } = await response.json()
           console.log('delete chat data: ', data)
           set({ chat: null })
+        },
+        reset: () => {
+          set({ chats: [] })
         }
       }),
       {
