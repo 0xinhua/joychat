@@ -52,6 +52,7 @@ const useChatStore = create<ChatState>()(
         },
         reset: () => {
           set({ chats: [] })
+          localforage.removeItem('chat-history')
         }
       }),
       {
