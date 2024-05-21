@@ -40,10 +40,14 @@ export async function getChat(chatId: string, userId: string) {
   FROM chat_dataset.chats
   WHERE user_id = $1 and chat_id =$2;
   `
+  const startTime = Date.now() // 记录开始时间
   const { rows } = await pgPool.query(query, [
     userId,
     chatId
   ])
+
+  const endTime = Date.now() // 记录结束时间
+  console.log(`Query execution time: ${endTime - startTime} ms`) // 计算并打印查询执行时间
 
   return rows[0]
 }

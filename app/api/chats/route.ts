@@ -29,7 +29,7 @@ export async function GET(req: Request) {
       userId
     ])
 
-    console.log('rows data =>', rows)
+    // console.log('rows data =>', rows)
 
     if (rows.length === 0) {
       return NextResponse.json({

@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
@@ -27,9 +27,10 @@ const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
   id?: string
+  title?: string
 }
 
-export function Chat({ id, initialMessages, className }: ChatProps) {
+export function Chat({ id, initialMessages, className, title }: ChatProps) {
   const router = useRouter()
   const path = usePathname()
   const [previewToken, setPreviewToken] = useLocalStorage<string | null>(
@@ -65,6 +66,15 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         }
       }
     })
+
+  useEffect(() => {
+    if (title) {
+      document.title = title.toString().slice(0, 50)
+    } else {
+      document.title = 'Chat - JoyChat'
+    }
+  }, [title])
+
   return (
     <>
       <div className={cn('md:pb-[200px]', className)}>
