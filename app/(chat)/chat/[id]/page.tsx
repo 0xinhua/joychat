@@ -5,6 +5,7 @@ import Mixpanel from 'mixpanel'
 import { auth } from '@/auth'
 import { getChat } from '@/app/actions'
 import { Chat } from '@/components/chat'
+import React, {Suspense} from 'react'
 
 export interface ChatPageProps {
   params: {
@@ -55,5 +56,9 @@ export default async function ChatPage({ params }: ChatPageProps) {
     distinct_id: session?.user.id
   })
 
-  return <Chat id={chat.chat_id} initialMessages={chat.messages} title={chat.title} />
+  return <div>
+    <Suspense>
+      <Chat id={chat.chat_id} initialMessages={chat.messages} title={chat.title} />
+    </Suspense>
+  </div>
 }
