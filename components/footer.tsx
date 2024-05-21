@@ -12,9 +12,10 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
       )}
       {...props}
     >
-      Open source AI chatbot built with{' '}
-      <ExternalLink href="https://nextjs.org">Next.js</ExternalLink>
-      .
+      <a
+        target="_blank"
+        className="inline-flex underline-offset-2 flex-1 justify-center gap-1 leading-4 underline"
+        href="https://joy-chat.vercel.app">JoyChat</a> - An open source AI chatbot built by{' '} 0xinhua.
     </p>
   )
 }
