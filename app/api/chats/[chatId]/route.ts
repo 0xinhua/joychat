@@ -40,7 +40,7 @@ export async function GET(req: Request,  { params }: { params: { chatId: string 
     }
 
     return NextResponse.json({
-      data: rows,
+      data: rows[0],
       code: 0
     })
 

@@ -14,6 +14,8 @@ export interface ChatState {
   fetchChatById: (id: string) => Promise<void>
   removeChat: (chatId: string) => Promise<void>
   reset: () => void
+  setChat: (chat: Chat) => void
+  chatLoading: boolean
 }
 
 const useChatStore = create<ChatState>()(
@@ -22,6 +24,7 @@ const useChatStore = create<ChatState>()(
       (set) => ({
         chats: [],
         chat: null,
+        chatLoading: false,
         setChats: (chats: Chat[]) => set({ chats }),
         fetchHistory: async () => {
           const response = await fetch('/api/chats')
@@ -30,9 +33,11 @@ const useChatStore = create<ChatState>()(
         },
         setChat: (chat: Chat) => set({chat}),
         fetchChatById: async (chatId: string) => {
+          set({chatLoading: true})
           const response = await fetch(`/api/chats/${chatId}`)
           const { data } = await response.json()
           console.log('chat data: ', data)
+          set({ chatLoading: false })
           set({ chat: data })
         },
         deleteChat: (id: string) => set((state) => ({

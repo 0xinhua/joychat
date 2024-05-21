@@ -28,9 +28,10 @@ export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
   id?: string
   title?: string
+  loading?: boolean
 }
 
-export function Chat({ id, initialMessages, className, title }: ChatProps) {
+export function Chat({ id, initialMessages, className, title, loading }: ChatProps) {
   const router = useRouter()
   const path = usePathname()
   const [previewToken, setPreviewToken] = useLocalStorage<string | null>(
@@ -60,8 +61,8 @@ export function Chat({ id, initialMessages, className, title }: ChatProps) {
       },
       onFinish() {
         if (!path.includes('chat')) {
-          router.push(`/chat/${id}`)
-          router.refresh()
+          router.replace(`/chat/${id}`)
+          // router.refresh()
           fetchHistory()
         }
       }
@@ -78,7 +79,7 @@ export function Chat({ id, initialMessages, className, title }: ChatProps) {
   return (
     <>
       <div className={cn('md:pb-[200px]', className)}>
-        {messages.length ? (
+        { messages.length ? (
           <>
             <ChatList messages={messages} />
             <ChatScrollAnchor trackVisibility={isLoading} />
