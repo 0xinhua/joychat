@@ -18,7 +18,18 @@ export const metadata = {
   },
   description: 'Talk with JoyChat, an AI assistant powered by OpenAI GPT-4-turbo built with love by 0xinhua.',
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      {
+        media: '(prefers-color-scheme: light)',
+        url: '/favicon.ico',
+        href: '/favicon.ico',
+      },
+      {
+        media: '(prefers-color-scheme: dark)',
+        url: '/favicon-dark.ico',
+        href: '/favicon-dark.ico',
+      }
+    ],
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png'
   }

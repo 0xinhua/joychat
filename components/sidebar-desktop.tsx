@@ -2,7 +2,7 @@ import { Sidebar } from '@/components/sidebar'
 
 import { auth } from '@/auth'
 import { ChatHistory } from '@/components/chat-history'
-import { IconChatBot, IconSquarePen } from './ui/icons'
+import { IconChatBot, IconChatBotDark, IconSquarePen } from './ui/icons'
 import Link from 'next/link'
 import { buttonVariants } from './ui/button'
 import { cn } from '@/lib/utils'
@@ -32,7 +32,8 @@ export async function SidebarDesktop() {
         >
         <div className="flex h-10 rounded-md px-2 py-4 w-full items-center justify-between font-medium hover:bg-zinc-200 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
           <div className="flex items-center">
-            <IconChatBot className='mr-1.5 mt-0.5 size-6' />
+            <IconChatBot className='mr-1.5 mt-0.5 size-6 dark:hidden' />
+            <IconChatBotDark className='mr-1.5 mt-0.5 size-6 hidden dark:block' />
             JoyChat
           </div>
           <TooltipProvider>
