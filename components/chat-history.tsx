@@ -18,12 +18,6 @@ interface ChatHistoryProps {
 export function ChatHistory({ userId }: ChatHistoryProps) {
   const { isSidebarOpen, isLoading, toggleSidebar } = useSidebar()
 
-  // const fetchHistory = async () => {
-  //   const res = await fetch('/api/history')
-  //   const { data } = await res.json()
-  //   setChats(data)
-  // }
-
   const { chats, fetchHistory } = useChatStore(state => ({
     chats: state.chats,
     fetchHistory: state.fetchHistory
@@ -67,7 +61,7 @@ export function ChatHistory({ userId }: ChatHistoryProps) {
         <div className="fixed left-0 top-1/2 z-40 transform xl:translate-x-[256px] lg:translate-x-[220px]">
           <button onClick={() => {
             toggleSidebar()
-          }} className="absolute inset-y-0 z-10 my-auto left-0 *:transition-transform group flex h-16 w-6 flex-col items-center justify-center -space-y-1 outline-none *:h-3 *:w-1 *:rounded-full *:hover:bg-gray-400 max-md:hidden dark:*:hover:bg-gray-800 *:bg-gray-200 dark:*:bg-gray-700">
+          }} className="absolute inset-y-0 z-10 my-auto left-0 *:transition-transform group flex h-16 w-6 flex-col items-center justify-center -space-y-1 outline-none *:h-3 *:w-1 *:rounded-full *:hover:bg-gray-400 max-md:hidden dark:*:hover:bg-gray-400 *:bg-gray-200 dark:*:bg-gray-500">
             <div className={cn(isSidebarOpen ? "group-hover:rotate-[20deg]": "group-hover:-rotate-[20deg]")}></div>
             <div className={cn(isSidebarOpen ? "group-hover:-rotate-[20deg]": "group-hover:rotate-[20deg]")}></div>
             <span className="sr-only">Toggle Sidebar</span>
