@@ -36,7 +36,6 @@ const useChatStore = create<ChatState>()(
           set({chatLoading: true})
           const response = await fetch(`/api/chats/${chatId}`)
           const { data } = await response.json()
-          console.log('chat data: ', data)
           set({ chatLoading: false })
           set({ chat: data })
         },
@@ -52,7 +51,6 @@ const useChatStore = create<ChatState>()(
             method: 'delete'
           })
           const { data } = await response.json()
-          console.log('delete chat data: ', data)
           set({ chat: null })
         },
         reset: () => {
