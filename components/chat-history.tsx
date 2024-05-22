@@ -7,8 +7,6 @@ import { SidebarList } from '@/components/sidebar-list'
 import { useSidebar } from '@/lib/hooks/use-sidebar'
 import { useEffect, useState } from 'react'
 import useChatStore, { ChatState } from '@/store/useChatStore'
-import useStore from '@/store/useStore'
-import { Chat } from '@/lib/types'
 import Link from 'next/link'
 import { buttonVariants } from './ui/button'
 import { IconPlus } from './ui/icons'
@@ -32,7 +30,6 @@ export function ChatHistory({ userId }: ChatHistoryProps) {
   }))
 
   useEffect(() => {
-    // 检查是否已经有聊天历史，如果为空，则尝试从服务器获取
     if (chats.length === 0) {
       fetchHistory()
     }

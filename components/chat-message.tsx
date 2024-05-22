@@ -27,7 +27,7 @@ export function ChatMessage({ message, ...props }: ChatMessageProps) {
           'flex size-9 shrink-0 select-none items-center justify-center rounded-2xl border shadow',
           message.role === 'user'
             ? 'bg-background'
-            : 'bg-primary text-primary-foreground'
+            : 'bg-primary dark:bg-gray-300 text-primary-foreground'
         )}
       >
         {message.role === 'user' ? <IconUser /> : <IconBot />}
