@@ -1,14 +1,11 @@
 "use client"
 
-import { type Metadata } from 'next'
-import { notFound, redirect } from 'next/navigation'
-import Mixpanel from 'mixpanel'
+import mixpanel from 'mixpanel-browser'
 
-import { auth } from '@/auth'
-import { getChat } from '@/app/actions'
 import { Chat } from '@/components/chat'
 import React, {Suspense, useEffect, useState} from 'react'
 import useChatStore from '@/store/useChatStore'
+import { useSession } from "next-auth/react"
 
 export interface ChatPageProps {
   params: {
@@ -17,32 +14,23 @@ export interface ChatPageProps {
 }
 
 export default function ChatPage({ params }: ChatPageProps) {
-  // const session = await auth()
 
-  // if (!session?.user) {
-  //   redirect(`/sign-in?next=/chat/${params.id}`)
-  // }
+  const { data: session, status } = useSession()
 
-  // const chat = await getChat(params.id, session.user.id)
+  mixpanel.init('aa4a031ffe173cb6eeb91bac9aa81f19', { debug: true, track_pageview: true, persistence: 'localStorage' })
 
-  // if (!chat) {
-  //   notFound()
-  // }
-
-  // if (chat?.user_id !== session?.user?.id) {
-  //   notFound()
-  // }
-
-  // const mixpanel = Mixpanel.init('aa4a031ffe173cb6eeb91bac9aa81f19', { debug: true })
-
-  // mixpanel.people.set(session?.user.id, {
-  //   $name: session.user.name,
-  //   $email: session.user.email
-  // })
-
-  // mixpanel.track('Chat Page', {
-  //   distinct_id: session?.user.id
-  // })
+  if (session?.user) {
+    mixpanel.identify(session?.user.id)
+    mixpanel.people.set({
+      id: session?.user.id,
+      name: session.user.name,
+      email: session.user.email
+    })
+  
+    mixpanel.track('Chat Page', {
+      distinct_id: session?.user.id
+    })
+  }
 
   const [loading, setLoading] = useState(false)
   const { chat, chatLoading, fetchChatById } = useChatStore()

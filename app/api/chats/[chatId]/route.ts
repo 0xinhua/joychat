@@ -1,6 +1,4 @@
 import { auth } from '@/auth'
-import { kv } from '@vercel/kv'
-import { type Chat } from '@/lib/types'
 import { NextResponse } from 'next/server'
 import { pgPool } from '@/lib/pg'
 import { revalidatePath } from 'next/cache'
@@ -16,7 +14,7 @@ export async function GET(req: Request,  { params }: { params: { chatId: string 
     })
   }
 
-  console.log('chatId', chatId)
+  console.log('chatId userId', chatId, userId)
 
   try {
 
@@ -29,8 +27,6 @@ export async function GET(req: Request,  { params }: { params: { chatId: string 
       userId,
       chatId
     ])
-
-    console.log('rows', rows)
 
     if (rows.length === 0) {
       return NextResponse.json({
@@ -76,8 +72,6 @@ export async function DELETE(req: Request, { params }: { params: { chatId: strin
       userId,
       chatId
     ])
-
-    console.log('delete rows', rows)
 
     const chat = rows[0]
 
