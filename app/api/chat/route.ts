@@ -1,5 +1,3 @@
-"use server"
-
 import { kv } from '@vercel/kv'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
@@ -11,7 +9,7 @@ import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 import { pgPool } from '@/lib/pg'
 
-// export const runtime = 'edge'
+export const runtime = 'edge'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
