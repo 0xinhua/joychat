@@ -1,4 +1,4 @@
-"use server"
+// "use server"
 
 import { kv } from '@vercel/kv'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
@@ -28,6 +28,7 @@ const buildGoogleGenAIPrompt = (messages: Message[]) => ({
     })),
 })
 
+export const maxDuration = 59
 export async function POST(req: Request) {
   const json = await req.json()
 
