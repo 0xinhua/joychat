@@ -31,7 +31,7 @@ export function SidebarList({ chats }: SidebarListProps) {
         )}
       </div>
       <div className="flex items-center justify-between py-4 px-3">
-        {/* <ThemeToggle /> */}
+        <ThemeToggle />
         <ClearHistory clearChats={clearChats} isEnabled={chats?.length > 0} />
       </div>
     </div>

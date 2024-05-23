@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { IconExternalLink } from '@/components/ui/icons'
 import useChatStore from '@/store/useChatStore'
+import { ThemeToggle } from './theme-toggle'
 
 export interface UserMenuProps {
   user: Session['user']
@@ -58,6 +59,9 @@ export function UserMenu({ user }: UserMenuProps) {
             <div className="text-xs text-zinc-500">{user?.email}</div>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+          {/* <DropdownMenuItem className="cursor-pointer">
+            <div className="text-xs font-medium cursor-pointer">Settings</div>
+          </DropdownMenuItem> */}
           <DropdownMenuItem asChild className="cursor-pointer">
             <a
               href="https://github.com/0xinhua/joychat"
