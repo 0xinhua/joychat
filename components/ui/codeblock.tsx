@@ -99,20 +99,20 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
         <div className="flex items-center space-x-1">
           <Button
             variant="ghost"
-            className="hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
+            className="hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0 hover:text-white"
             onClick={downloadAsFile}
             size="icon"
           >
-            <IconDownload />
+            <IconDownload className="hover:size-5 transition ease-in" />
             <span className="sr-only">Download</span>
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="text-xs hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
+            className="text-xs hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0 hover:text-white"
             onClick={onCopy}
           >
-            {isCopied ? <IconCheck /> : <IconCopy />}
+            {isCopied ? <IconCheck className="hover:size-5 transition ease-in" /> : <IconCopy className="hover:size-5 transition ease-in" />}
             <span className="sr-only">Copy code</span>
           </Button>
         </div>
