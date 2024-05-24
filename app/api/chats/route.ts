@@ -1,5 +1,4 @@
 import { auth } from '@/auth'
-import { kv } from '@vercel/kv'
 import { type Chat } from '@/lib/types'
 import { NextResponse } from 'next/server'
 import { pgPool } from '@/lib/pg'

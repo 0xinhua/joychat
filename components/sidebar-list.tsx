@@ -1,4 +1,4 @@
-import { clearChats, getChats } from '@/app/actions'
+import { clearChats } from '@/app/actions'
 import { ClearHistory } from '@/components/clear-history'
 import { SidebarItems } from '@/components/sidebar-items'
 import { ThemeToggle } from '@/components/theme-toggle'
@@ -11,10 +11,6 @@ interface SidebarListProps {
   chats: Chat[],
   children?: React.ReactNode
 }
-
-const loadChats = cache(async (userId?: string) => {
-  return await getChats(userId)
-})
 
 export function SidebarList({ chats }: SidebarListProps) {
   return (

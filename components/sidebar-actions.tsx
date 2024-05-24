@@ -28,7 +28,6 @@ import { revalidatePath } from 'next/cache'
 
 interface SidebarActionsProps {
   chat: Chat
-  removeChat: (args: { id: string; path: string }) => ServerActionResult<void>
   shareChat: (id: string) => ServerActionResult<Chat>
 }
 

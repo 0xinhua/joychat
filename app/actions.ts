@@ -2,34 +2,10 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { kv } from '@vercel/kv'
 
 import { auth } from '@/auth'
 import { type Chat } from '@/lib/types'
 import { pgPool } from '@/lib/pg'
-
-export async function getChats(userId?: string | null) {
-  if (!userId) {
-    return []
-  }
-
-  try {
-    const pipeline = kv.pipeline()
-    const chats: string[] = await kv.zrange(`user:chat:${userId}`, 0, -1, {
-      rev: true
-    })
-
-    for (const chat of chats) {
-      pipeline.hgetall(chat)
-    }
-
-    const results = await pipeline.exec()
-
-    return results as Chat[]
-  } catch (error) {
-    return []
-  }
-}
 
 export async function getChat(chatId: string, userId: string) {
 
@@ -52,31 +28,6 @@ export async function getChat(chatId: string, userId: string) {
   return rows[0]
 }
 
-export async function removeChat({ id, path }: { id: string; path: string }) {
-  const session = await auth()
-
-  if (!session) {
-    return {
-      error: 'Unauthorized'
-    }
-  }
-
-  //Convert uid to string for consistent comparison with session.user.id
-  const uid = String(await kv.hget(`chat:${id}`, 'userId'))
-
-  if (uid !== session?.user?.id) {
-    return {
-      error: 'Unauthorized'
-    }
-  }
-
-  await kv.del(`chat:${id}`)
-  await kv.zrem(`user:chat:${session.user.id}`, `chat:${id}`)
-
-  revalidatePath('/')
-  return revalidatePath(path)
-}
-
 export async function clearChats() {
   const session = await auth()
 
@@ -97,7 +48,6 @@ export async function clearChats() {
 }
 
 export async function getSharedChat(id: string) {
-  const chat = await kv.hgetall<Chat>(`chat:${id}`)
 
   const queryStr = `
   SELECT * 
