@@ -2,6 +2,7 @@ import { auth } from '@/auth'
 import { NextResponse } from 'next/server'
 import { pgPool } from '@/lib/pg'
 import { revalidatePath } from 'next/cache'
+import { supabase } from '@/lib/supabase'
 
 export async function GET(req: Request,  { params }: { params: { chatId: string } }) {
 
@@ -18,15 +19,18 @@ export async function GET(req: Request,  { params }: { params: { chatId: string 
 
   try {
 
-    const query = `
-    SELECT * 
-    FROM chat_dataset.chats
-    WHERE user_id = $1 and chat_id =$2;
-    `
-    const { rows } = await pgPool.query(query, [
-      userId,
-      chatId
-    ])
+    const startTime = Date.now()
+    const { data: rows, error } = await supabase.rpc('get_chat_data', {
+      p_user_id: userId,
+      p_chat_id: chatId
+    })
+
+    const endTime = Date.now()
+    const executionTime = endTime - startTime
+
+    console.log(`Execution Time: ${executionTime} ms`)
+
+    console.log(`chat ${chatId} data `, rows, error)
 
     if (rows.length === 0) {
       return NextResponse.json({
