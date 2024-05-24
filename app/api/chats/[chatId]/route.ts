@@ -20,6 +20,8 @@ export async function GET(req: Request,  { params }: { params: { chatId: string 
   try {
 
     const startTime = Date.now()
+
+    // see README function get_chat_data definition
     const { data: rows, error } = await supabase.rpc('get_chat_data', {
       p_user_id: userId,
       p_chat_id: chatId

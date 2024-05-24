@@ -65,6 +65,7 @@ export async function POST(req: Request) {
 
           const startTime = Date.now()
 
+          // see README function upsert_chat definition
           const { data: rows, error } = await supabase.rpc('upsert_chat', {
             p_chat_id: id,
             p_title: title,
@@ -134,6 +135,7 @@ export async function POST(req: Request) {
 
         const startTime = Date.now()
 
+        // see README function upsert_chat definition
         const { data: rows, error } = await supabase.rpc('upsert_chat', {
           p_chat_id: chatId,
           p_title: title,
