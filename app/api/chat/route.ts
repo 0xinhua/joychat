@@ -1,6 +1,5 @@
 // "use server"
 
-import { kv } from '@vercel/kv'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
 
@@ -9,7 +8,7 @@ import { GoogleGenerativeAIStream, Message } from 'ai'
 
 import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
-import { pgPool } from '@/lib/pg'
+import { supabase } from '@/lib/supabase'
 
 // export const runtime = 'edge'
 
@@ -61,26 +60,38 @@ export async function POST(req: Request) {
         const id = json.id ?? nanoid()
         const createdAt = Date.now()
         const path = `/chat/${id}`
-        const payload = {
-          id,
-          title,
-          userId,
-          createdAt,
-          path,
-          messages: [
-            ...messages,
-            {
-              content: completion,
-              role: 'assistant'
-            }
-          ]
+
+        try {
+
+          const startTime = Date.now()
+
+          const { data: rows, error } = await supabase.rpc('upsert_chat', {
+            p_chat_id: id,
+            p_title: title,
+            p_user_id: userId,
+            p_created_at: createdAt,
+            p_path: path,
+            p_messages: [
+              ...messages,
+              {
+                content: completion,
+                role: 'assistant'
+              }
+            ],
+            p_share_path: null
+          })
+
+          const endTime = Date.now()
+          const executionTime = endTime - startTime
+
+          console.log(`Execution Time: ${executionTime} ms`)
+
+          console.log(`upsert chat ${id} data `, rows, error)
+
+        } catch (err) {
+          console.error('Error inserting or updating chat:', err)
         }
 
-        await kv.hmset(`chat:${id}`, payload)
-        await kv.zadd(`user:chat:${userId}`, {
-          score: createdAt,
-          member: `chat:${id}`
-        })
       },
     })
 
@@ -114,31 +125,32 @@ export async function POST(req: Request) {
         role: 'assistant',
       }
 
-      const updatedMessages = JSON.stringify([
+      const updatedMessages = [
         ...messages,
         newMessage,
-      ])
-
-      // 插入数据或更新 messages 字段
-        const query = `
-        INSERT INTO chat_dataset.chats (chat_id, title, user_id, created_at, path, messages, share_path)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
-        ON CONFLICT (chat_id) DO UPDATE
-        SET messages = EXCLUDED.messages
-      `
-      const values = [
-        chatId,
-        title,
-        userId,
-        createdAt,
-        path,
-        updatedMessages,
-        null, // Assuming share_path is null for now
       ]
 
       try {
-        await pgPool.query(query, values)
-        console.log(`Chat ${chatId} inserted or updated successfully`)
+
+        const startTime = Date.now()
+
+        const { data: rows, error } = await supabase.rpc('upsert_chat', {
+          p_chat_id: chatId,
+          p_title: title,
+          p_user_id: userId,
+          p_created_at: createdAt,
+          p_path: path,
+          p_messages: updatedMessages,
+          p_share_path: null
+        })
+
+        const endTime = Date.now()
+        const executionTime = endTime - startTime
+
+        console.log(`Execution Time: ${executionTime} ms`)
+
+        console.log(`upsert chat ${chatId} data `, rows, error)
+
       } catch (err) {
         console.error('Error inserting or updating chat:', err)
       }
