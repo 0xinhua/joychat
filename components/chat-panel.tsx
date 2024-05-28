@@ -64,7 +64,7 @@ export function ChatPanel({
           ) : (
             messages?.length >= 2 && (
               <div className="flex space-x-2">
-                <Button className="shadow-none bg-gray-100 dark:bg-gray-700 hover:dark:bg-gray-700/80" variant="outline" onClick={() => reload()}>
+                <Button className="shadow-none bg-gray-100 dark:bg-neutral-800 hover:dark:bg-neutral-700" variant="outline" onClick={() => reload()}>
                   <IconRefresh className="mr-2" />
                   Regenerate response
                 </Button>
@@ -95,7 +95,7 @@ export function ChatPanel({
           )}
         </div>
         <div className="p-2 space-y-4 border border-x-0 md:py-2 sm:mb-2
-          relative flex w-full max-w-4xl flex-1 items-center sm:rounded-xl md:border bg-gray-100 focus-within:border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:focus-within:border-gray-500
+          relative flex w-full max-w-4xl flex-1 items-center sm:rounded-xl md:border bg-gray-100 focus-within:border-gray-300 dark:border-gray-600 dark:bg-neutral-800 dark:focus-within:border-gray-500
         ">
           <PromptForm
             onSubmit={async value => {

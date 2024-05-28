@@ -37,7 +37,7 @@ async function UserOrLogin() {
 export async function Header() {
   const session = await auth()
   return (
-    <header className="sticky top-0 z-1 flex items-center justify-between w-full h-16 px-5 shrink-0 bg-gradient-to-b from-background/10 via-background/50 to-background/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-1 flex items-center justify-between w-full h-16 px-5 shrink-0 dark:bg-zinc-900">
       <div className="flex items-center">
         <React.Suspense fallback={<div className="flex-1 overflow-auto" />}>
           <UserOrLogin />

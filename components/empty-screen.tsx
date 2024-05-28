@@ -62,7 +62,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   return (
     <div className="mx-auto max-w-3xl pb-4 sm:px-0 px-4">
       <div className="grid md:grid-cols-10 grid-cols-1">
-        <div className="rounded-lg bg-background pb-4 sm:pb-8 md:col-span-8">
+        <div className="rounded-lg bg-background dark:bg-transparent pb-4 sm:pb-8 md:col-span-8">
           <h1 className="mb-2 text-lg font-semibold flex items-center">
             👋 Welcome to JoyChat <span className="font-normal ml-2 inline-flex items-center rounded-md border border-gray-100 bg-gray-50 px-2 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-gray-800">v0.1.0</span>
           </h1>
@@ -115,7 +115,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
           {exampleMessages.map((message, index) => (
             <button
               key={index}
-              className="rounded-md border bg-gray-50 p-2.5 px-3 text-gray-600 hover:bg-gray-100 max-xl:text-sm dark:border-gray-800 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 text-left"
+              className="rounded-md border bg-gray-50 p-2.5 px-3 text-gray-600 hover:bg-gray-100 max-xl:text-sm dark:border-gray-800 dark:bg-neutral-800 dark:text-gray-300 dark:hover:bg-neutral-700 text-left"
               onClick={() => setInput(message.message)}
             >
               {message.heading}

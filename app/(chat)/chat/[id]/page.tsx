@@ -26,11 +26,13 @@ export default function ChatPage({ params }: ChatPageProps) {
       name: session.user.name,
       email: session.user.email
     })
-  
+  }
+
+  useEffect(()=> {
     mixpanel.track('Chat Page', {
       distinct_id: session?.user.id
     })
-  }
+  }, [session?.user.id])
 
   const [loading, setLoading] = useState(false)
   const { chat, chatLoading, fetchChatById } = useChatStore()
