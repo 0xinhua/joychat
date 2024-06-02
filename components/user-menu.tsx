@@ -118,7 +118,6 @@ export function UserMenu({ user }: UserMenuProps) {
                   <Moon className="mr-2 h-4 w-4" />
                   <span>Dark</span>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => setTheme("system")} className="cursor-pointer">
                   <Settings className="mr-2 h-4 w-4" />
                   <span>System</span>
@@ -130,14 +129,14 @@ export function UserMenu({ user }: UserMenuProps) {
         <DropdownMenuItem>
           <GithubIcon className="mr-2 h-4 w-4" />
           <a
-              href="https://github.com/0xinhua/joychat"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-between w-full"
-            >
-              GitHub
-              <IconExternalLink className="size-3 ml-auto" />
-            </a>
+            href="https://github.com/0xinhua/joychat"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-between w-full"
+          >
+            GitHub
+            <IconExternalLink className="size-3 ml-auto" />
+          </a>
         </DropdownMenuItem>
         {/* <DropdownMenuItem>
           <LifeBuoy className="mr-2 h-4 w-4" />
@@ -156,7 +155,7 @@ export function UserMenu({ user }: UserMenuProps) {
           >
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
