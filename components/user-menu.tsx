@@ -71,7 +71,7 @@ export function UserMenu({ user }: UserMenuProps) {
           )}
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 ml-2">
+      <DropdownMenuContent className="w-48 ml-2">
         <DropdownMenuLabel>
         <div className="text-[13px] font-medium">{user?.name}</div>
           <div className="text-xs text-zinc-500 font-normal">{user?.email}</div>
