@@ -3,19 +3,21 @@
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
-import { SidebarList } from '@/components/sidebar-list'
+import { SidebarFooter } from '@/components/sidebar-footer'
 import { useSidebar } from '@/lib/hooks/use-sidebar'
 import { useEffect, useState } from 'react'
 import useChatStore, { ChatState } from '@/store/useChatStore'
 import Link from 'next/link'
 import { buttonVariants } from './ui/button'
 import { IconPlus } from './ui/icons'
+import { Session } from 'next-auth'
 
 interface ChatHistoryProps {
-  userId?: string
+  userId?: string,
+  session?: Session
 }
 
-export function ChatHistory({ userId }: ChatHistoryProps) {
+export function ChatHistory({ userId, session }: ChatHistoryProps) {
   const { isSidebarOpen, isLoading, toggleSidebar } = useSidebar()
 
   const { chats, fetchHistory } = useChatStore(state => ({
@@ -57,7 +59,7 @@ export function ChatHistory({ userId }: ChatHistoryProps) {
         }
       >
         {/* @ts-ignore */}
-        <SidebarList userId={userId} chats={chats} />
+        <SidebarFooter userId={userId} chats={chats} session={session} />
         <div className="fixed left-0 top-1/2 z-40 transform xl:translate-x-[256px] lg:translate-x-[220px]">	
           <button onClick={() => {	
             toggleSidebar()	

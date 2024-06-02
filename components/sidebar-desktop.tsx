@@ -12,6 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { UserMenu } from './user-menu'
 
 export async function SidebarDesktop() {
   const session = await auth()
@@ -48,7 +49,7 @@ export async function SidebarDesktop() {
           </TooltipProvider>
         </div>
       </Link>
-      <ChatHistory userId={session.user.id} />
+      <ChatHistory userId={session.user.id} session={session} />
     </Sidebar>
   )
 }
