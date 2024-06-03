@@ -73,8 +73,8 @@ export function UserMenu({ user }: UserMenuProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-48 ml-2">
         <DropdownMenuLabel>
-        <div className="text-[13px] font-medium">{user?.name}</div>
-          <div className="text-xs text-zinc-500 font-normal">{user?.email}</div>
+        <div className="text-[15px] font-medium">{user?.name}</div>
+          <div className="text-[13px] text-zinc-500 font-normal">{user?.email}</div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
@@ -135,7 +135,7 @@ export function UserMenu({ user }: UserMenuProps) {
             className="inline-flex items-center justify-between w-full"
           >
             GitHub
-            <IconExternalLink className="size-3 ml-auto" />
+            <IconExternalLink className="size-4 ml-auto" />
           </a>
         </DropdownMenuItem>
         {/* <DropdownMenuItem>
