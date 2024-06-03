@@ -169,6 +169,11 @@ END;
 $$;
 ```
 
+## Thanks
+
+The initial version of JoyChat is based on [ai-chatbot](https://github.com/vercel/ai-chatbot) created by the team behind Vercel.
+Thanks for providing this awesome ai chatbot template!
+
 ## License
 
 [MIT](https://github.com/0xinhua/joychat?tab=MIT-1-ov-file)
