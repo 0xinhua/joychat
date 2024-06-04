@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
-import { IconBard, IconOpenai } from '@/components/ui/icons'
+import { IconBard, IconMeta, IconOpenai } from '@/components/ui/icons'
 
 const exampleMessages = [
   {
@@ -94,6 +94,11 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
                 <SelectItem value="gpt-4" className="cursor-pointer">
                   <div className="flex items-center justify-center gap-x-1.5">
                     <IconOpenai />gpt-4-turbo
+                  </div>
+                </SelectItem>
+                <SelectItem value="llama3-8b" className="cursor-pointer">
+                  <div className="flex items-center justify-center gap-x-1.5">
+                    <IconMeta />llama3-8b
                   </div>
                 </SelectItem>
                 <SelectItem disabled value="gemini-1.5-flash-latest" className="cursor-not-allowed">
