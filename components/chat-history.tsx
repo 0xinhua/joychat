@@ -5,12 +5,13 @@ import * as React from 'react'
 import { cn } from '@/lib/utils'
 import { SidebarFooter } from '@/components/sidebar-footer'
 import { useSidebar } from '@/lib/hooks/use-sidebar'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import useChatStore, { ChatState } from '@/store/useChatStore'
 import Link from 'next/link'
 import { buttonVariants } from './ui/button'
 import { IconPlus } from './ui/icons'
 import { Session } from 'next-auth'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip'
 
 interface ChatHistoryProps {
   userId?: string,
@@ -58,16 +59,25 @@ export function ChatHistory({ userId, session }: ChatHistoryProps) {
           </div>
         }
       >
-        {/* @ts-ignore */}
         <SidebarFooter userId={userId} chats={chats} session={session} />
-        <div className="fixed left-0 top-1/2 z-40 transform xl:translate-x-[256px] lg:translate-x-[220px]">	
-          <button onClick={() => {	
-            toggleSidebar()	
-          }} className="absolute inset-y-0 z-10 my-auto left-0 *:transition-transform group flex h-16 w-6 flex-col items-center justify-center -space-y-1 outline-none *:h-3 *:w-1 *:rounded-full *:hover:bg-gray-400 max-md:hidden dark:*:hover:bg-gray-400 *:bg-gray-200 dark:*:bg-gray-500">	
-            <div className={cn(isSidebarOpen ? "group-hover:rotate-[20deg]": "group-hover:-rotate-[20deg]")}></div>	
-            <div className={cn(isSidebarOpen ? "group-hover:-rotate-[20deg]": "group-hover:rotate-[20deg]")}></div>	
-            <span className="sr-only">Toggle Sidebar</span>	
-          </button>	
+        {/* sidebar toggle */}
+        <div className="fixed left-0 top-1/2 z-40 transform xl:translate-x-[256px] lg:translate-x-[220px] translate-y-[-32px]">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+              <button onClick={() => {
+                toggleSidebar()
+              }} className="absolute inset-y-0 z-10 my-auto left-0 *:transition-transform group flex h-16 w-6 flex-col items-center justify-center -space-y-1 outline-none *:h-3 *:w-1 *:rounded-full *:hover:bg-gray-400 max-md:hidden dark:*:hover:bg-gray-400 *:bg-gray-200 dark:*:bg-gray-500">
+                  <div className={cn(isSidebarOpen ? "group-hover:rotate-[20deg]": "group-hover:-rotate-[20deg]")}></div>
+                  <div className={cn(isSidebarOpen ? "group-hover:-rotate-[20deg]": "group-hover:rotate-[20deg]")}></div>
+                  <span className="sr-only">Toggle Sidebar</span>
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side='right'>
+                <p className="z-2">{isSidebarOpen ? 'Fold Sidebar' : 'Unfold Sidebar'}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </React.Suspense>
     </div>

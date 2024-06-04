@@ -23,13 +23,12 @@ export async function SidebarDesktop() {
 
   return (
     <Sidebar className="peer absolute inset-y-0 z-30 hidden -translate-x-full duration-300 ease-in-out data-[state=open]:translate-x-0 lg:flex lg:w-[240px] xl:w-[256px]">
-      {/* @ts-ignore */}
       <Link
-          href="/"
-          className={cn(
-            buttonVariants({ variant: 'outline' }),
-            'flex w-full h-fit px-3 mt-2 border-none justify-start font-normal shadow-none transition-colors text-gray-600 max-xl:text-sm hover:bg-transparent'
-          )}
+        href="/"
+        className={cn(
+          buttonVariants({ variant: 'outline' }),
+          'flex w-full h-fit px-3 mt-2 border-none justify-start font-normal shadow-none transition-colors text-gray-600 max-xl:text-sm hover:bg-transparent'
+        )}
         >
         <div className="flex h-10 rounded-md px-2 py-4 w-full items-center justify-between font-medium hover:bg-zinc-200 dark:border-gray-800 dark:bg-neutral-800 dark:text-gray-300 dark:hover:bg-neutral-700">
           <div className="flex items-center">

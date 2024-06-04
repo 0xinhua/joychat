@@ -29,7 +29,7 @@ export function SidebarFooter({ chats, session }: SidebarListProps) {
           </div>
         )}
       </div>
-      <div className="flex items-center justify-between py-4 px-3">
+      <div className="flex items-center justify-between py-4 px-3 sm:pl-4">
         {session?.user ? <UserMenu user={session.user} /> : null}
         <ClearHistory clearChats={clearChats} isEnabled={chats?.length > 0} />
       </div>

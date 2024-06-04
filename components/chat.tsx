@@ -72,7 +72,7 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
     if (title) {
       document.title = title.toString().slice(0, 50)
     } else {
-      document.title = 'Chat - JoyChat'
+      document.title = 'New Chat - JoyChat'
     }
   }, [title])
 
