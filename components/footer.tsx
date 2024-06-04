@@ -15,7 +15,7 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
       <a
         target="_blank"
         className="inline-flex underline-offset-2 flex-1 justify-center gap-1 leading-4 underline"
-        href="https://joychat.io">JoyChat</a> - An open source AI chatbot built by{' '} 0xinhua.
+        href="https://github.com/0xinhua/joychat">JoyChat</a> - An open source AI chatbot built by{' '} 0xinhua.
     </p>
   )
 }
