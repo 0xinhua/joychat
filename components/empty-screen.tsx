@@ -66,14 +66,14 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
           <h1 className="mb-2 text-lg font-semibold flex items-center">
             👋 Welcome to JoyChat <span className="font-normal ml-2 inline-flex items-center rounded-md border border-gray-100 bg-gray-50 px-2 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-gray-800">v0.1.0</span>
           </h1>
-          <p className="mb-2 leading-normal text-muted-foreground">
+          <p className="mb-2 leading-normal text-muted-foreground dark:text-gray-300">
             A beautiful open source AI chatbot built by {' '}
             <ExternalLink href="https://twitter.com/0xinhua">
               0xinhua
             </ExternalLink>
             .
           </p>
-          <p className="leading-normal text-muted-foreground">
+          <p className="leading-normal text-muted-foreground dark:text-gray-300">
             You can start a conversation here or try with the following prompts.
           </p>
         </div>
@@ -85,7 +85,6 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                {/* <SelectLabel>Fruits</SelectLabel> */}
                 <SelectItem value="gpt-4o" className="cursor-pointer">
                   <div className="flex items-center justify-center gap-x-1.5">
                     <IconOpenai />gpt-4o
