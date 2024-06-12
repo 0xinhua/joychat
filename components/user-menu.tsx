@@ -90,22 +90,22 @@ export function UserMenu({ user }: UserMenuProps) {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {/* <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
+            <User className="mr-2 size-4" />
             <span>Profile</span>
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <CreditCard className="mr-2 h-4 w-4" />
+            <CreditCard className="mr-2 size-4" />
             <span>Billing</span>
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem> */}
           <DropdownMenuItem className="cursor-pointer" onClick={e => setSettingsDialogOpen(true)}>
-            <Settings className="mr-2 h-4 w-4" />
+            <Settings className="mr-2 size-4" />
             <span>Setting</span>
             {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
           </DropdownMenuItem>
           {/* <DropdownMenuItem>
-            <Keyboard className="mr-2 h-4 w-4" />
+            <Keyboard className="mr-2 size-4" />
             <span>Keyboard shortcuts</span>
             <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
           </DropdownMenuItem> */}
@@ -115,22 +115,22 @@ export function UserMenu({ user }: UserMenuProps) {
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               {/* <Button variant="ghost" size="icon" className="outline-none shadow-none focus:border-transparent focus:ring-0 focus-visible:ring-0 focus-visible:ring-transparent hover:bg-zinc-200 dark:hover:bg-neutral-700"> */}
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 mr-2" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 mr-2" />
+              <Sun className="size-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 mr-2" />
+              <Moon className="absolute size-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 mr-2" />
               <span>Theme</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuItem onClick={() => setTheme("light")} className="cursor-pointer">
-                  <Sun className="mr-2 h-4 w-4" />
+                  <Sun className="mr-2 size-4" />
                   <span>Light</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme("dark")} className="cursor-pointer">
-                  <Moon className="mr-2 h-4 w-4" />
+                  <Moon className="mr-2 size-4" />
                   <span>Dark</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme("system")} className="cursor-pointer">
-                  <Settings className="mr-2 h-4 w-4" />
+                  <Settings className="mr-2 size-4" />
                   <span>System</span>
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
@@ -138,7 +138,7 @@ export function UserMenu({ user }: UserMenuProps) {
           </DropdownMenuSub>
         </DropdownMenuGroup>
         <DropdownMenuItem>
-          <GithubIcon className="mr-2 h-4 w-4" />
+          <GithubIcon className="mr-2 size-4" />
           <a
             href="https://github.com/0xinhua/joychat"
             target="_blank"
@@ -150,7 +150,7 @@ export function UserMenu({ user }: UserMenuProps) {
           </a>
         </DropdownMenuItem>
         {/* <DropdownMenuItem>
-          <LifeBuoy className="mr-2 h-4 w-4" />
+          <LifeBuoy className="mr-2 size-4" />
           <span>Support</span>
         </DropdownMenuItem> */}
         <DropdownMenuSeparator />
@@ -164,7 +164,7 @@ export function UserMenu({ user }: UserMenuProps) {
           }
             className="cursor-pointer"
           >
-          <LogOut className="mr-2 h-4 w-4" />
+          <LogOut className="mr-2 size-4" />
           <span>Log out</span>
           {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
         </DropdownMenuItem>
