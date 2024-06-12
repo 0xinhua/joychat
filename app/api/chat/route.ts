@@ -32,11 +32,57 @@ const groqOpenAI = new OpenAI({
   apiKey: process.env.GROQ_API_KEY,
 })
 
+async function handleCompletion(completion: string, messages: Message[], id: string, userId: string) {
+
+  const nonSystemMessages = messages.filter((message: Message) => message.role !== 'system')
+  const firstNonSystemMessage = nonSystemMessages.find((message: Message) => message.role !== 'system')
+
+  const title = firstNonSystemMessage ? firstNonSystemMessage.content.substring(0, 100) : messages[0].content.substring(0, 100)
+  const chatId = id ?? nanoid()
+  const createdAt = Date.now()
+  const path = `/chat/${chatId}`
+  const newMessage = {
+    content: completion,
+    role: 'assistant',
+  }
+
+  const updatedMessages = [
+    ...messages,
+    newMessage,
+  ]
+
+  try {
+    const startTime = Date.now()
+
+    // see README function upsert_chat definition
+    const { data: rows, error } = await supabase.rpc('upsert_chat', {
+      p_chat_id: chatId,
+      p_title: title,
+      p_user_id: userId,
+      p_created_at: createdAt,
+      p_path: path,
+      p_messages: updatedMessages,
+      p_share_path: null
+    })
+
+    const endTime = Date.now()
+    const executionTime = endTime - startTime
+
+    console.log(`Execution Time: ${executionTime} ms`)
+    console.log(`upsert chat ${chatId} data `, rows, error)
+
+  } catch (err) {
+    console.error('Error inserting or updating chat:', err)
+  }
+}
+
 export const maxDuration = 59
+
 export async function POST(req: Request) {
+
   const json = await req.json()
 
-  let { messages, previewToken, model } = json
+  let { messages, previewToken, model, id } = json
   const userId = (await auth())?.user.id
 
   if (!userId) {
@@ -60,51 +106,9 @@ export async function POST(req: Request) {
     })
 
     const stream = OpenAIStream(res, {
+
       async onCompletion(completion) {
-
-        const nonSystemMessages = messages.filter((message:Message) => message.role !== 'system')
-        const firstNonSystemMessage = nonSystemMessages.find((message: Message) => message.role !== 'system')
-
-        const title = firstNonSystemMessage ? firstNonSystemMessage.content.substring(0, 100) : messages[0].content.substring(0, 100)
-
-        const chatId = json.id ?? nanoid()
-        const createdAt = Date.now()
-        const path = `/chat/${chatId}`
-        const newMessage = {
-          content: completion,
-          role: 'assistant',
-        }
-
-        const updatedMessages = [
-          ...messages,
-          newMessage,
-        ]
-
-        try {
-
-          const startTime = Date.now()
-
-          // see README function upsert_chat definition
-          const { data: rows, error } = await supabase.rpc('upsert_chat', {
-            p_chat_id: chatId,
-            p_title: title,
-            p_user_id: userId,
-            p_created_at: createdAt,
-            p_path: path,
-            p_messages: updatedMessages,
-            p_share_path: null
-          })
-
-          const endTime = Date.now()
-          const executionTime = endTime - startTime
-
-          console.log(`Execution Time: ${executionTime} ms`)
-
-          console.log(`upsert chat ${chatId} data `, rows, error)
-
-        } catch (err) {
-          console.error('Error inserting or updating chat:', err)
-        }
+        handleCompletion(completion, messages, id, userId)
       }
     })
 
@@ -123,50 +127,9 @@ export async function POST(req: Request) {
 
     // Convert the response into a friendly text-stream
     const stream = GoogleGenerativeAIStream(geminiStream, {
-      onCompletion: async (completion: string) => {
-        // This callback is called when the completion is ready
-        // You can use this to save the final completion to your database
-        const nonSystemMessages = messages.filter((message:Message) => message.role !== 'system')
-        const firstNonSystemMessage = nonSystemMessages.find((message: Message) => message.role !== 'system')
-
-        const title = firstNonSystemMessage ? firstNonSystemMessage.content.substring(0, 100) : messages[0].content.substring(0, 100)
-        const id = json.id ?? nanoid()
-        const createdAt = Date.now()
-        const path = `/chat/${id}`
-
-        try {
-
-          const startTime = Date.now()
-
-          // see README function upsert_chat definition
-          const { data: rows, error } = await supabase.rpc('upsert_chat', {
-            p_chat_id: id,
-            p_title: title,
-            p_user_id: userId,
-            p_created_at: createdAt,
-            p_path: path,
-            p_messages: [
-              ...messages,
-              {
-                content: completion,
-                role: 'assistant'
-              }
-            ],
-            p_share_path: null
-          })
-
-          const endTime = Date.now()
-          const executionTime = endTime - startTime
-
-          console.log(`Execution Time: ${executionTime} ms`)
-
-          console.log(`upsert chat ${id} data `, rows, error)
-
-        } catch (err) {
-          console.error('Error inserting or updating chat:', err)
-        }
-
-      },
+      onCompletion: async (completion) => {
+        handleCompletion(completion, messages, id, userId)      
+      }
     })
 
     // Respond with the stream
@@ -190,48 +153,7 @@ export async function POST(req: Request) {
 
   const stream = OpenAIStream(res, {
     async onCompletion(completion) {
-
-      const nonSystemMessages = messages.filter((message:Message) => message.role !== 'system')
-      const firstNonSystemMessage = nonSystemMessages.find((message: Message) => message.role !== 'system')
-
-      const title = firstNonSystemMessage ? firstNonSystemMessage.content.substring(0, 100) : messages[0].content.substring(0, 100)
-      const chatId = json.id ?? nanoid()
-      const createdAt = Date.now()
-      const path = `/chat/${chatId}`
-      const newMessage = {
-        content: completion,
-        role: 'assistant',
-      }
-
-      const updatedMessages = [
-        ...messages,
-        newMessage,
-      ]
-
-      try {
-
-        const startTime = Date.now()
-
-        // see README function upsert_chat definition
-        const { data: rows, error } = await supabase.rpc('upsert_chat', {
-          p_chat_id: chatId,
-          p_title: title,
-          p_user_id: userId,
-          p_created_at: createdAt,
-          p_path: path,
-          p_messages: updatedMessages,
-          p_share_path: null
-        })
-
-        const endTime = Date.now()
-        const executionTime = endTime - startTime
-
-        console.log(`Execution Time: ${executionTime} ms`)
-        console.log(`upsert chat ${chatId} data `, rows, error)
-
-      } catch (err) {
-        console.error('Error inserting or updating chat:', err)
-      }
+      handleCompletion(completion, messages, id, userId)
     }
   })
 
