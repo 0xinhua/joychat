@@ -39,13 +39,13 @@ export function SettingsDialog() {
         {/* <Button variant="outline">settings</Button> */}
       </DialogTrigger>
       <DialogContent
-        className='sm:max-w-[625px]'
+        className='sm:max-w-[625px] w-full'
         onEscapeKeyDown={(e) => e.preventDefault()}
         // onPointerDown={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}
         // onOpenAutoFocus={e => e.preventDefault()}
       >
-        <div className="hidden space-y-6 p-10 pb-16 md:block">
+        <div className="space-y-6 sm:p-10 p-6 sm:pb-16 pb-10">
           <div className="space-y-0.5">
             <h2 className="text-2xl font-bold tracking-tight">Setting</h2>
             <p className="text-muted-foreground">
