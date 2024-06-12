@@ -83,7 +83,7 @@ export function SystemPromptForm() {
               <FormControl>
                 <Textarea
                   rows={5}
-                  placeholder={`You are a helpful assistant.`}
+                  placeholder="You are a helpful assistant."
                   className="resize-none"
                   {...field}
                 />
