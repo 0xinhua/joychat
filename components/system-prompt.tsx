@@ -89,8 +89,7 @@ export function SystemPromptForm() {
                 />
               </FormControl>
               <FormDescription className="mt-4">
-                The system prompt shapes the assistant's behavior, allowing you to modify its personality or provide specific instructions,
-                  {' '} 
+                The system prompt shapes the assistant's behavior, allowing you to modify its personality or provide specific instructions, &nbsp;
                   <ExternalLink href="https://platform.openai.com/docs/guides/text-generation/chat-completions-api">
                   learn more.
               </ExternalLink>
