@@ -33,6 +33,9 @@ import {
   User,
 } from "lucide-react"
 import { useTheme } from 'next-themes'
+import { SettingsDialog } from './settings'
+import useUserSettingStore from '@/store/useSettingStore'
+import { useEffect } from 'react'
 
 export interface UserMenuProps {
   user: Session['user']
@@ -46,6 +49,14 @@ function getUserInitials(name: string) {
 export function UserMenu({ user }: UserMenuProps) {
 
   const { setTheme } = useTheme()
+  const {
+    setSettingsDialogOpen,
+    fetchSystemPrompt,
+  } = useUserSettingStore()
+
+  useEffect(() => {
+    fetchSystemPrompt()
+  }, [])
 
   const { reset } = useChatStore(state => ({
     reset: state.reset,
@@ -88,11 +99,11 @@ export function UserMenu({ user }: UserMenuProps) {
             <span>Billing</span>
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem> */}
-          {/* <DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer" onClick={e => setSettingsDialogOpen(true)}>
             <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem> */}
+            <span>Setting</span>
+            {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
+          </DropdownMenuItem>
           {/* <DropdownMenuItem>
             <Keyboard className="mr-2 h-4 w-4" />
             <span>Keyboard shortcuts</span>

@@ -1,0 +1,1 @@
+export const defaultSystemPrompt = "You are a helpful assistant.Please provide concise and clear answers."

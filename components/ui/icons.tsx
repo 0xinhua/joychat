@@ -658,14 +658,14 @@ function IconMeta({
       <path d="M27.7975 10.5418C23.6557 10.5418 20.1384 13.4481 17.1949 17.8937C13.0329 24.1755 10.4844 33.5325 10.4844 42.5182C10.4844 46.2245 11.2979 49.0701 12.3612 50.7916L3.42277 56.6785C1.12741 52.8608 0 47.8515 0 42.1435C0 31.7637 2.84893 20.9451 8.26666 12.5907C13.0734 5.1814 20.0101 0 27.9662 0L27.7975 10.5418Z" fill="url(#paint1_linear_1_7)"/>
       <defs>
         <linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_1_7" x1="13.4713" x2="86.4925" y1="39.4937" y2="43.5249">
-          <stop stop-color="#0064E1"/>
-          <stop offset="0.4" stop-color="#0064E1"/>
-          <stop offset="0.83" stop-color="#0073EE"/>
-          <stop offset="1" stop-color="#0082FB"/>
+          <stop stopColor="#0064E1"/>
+          <stop offset="0.4" stopColor="#0064E1"/>
+          <stop offset="0.83" stopColor="#0073EE"/>
+          <stop offset="1" stopColor="#0082FB"/>
         </linearGradient>
         <linearGradient gradientUnits="userSpaceOnUse" id="paint1_linear_1_7" x1="15.1899" x2="15.1899" y1="46.9199" y2="22.2785">
-          <stop stop-color="#0082FB"/>
-          <stop offset="1" stop-color="#0064E0"/>
+          <stop stopColor="#0082FB"/>
+          <stop offset="1" stopColor="#0064E0"/>
         </linearGradient>
       </defs>
     </svg>

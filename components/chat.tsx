@@ -79,7 +79,7 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
   return (
     <>
       <div className={cn('md:pb-[200px] md:px-4 lg:px-0', className)}>
-        { messages.length ? (
+        { messages.filter(msg => msg.role !== 'system').length ? (
           <>
             <ChatList messages={messages} />
             <ChatScrollAnchor trackVisibility={isLoading} />

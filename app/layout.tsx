@@ -1,4 +1,4 @@
-import { Toaster } from 'react-hot-toast'
+// import { Toaster } from 'react-hot-toast'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 
@@ -9,6 +9,7 @@ import { Providers } from '@/components/providers'
 import { Header } from '@/components/header'
 import Script from 'next/script'
 import mixpanel from 'mixpanel-browser'
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata = {
   metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
