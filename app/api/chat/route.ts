@@ -61,7 +61,12 @@ export async function POST(req: Request) {
 
     const stream = OpenAIStream(res, {
       async onCompletion(completion) {
-        const title = json.messages[0].content.substring(0, 100)
+
+        const nonSystemMessages = messages.filter((message:Message) => message.role !== 'system')
+        const firstNonSystemMessage = nonSystemMessages.find((message: Message) => message.role !== 'system')
+
+        const title = firstNonSystemMessage ? firstNonSystemMessage.content.substring(0, 100) : messages[0].content.substring(0, 100)
+
         const chatId = json.id ?? nanoid()
         const createdAt = Date.now()
         const path = `/chat/${chatId}`
@@ -121,7 +126,10 @@ export async function POST(req: Request) {
       onCompletion: async (completion: string) => {
         // This callback is called when the completion is ready
         // You can use this to save the final completion to your database
-        const title = messages[0].content.substring(0, 100)
+        const nonSystemMessages = messages.filter((message:Message) => message.role !== 'system')
+        const firstNonSystemMessage = nonSystemMessages.find((message: Message) => message.role !== 'system')
+
+        const title = firstNonSystemMessage ? firstNonSystemMessage.content.substring(0, 100) : messages[0].content.substring(0, 100)
         const id = json.id ?? nanoid()
         const createdAt = Date.now()
         const path = `/chat/${id}`
@@ -182,7 +190,11 @@ export async function POST(req: Request) {
 
   const stream = OpenAIStream(res, {
     async onCompletion(completion) {
-      const title = json.messages[0].content.substring(0, 100)
+
+      const nonSystemMessages = messages.filter((message:Message) => message.role !== 'system')
+      const firstNonSystemMessage = nonSystemMessages.find((message: Message) => message.role !== 'system')
+
+      const title = firstNonSystemMessage ? firstNonSystemMessage.content.substring(0, 100) : messages[0].content.substring(0, 100)
       const chatId = json.id ?? nanoid()
       const createdAt = Date.now()
       const path = `/chat/${chatId}`
@@ -215,7 +227,6 @@ export async function POST(req: Request) {
         const executionTime = endTime - startTime
 
         console.log(`Execution Time: ${executionTime} ms`)
-
         console.log(`upsert chat ${chatId} data `, rows, error)
 
       } catch (err) {
