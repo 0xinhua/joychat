@@ -77,7 +77,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             .
           </p>
           <p className="leading-normal text-muted-foreground dark:text-gray-300">
-            You can start a conversation here or try with the following prompts.
+            You can start a conversation here or try with the following quickstart question.
           </p>
         </div>
         <div className="col-span-1 md:col-span-2 flex flex-col gap-y-1 leading-normal text-muted-foreground sm:pb-0 pb-4">
@@ -116,7 +116,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
       </div>
       <div className="py-2">
         <h1 className="mb-2 text-lg font-semibold">
-          💬 Prompts
+          💬 Quickstart
         </h1>
         <div className="mt-4 grid gap-3 lg:grid-cols-3 lg:gap-5">
           {exampleMessages.map((message, index) => (
