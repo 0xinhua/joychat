@@ -1,1 +1,1 @@
-export const defaultSystemPrompt = "You are a helpful assistant.Please provide concise and clear answers."
+export const defaultSystemPrompt = "You are a helpful assistant, you always give concise answers."
