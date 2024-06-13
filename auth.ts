@@ -55,11 +55,12 @@ export const {
       const isAllowedToSignIn = true
       console.log('email', user, allowedEmails)
       // add a whitelist
-      if (user.email && allowedEmails.includes(user.email.toLowerCase())) {
-        return isAllowedToSignIn
-      } else {
-        return false
-      }
+      // if (user.email && allowedEmails.includes(user.email.toLowerCase())) {
+      //   return isAllowedToSignIn
+      // } else {
+      //   return false
+      // }
+      return isAllowedToSignIn
     },
     redirect: async (params: { url: string; baseUrl: string; }) => {
       return Promise.resolve(params.url)
