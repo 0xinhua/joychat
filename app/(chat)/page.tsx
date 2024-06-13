@@ -3,12 +3,18 @@
 import { nanoid } from '@/lib/utils'
 import { Chat } from '@/components/chat'
 import useUserSettingStore from '@/store/useSettingStore'
+import { useEffect } from 'react'
 
 export default function IndexPage() {
 
   const {
-    systemPrompt
+    systemPrompt,
+    fetchSystemPrompt
   } = useUserSettingStore()
+
+  useEffect(() => {
+    fetchSystemPrompt()
+  }, [])
 
   const id = nanoid()
 

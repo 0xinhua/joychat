@@ -35,7 +35,6 @@ import {
 import { useTheme } from 'next-themes'
 import { SettingsDialog } from './settings'
 import useUserSettingStore from '@/store/useSettingStore'
-import { useEffect } from 'react'
 
 export interface UserMenuProps {
   user: Session['user']
@@ -51,12 +50,7 @@ export function UserMenu({ user }: UserMenuProps) {
   const { setTheme } = useTheme()
   const {
     setSettingsDialogOpen,
-    fetchSystemPrompt,
   } = useUserSettingStore()
-
-  useEffect(() => {
-    fetchSystemPrompt()
-  }, [])
 
   const { reset } = useChatStore(state => ({
     reset: state.reset,
