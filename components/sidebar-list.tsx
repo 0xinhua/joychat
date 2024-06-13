@@ -17,7 +17,7 @@ interface SidebarListProps {
   children?: React.ReactNode
 }
 
-export function SidebarFooter({ chats, session }: SidebarListProps) {
+export function SidebarList({ chats, session }: SidebarListProps) {
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden">

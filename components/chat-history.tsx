@@ -3,7 +3,7 @@
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
-import { SidebarFooter } from '@/components/sidebar-footer'
+import { SidebarList } from '@/components/sidebar-list'
 import { useSidebar } from '@/lib/hooks/use-sidebar'
 import { useEffect } from 'react'
 import useChatStore from '@/store/useChatStore'
@@ -59,7 +59,7 @@ export function ChatHistory({ userId, session }: ChatHistoryProps) {
           </div>
         }
       >
-        <SidebarFooter userId={userId} chats={chats} session={session} />
+        <SidebarList userId={userId} chats={chats} session={session} />
         {/* sidebar toggle */}
         <div className="fixed left-0 top-1/2 z-40 transform xl:translate-x-[256px] lg:translate-x-[220px] translate-y-[-32px]">
           <TooltipProvider>
