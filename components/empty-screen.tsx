@@ -54,6 +54,7 @@ const exampleMessages = [
 \n`
   },
   {
+    // prompt form  https://x.com/dotey/status/1800696118642458775
     heading: '🧬 Translate Sci article',
     message: `You are a professional translator proficient in Simplified Chinese, specializing in translating professional academic papers into easy-to-understand popular science articles. Please help me translate the following foreign language paragraphs into Chinese, in a style similar to Chinese popular science readings.
 
