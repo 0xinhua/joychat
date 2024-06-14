@@ -5,17 +5,21 @@
 </a>
 
 <p align="center">
-  An beautiful open-source AI chatbot built with Next.js, the Vercel AI SDK, OpenAI, and Vercel KV.
+  A beautiful, customizable AI chatbot built with Next.js, Vercel AI SDK, OpenAI, and Supabase.
 </p>
 
 <p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
+  <a href="#stacks"><strong>Stacks</strong></a> ·
   <a href="#model-providers"><strong>Model Providers</strong></a> ·
   <a href="#deploy-your-own"><strong>Deploy Your Own</strong></a> ·
   <a href="#running-locally"><strong>Running locally</strong></a> ·
-  <a href="#authors"><strong>Authors</strong></a>
+  <a href="#thanks"><strong>Thanks</strong></a>
 </p>
 <br/>
+
+## Usage
+
+  👋 Hey, you can use [joychat.io](https://joychat.io/) for **Free** as long as my OpenAI key quota allows it. If it exceeds what I can afford later, I will consider limiting frequency of use.
 
 ## Stacks
 
@@ -23,14 +27,12 @@
 - [Supabase](https://supabase.com/) for Database
 - [Vercel AI SDK](https://sdk.vercel.ai/docs) for streaming chat UI
 - Support for OpenAI (default), Anthropic, Cohere, Hugging Face, or custom AI chat models and/or LangChain
-- [shadcn/ui](https://ui.shadcn.com)
-  - Styling with [Tailwind CSS](https://tailwindcss.com)
-  - [Radix UI](https://radix-ui.com) for headless component primitives
+- Styling with [shadcn/ui](https://ui.shadcn.com) and [Tailwind CSS](https://tailwindcss.com)
 - [NextAuth.js](https://github.com/nextauthjs/next-auth) for authentication
 
 ## Model Providers
 
-This template ships with OpenAI `gpt-3.5-turbo` as the default. However, you can switch LLM providers to [Anthropic](https://anthropic.com), [Cohere](https://cohere.com/), [Hugging Face](https://huggingface.co), or using [LangChain](https://js.langchain.com) with just a few lines of code.
+This chatbot ships with OpenAI `gpt-4o` as the default. However, you can switch LLM providers to [Anthropic](https://anthropic.com), [Cohere](https://cohere.com/), [Hugging Face](https://huggingface.co), or using [LangChain](https://js.langchain.com) with just a few lines of code.
 
 ## Deploy Your Own
 
