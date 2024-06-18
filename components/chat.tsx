@@ -22,7 +22,7 @@ import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
 import { usePathname, useRouter } from 'next/navigation'
 import useChatStore from '@/store/useChatStore'
-import { isLocalMode } from '@/lib/const'
+import { defaultModel, isLocalMode } from '@/lib/const'
 import { Chat as IChat } from '@/lib/types'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
@@ -53,7 +53,7 @@ export function Chat({ id, initialMessages, className, title, loading, userId }:
       body: {
         id,
         previewToken,
-        model: localStorage.getItem('selected-model')?.replaceAll('"', '') || 'gpt-4'
+        model: localStorage.getItem('selected-model')?.replaceAll('"', '') || defaultModel
       },
       onResponse(response) {
         if (response.status === 401) {
