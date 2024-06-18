@@ -5,7 +5,6 @@ import { Chat } from '@/lib/types'
 import { isLocalMode } from '@/lib/const'
 import { localForage } from '@/lib/localforage'
 
-// 定义状态类型
 export interface ChatState {
   chats: Array<Chat>
   setChats: (chats: Array<Chat>) => void
@@ -31,7 +30,6 @@ const useChatStore = create<ChatState>()(
             if (!isLocalMode) {
               const response = await fetch('/api/chats')
               const { data } = await response.json()
-              console.log('fetch history data', data)
               set({ chats: data })
             } else {
               const localChatState = await localForage.get('chat-history') as { state: ChatState } || null
