@@ -24,17 +24,6 @@ const useUserSettingStore = create<UserSettingState>()(
   persist(
     (set, get) => {
 
-      (async () => {
-        if (isLocalMode) {
-          const localChatSetting = await localForage.get('user-setting') as { state: UserSettingState } || null
-          set({ systemPrompt: localChatSetting?.state?.systemPrompt || defaultSystemPrompt })
-        } else {
-          const response = await fetch('/api/user/settings/systemPrompt')
-          const { data } = await response.json()
-          set({ systemPrompt: data.prompt || defaultSystemPrompt })
-        }
-      })()
-
       return {
         isSettingsDialogOpen: false,
         systemPrompt: defaultSystemPrompt,
@@ -44,20 +33,18 @@ const useUserSettingStore = create<UserSettingState>()(
 
         fetchSystemPrompt: async () => {
 
-          if (!isLocalMode) {
-
+          if (isLocalMode) {
+            const localChatSetting = await localForage.get('user-setting') as { state: UserSettingState } || null
+            set({ systemPrompt: localChatSetting?.state?.systemPrompt || defaultSystemPrompt })
+          } else {
             set({ loading: true, error: null })
-
             try {
               const response = await fetch('/api/user/settings/systemPrompt')
-
               if (!response.ok) {
                 throw new Error('Failed to fetch system prompt')
               }
-
               const json = await response.json()
-
-              set({ 
+              set({
                 systemPrompt: json.data?.prompt ? json.data.prompt : defaultSystemPrompt, 
                 loading: false
               })

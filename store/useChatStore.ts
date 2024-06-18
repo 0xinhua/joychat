@@ -22,19 +22,6 @@ export interface ChatState {
 const useChatStore = create<ChatState>()(
     persist(
       (set) => {
-        // init history data
-        (async () => {
-          if (isLocalMode) {
-            const localChatState = await localForage.get('chat-history') as { state: ChatState } || null
-            set({ chats: localChatState?.state?.chats || [] })
-          } else {
-            const response = await fetch('/api/chats')
-            const { data } = await response.json()
-            console.log('init history data', data)
-            set({ chats: data })
-          }
-        })()
-
         return {
           chats: [],
           chat: null,
@@ -46,6 +33,9 @@ const useChatStore = create<ChatState>()(
               const { data } = await response.json()
               console.log('fetch history data', data)
               set({ chats: data })
+            } else {
+              const localChatState = await localForage.get('chat-history') as { state: ChatState } || null
+              set({ chats: localChatState?.state?.chats || [] })
             }
           },
           setChat: (chat: Chat) => set({chat}),
