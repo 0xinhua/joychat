@@ -49,7 +49,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             <SelectContent>
               <SelectGroup>
                 {models.map((model) => (
-                  <SelectItem value={model.value} className={model.disabled ? 'cursor-not-allowed' : 'cursor-pointer'} disabled={model.disabled}>
+                  <SelectItem key={model.value} value={model.value} className={model.disabled ? 'cursor-not-allowed' : 'cursor-pointer'} disabled={model.disabled}>
                     <div className="flex items-center justify-center gap-x-1.5">
                       {<model.icon />}
                       <span className="line-clamp-1">{model.label}</span>
