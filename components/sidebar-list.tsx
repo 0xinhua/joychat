@@ -1,4 +1,3 @@
-import { clearChats } from '@/app/actions'
 import { ClearHistory } from '@/components/clear-history'
 import { SidebarItems } from '@/components/sidebar-items'
 import { cache } from 'react'
@@ -7,8 +6,6 @@ import { Chat } from '@/lib/types'
 import { UserMenu } from './user-menu'
 import { Session } from 'next-auth'
 import { SettingsDialog } from './settings'
-
-import useUserSettingStore from '@/store/useSettingStore'
 
 interface SidebarListProps {
   userId?: string,
@@ -33,11 +30,11 @@ export function SidebarList({ chats, session }: SidebarListProps) {
         )}
       </div>
       <div className="flex items-center justify-between py-4 px-3 sm:pl-4">
-        {session?.user ? <div>
+        { session?.user ? <div>
           <SettingsDialog />
           <UserMenu user={session.user} />
-        </div> : null}
-        <ClearHistory clearChats={clearChats} isEnabled={chats?.length > 0} />
+        </div> : null }
+        <ClearHistory isEnabled={chats?.length > 0} />
       </div>
     </div>
   )

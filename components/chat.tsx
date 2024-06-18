@@ -2,7 +2,7 @@
 
 import { useChat, type Message } from 'ai/react'
 
-import { cn } from '@/lib/utils'
+import { cn, nanoid } from '@/lib/utils'
 import { ChatList } from '@/components/chat-list'
 import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
@@ -22,16 +22,19 @@ import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
 import { usePathname, useRouter } from 'next/navigation'
 import useChatStore from '@/store/useChatStore'
+import { isLocalMode } from '@/lib/const'
+import { Chat as IChat } from '@/lib/types'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
-  initialMessages?: Message[]
+  initialMessages: Message[]
   id?: string
   title?: string
   loading?: boolean
+  userId?: string | null
 }
 
-export function Chat({ id, initialMessages, className, title, loading }: ChatProps) {
+export function Chat({ id, initialMessages, className, title, loading, userId }: ChatProps) {
   const router = useRouter()
   const path = usePathname()
   const [previewToken, setPreviewToken] = useLocalStorage<string | null>(
@@ -41,9 +44,7 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
   const [previewTokenDialog, setPreviewTokenDialog] = useState(IS_PREVIEW)
   const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '')
 
-  const { fetchHistory } = useChatStore(state => ({
-    fetchHistory: state.fetchHistory
-  }))
+  const { fetchHistory, chats, setChats } = useChatStore()
 
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
@@ -59,11 +60,35 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
           toast.error(response.statusText)
         }
       },
-      onFinish() {
+      onFinish(message: Message) {
+
+        if (isLocalMode) {
+
+          const existingChatIndex = chats.findIndex(chat => chat.chat_id === id)
+
+          if (existingChatIndex !== -1) {
+            const existingChat = chats[existingChatIndex]
+            const newChat = { ...existingChat, messages: [message, ...existingChat.messages] }
+            setChats([...chats.slice(0, existingChatIndex), newChat, ...chats.slice(existingChatIndex + 1)])
+          } else {
+
+            const newChat: IChat = {
+              chat_id: id as string,
+              title: input.substring(0, 100),
+              created_at: new Date(),
+              user_id: userId || undefined,
+              path: `/chat/${id}`,
+              messages: [...initialMessages, { role: 'user', content: input, id: nanoid() }, message],
+            }
+
+            setChats([newChat, ...chats])
+          }
+        }
+
         if (!path.includes('chat')) {
           router.replace(`/chat/${id}`)
           // router.refresh()
-          fetchHistory()
+          !isLocalMode && fetchHistory()
         }
       }
     })

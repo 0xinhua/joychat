@@ -1,7 +1,7 @@
 import { auth } from '@/auth'
-import { type Chat } from '@/lib/types'
 import { NextResponse } from 'next/server'
 import { pgPool } from '@/lib/pg'
+import { supabase } from '@/lib/supabase'
 
 export async function GET(req: Request) {
   const userId = (await auth())?.user.id
@@ -40,6 +40,39 @@ export async function GET(req: Request) {
     return NextResponse.json({
       data: rows,
       code: 0
+    })
+
+  } catch (error) {
+    console.log('error', error)
+    return NextResponse.json({
+      data: [],
+      code: 0
+    })
+  }
+}
+
+export async function DELETE(req: Request) {
+
+  const userId = (await auth())?.user.id
+
+  console.log('userId -> ', userId)
+
+  if (!userId) {
+    return new Response('Unauthorized', {
+      status: 401
+    })
+  }
+
+  try {
+
+    const { data, error } = await supabase.rpc('delete_user_chats', { p_user_id: userId });
+
+    console.log('delete rows data', error)
+
+    return NextResponse.json({
+      data: [],
+      code: 0,
+      message: 'success',
     })
 
   } catch (error) {

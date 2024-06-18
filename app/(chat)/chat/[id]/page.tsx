@@ -49,12 +49,22 @@ export default function ChatPage({ params }: ChatPageProps) {
 
   return <div>
     <Suspense>
-      {loading ? <div className="text-center text-gray-400 flex justify-center gap-1 items-center">
-      Loading
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin text-gray-400 size-4">
-        <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
-      </svg>
-      </div> : <Chat id={params.id} initialMessages={chat?.messages} title={chat?.title} loading={chatLoading} />}
+      {
+        loading
+        ? <div className="text-center text-gray-400 flex justify-center gap-1 items-center">
+          Loading
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin text-gray-400 size-4">
+            <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+          </svg>
+        </div>
+        : <Chat
+          id={params.id}
+          initialMessages={chat?.messages || []}
+          title={chat?.title}
+          loading={chatLoading} 
+          userId={session?.user.id}
+        />
+      }
     </Suspense>
   </div>
 }

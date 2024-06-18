@@ -21,7 +21,7 @@ export function SidebarItems({ chats }: SidebarItemsProps) {
         (chat, index) =>
           chat && (
             <motion.div
-              key={chat?.id}
+              key={chat?.chat_id}
               exit={{
                 opacity: 0,
                 height: 0

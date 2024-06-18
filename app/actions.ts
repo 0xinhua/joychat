@@ -1,10 +1,6 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
-
 import { auth } from '@/auth'
-import { type Chat } from '@/lib/types'
 import { pgPool } from '@/lib/pg'
 
 export async function getChat(chatId: string, userId: string) {
@@ -26,25 +22,6 @@ export async function getChat(chatId: string, userId: string) {
   console.log(`Query execution time: ${endTime - startTime} ms`) // 计算并打印查询执行时间
 
   return rows[0]
-}
-
-export async function clearChats() {
-  const session = await auth()
-
-  if (!session?.user?.id) {
-    return {
-      error: 'Unauthorized'
-    }
-  }
-
-  const query = `
-  DELETE FROM chat_dataset.chats 
-  WHERE user_id = $1;
-  `
-  await pgPool.query(query, [session?.user?.id])
-
-  revalidatePath('/')
-  return redirect('/')
 }
 
 export async function getSharedChat(id: string) {

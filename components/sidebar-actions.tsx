@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/tooltip'
 import useChatStore from '@/store/useChatStore'
 import { revalidatePath } from 'next/cache'
+import { isLocalMode } from '@/lib/const'
 
 interface SidebarActionsProps {
   chat: Chat
@@ -39,9 +40,6 @@ export function SidebarActions({
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false)
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
   const [isRemovePending, startRemoveTransition] = React.useTransition()
-  const { deleteChat } = useChatStore(state => ({
-    deleteChat: state.deleteChat
-  }))
 
   const { removeChat } = useChatStore(state => ({
     removeChat: state.removeChat
@@ -50,7 +48,7 @@ export function SidebarActions({
   return (
     <>
       <div className="space-x-1">
-        <Tooltip>
+        { isLocalMode ?  null : <Tooltip>
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
@@ -62,7 +60,7 @@ export function SidebarActions({
             </Button>
           </TooltipTrigger>
           <TooltipContent>Share chat</TooltipContent>
-        </Tooltip>
+        </Tooltip>}
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -104,11 +102,10 @@ export function SidebarActions({
                 event.preventDefault()
                 // @ts-ignore
                 startRemoveTransition(async () => {
-                  const result = await removeChat(chat.chat_id)
+                  await removeChat(chat.chat_id)
                   setDeleteDialogOpen(false)
                   router.push('/')
                   router.refresh()
-                  deleteChat(chat.id)
                   toast.success('Chat deleted')
                 })
               }}

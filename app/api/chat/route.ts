@@ -7,6 +7,7 @@ import { GoogleGenerativeAIStream, Message } from 'ai'
 import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 import { supabase } from '@/lib/supabase'
+import { isLocalMode } from '@/lib/const'
 
 // export const runtime = 'edge'
 
@@ -89,7 +90,7 @@ export async function POST(req: Request) {
     })
   }
 
-  console.log('model', model)
+  console.log('isLocalMode model id', isLocalMode, model, id,)
 
   // use groqOpenAI llama provider
   if (model.startsWith('llama3')) {
@@ -151,7 +152,9 @@ export async function POST(req: Request) {
 
   const stream = OpenAIStream(res, {
     async onCompletion(completion) {
-      handleCompletion(completion, messages, id, userId)
+      if (!isLocalMode) {
+        handleCompletion(completion, messages, id, userId)
+      }
     }
   })
 
