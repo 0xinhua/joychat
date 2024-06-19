@@ -27,7 +27,7 @@ import { Chat as IChat } from '@/lib/types'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
-  initialMessages: Message[]
+  initialMessages?: Message[]
   id?: string
   title?: string
   loading?: boolean
@@ -78,7 +78,7 @@ export function Chat({ id, initialMessages, className, title, loading, userId }:
               created_at: new Date(),
               user_id: userId || undefined,
               path: `/chat/${id}`,
-              messages: [...initialMessages, { role: 'user', content: input, id: nanoid() }, message],
+              messages: [...(initialMessages || []), { role: 'user', content: input, id: nanoid() }, message],
             }
 
             setChats([newChat, ...chats])
