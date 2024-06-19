@@ -35,7 +35,7 @@ export default function ChatPage({ params }: ChatPageProps) {
   }, [session?.user.id])
 
   const [loading, setLoading] = useState(false)
-  const { chat, chatLoading, fetchChatById, fetchHistory } = useChatStore()
+  const { chat, chatLoading, fetchChatById } = useChatStore()
 
   useEffect(() => {
     const fetchChat = async () => {
@@ -44,7 +44,6 @@ export default function ChatPage({ params }: ChatPageProps) {
       setLoading(false)
     }
     fetchChat()
-    fetchHistory()
     }, [])
 
   return <div>

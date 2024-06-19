@@ -21,7 +21,16 @@ interface ChatHistoryProps {
 export function ChatHistory({ userId, session }: ChatHistoryProps) {
   const { isSidebarOpen, isLoading, toggleSidebar } = useSidebar()
 
-  const { chats } = useChatStore()
+  const { chats, fetchHistory } = useChatStore(state => ({
+    chats: state.chats,
+    fetchHistory: state.fetchHistory
+  }))
+
+  useEffect(() => {
+    if (chats.length === 0) {
+      fetchHistory()
+    }
+  }, [fetchHistory, chats.length])
 
   return (
     <div className="flex flex-col h-full">
