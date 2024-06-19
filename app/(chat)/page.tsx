@@ -4,7 +4,6 @@ import { nanoid } from '@/lib/utils'
 import { Chat } from '@/components/chat'
 import useUserSettingStore from '@/store/useSettingStore'
 import { useEffect } from 'react'
-import useChatStore from '@/store/useChatStore'
 
 export default function IndexPage() {
 
@@ -13,14 +12,9 @@ export default function IndexPage() {
     fetchSystemPrompt
   } = useUserSettingStore()
 
-  const {
-    fetchHistory,
-  } = useChatStore()
-
   const id = nanoid()
 
   useEffect(() => {
-    fetchHistory()
     fetchSystemPrompt()
   },[])
 

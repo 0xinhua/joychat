@@ -60,7 +60,6 @@ export default function ChatPage({ params }: ChatPageProps) {
           id={params.id}
           initialMessages={chat?.messages}
           title={chat?.title}
-          loading={chatLoading}
         />
       }
     </Suspense>
