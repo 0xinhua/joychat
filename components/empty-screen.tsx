@@ -33,7 +33,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             My goal is to be your helpful personal AI. Ask me for advice, answers, etc.
           </p>
           <p className="leading-normal text-muted-foreground dark:text-gray-300">
-            Let's chat about anything on your mind, or try one of our quickstart questions.
+            Let&apos;s chat about anything on your mind, or try one of our quickstart questions.
           </p>
         </div>
         <div className="col-span-1 md:col-span-2 flex flex-col gap-y-1 leading-normal text-muted-foreground sm:pb-0 pb-4">
