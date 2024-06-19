@@ -8,15 +8,17 @@ import remarkMath from 'remark-math'
 import { cn } from '@/lib/utils'
 import { CodeBlock } from '@/components/ui/codeblock'
 import { MemoizedReactMarkdown } from '@/components/markdown'
-import { IconOpenAI, IconUser } from '@/components/ui/icons'
+import { IconBotAvatar, IconOpenAI, IconUser } from '@/components/ui/icons'
 import { ChatMessageActions } from '@/components/chat-message-actions'
 import { IconBot } from '@/components/ui/icons'
+import { User } from 'next-auth'
 
 export interface ChatMessageProps {
-  message: Message
+  message: Message,
+  user?: User
 }
 
-export function ChatMessage({ message, ...props }: ChatMessageProps) {
+export function ChatMessage({ message, user, ...props }: ChatMessageProps) {
   return (
     <div
       className={cn('group relative mb-4 flex items-start md:-ml-12')}
@@ -24,19 +26,22 @@ export function ChatMessage({ message, ...props }: ChatMessageProps) {
     >
       <div
         className={cn(
-          'flex size-9 shrink-0 select-none items-center justify-center rounded-2xl border shadow',
+          'flex size-9 shrink-0 select-none items-center justify-center rounded-2xl border border-gray-100 dark:border-neutral-800',
           message.role === 'user'
-            ? 'bg-background'
-            : 'bg-primary dark:bg-gray-300 text-primary-foreground'
+            ? 'bg-transparent'
+            : 'bg-primary bg-zinc-100/60 dark:bg-transparent text-primary-foreground'
         )}
       >
-        {message.role === 'user' ? <IconUser /> : <IconBot />}
+        { message.role === 'user' ? (user ? <span className="text-gray-500 font-medium dark:text-gray-300">{user?.name?.substring(0, 1)?.toUpperCase()}</span> : <IconUser />)
+        : <IconBot className="h-[20px] w-[20px] text-gray-500 dark:text-gray-300 mb-0.5" />}
       </div>
       <div className={cn(`
         group flex-1 ml-4 space-y-2 overflow-hidden min-h-[calc(2rem+theme(spacing[3.5])*2)] min-w-[60px] 
-        break-words rounded-xl border border-gray-100 bg-gradient-to-br from-gray-50 px-5 py-4 text-gray-600 
-        prose-pre:my-2 dark:border-neutral-800 dark:from-transparent dark:text-gray-300 dark:hover:bg-neutral-800 hover:bg-gray-100/50 transition-all
-      `)}>
+        break-words rounded-xl bg-transparent px-5 py-1 text-gray-600 
+        prose-pre:my-2 dark:border-neutral-800 dark:from-transparent dark:text-gray-300 transition-all
+      `,
+        message.role === 'assistant' && 'py-4 border border-gray-100 bg-zinc-100/60 dark:bg-neutral-900 dark:hover:bg-neutral-950 hover:bg-zinc-100/80'
+      )}>
         <MemoizedReactMarkdown
           className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
           remarkPlugins={[remarkGfm, remarkMath]}

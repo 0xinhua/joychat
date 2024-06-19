@@ -76,7 +76,7 @@ export function UserMenu({ user }: UserMenuProps) {
           )}
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-48 ml-2">
+      <DropdownMenuContent className="w-48 dark:bg-neutral-900 ml-2">
         <DropdownMenuLabel>
         <div className="text-[15px] font-medium">{user?.name}</div>
           <div className="text-[13px] text-zinc-500 font-normal">{user?.email}</div>
@@ -93,7 +93,7 @@ export function UserMenu({ user }: UserMenuProps) {
             <span>Billing</span>
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem> */}
-          <DropdownMenuItem className="cursor-pointer" onClick={e => setSettingsDialogOpen(true)}>
+          <DropdownMenuItem className="cursor-pointer dark:hover:bg-zinc-800" onClick={e => setSettingsDialogOpen(true)}>
             <Settings className="mr-2 size-4" />
             <span>Setting</span>
             {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
@@ -107,23 +107,23 @@ export function UserMenu({ user }: UserMenuProps) {
         {/* <DropdownMenuSeparator /> */}
         <DropdownMenuGroup>
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger className="dark:hover:bg-zinc-800">
               {/* <Button variant="ghost" size="icon" className="outline-none shadow-none focus:border-transparent focus:ring-0 focus-visible:ring-0 focus-visible:ring-transparent hover:bg-zinc-200 dark:hover:bg-neutral-700"> */}
               <Sun className="size-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 mr-2" />
               <Moon className="absolute size-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 mr-2" />
               <span>Theme</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem onClick={() => setTheme("light")} className="cursor-pointer">
+              <DropdownMenuSubContent className="dark:bg-zinc-900">
+                <DropdownMenuItem onClick={() => setTheme("light")} className="cursor-pointer dark:hover:bg-zinc-800">
                   <Sun className="mr-2 size-4" />
                   <span>Light</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")} className="cursor-pointer">
+                <DropdownMenuItem onClick={() => setTheme("dark")} className="cursor-pointer dark:hover:bg-zinc-800">
                   <Moon className="mr-2 size-4" />
                   <span>Dark</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")} className="cursor-pointer">
+                <DropdownMenuItem onClick={() => setTheme("system")} className="cursor-pointer dark:hover:bg-zinc-800">
                   <Settings className="mr-2 size-4" />
                   <span>System</span>
                 </DropdownMenuItem>
@@ -131,13 +131,13 @@ export function UserMenu({ user }: UserMenuProps) {
             </DropdownMenuPortal>
           </DropdownMenuSub>
         </DropdownMenuGroup>
-        <DropdownMenuItem>
+        <DropdownMenuItem className="dark:hover:bg-zinc-800">
           <GithubIcon className="mr-2 size-4" />
           <a
             href="https://github.com/0xinhua/joychat"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-between w-full"
+            className="inline-flex items-center justify-between w-full dark:hover:bg-zinc-800"
           >
             GitHub
             <IconExternalLink className="size-4 ml-auto" />
@@ -156,7 +156,7 @@ export function UserMenu({ user }: UserMenuProps) {
             })
             }
           }
-            className="cursor-pointer"
+            className="cursor-pointer dark:hover:bg-zinc-800"
           >
           <LogOut className="mr-2 size-4" />
           <span>Log out</span>

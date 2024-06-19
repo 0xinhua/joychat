@@ -33,8 +33,8 @@ export function ChatMessageActions({
     >
       <Button variant="ghost" size="icon" onClick={onCopy} className="hover:bg-transparent">
         {isCopied
-        ? <span className="flex items-center gap-x-1 text-[12px] px-2 py-1 bg-white rounded-md dark:bg-gray-600"><IconCopied />Copied</span>
-        : <span className="flex items-center gap-x-1 text-[12px] px-2.5 py-1 bg-white/60 hover:bg-white dark:bg-gray-600 rounded-md"><IconCopy />Copy</span>}
+        ? <span className="flex items-center gap-x-1 text-[12px] px-2 py-1 bg-white rounded-md dark:bg-neutral-900"><IconCopied />Copied</span>
+        : <span className="flex items-center gap-x-1 text-[12px] px-2.5 py-1 bg-white/60 hover:bg-white dark:bg-neutral-900 rounded-md"><IconCopy />Copy</span>}
         <span className="sr-only">Copy message</span>
       </Button>
     </div>

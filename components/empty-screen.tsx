@@ -24,7 +24,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
       <div className="grid md:grid-cols-10 grid-cols-1">
         <div className="rounded-lg bg-background dark:bg-transparent pb-4 sm:pb-8 md:col-span-8">
           <h1 className="mb-2 text-lg font-semibold flex items-center">
-            👋 Welcome to JoyChat <span className="font-normal ml-2 inline-flex items-center rounded-md border border-gray-100 bg-gray-50 px-1.5 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-gray-800">
+            👋 Welcome to JoyChat <span className="font-normal ml-2 inline-flex items-center rounded-md border border-gray-100 bg-gray-50 px-1.5 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-zinc-800">
               <ExternalLink className="py-1 tracking-wide" title="JoyChat Changelog" href="https://github.com/0xinhua/joychat/discussions/categories/changelog">
               v0.1.1
             </ExternalLink></span>
@@ -42,10 +42,10 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             <SelectTrigger className="w-[154px] shadow-none">
               <SelectValue placeholder="Select a model" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="dark:bg-zinc-900">
               <SelectGroup>
                 {models.map((model) => (
-                  <SelectItem key={model.value} value={model.value} className={model.disabled ? 'cursor-not-allowed' : 'cursor-pointer'} disabled={model.disabled}>
+                  <SelectItem key={model.value} value={model.value} className={model.disabled ? 'cursor-not-allowed' : 'cursor-pointer dark:hover:bg-zinc-800'} disabled={model.disabled}>
                     <div className="flex items-center justify-center gap-x-1.5">
                       {<model.icon />}
                       <span className="line-clamp-1">{model.label}</span>
