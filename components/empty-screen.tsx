@@ -20,7 +20,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   const [model, setModel] = useLocalStorage('selected-model', defaultModel)
 
   return (
-    <div className="mx-auto max-w-3xl pb-4 sm:px-0 px-4">
+    <div className="mx-auto max-w-3xl pb-4 px-4 md:px-2">
       <div className="grid md:grid-cols-10 grid-cols-1">
         <div className="rounded-lg bg-background dark:bg-transparent pb-4 sm:pb-8 md:col-span-8">
           <h1 className="mb-2 text-lg font-semibold flex items-center">
@@ -65,7 +65,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
         <h1 className="mb-2 text-lg font-semibold">
           💬 Quickstart
         </h1>
-        <div className="mt-4 grid gap-3 lg:grid-cols-3 lg:gap-5">
+        <div className="mt-4 grid gap-3 lg:grid-cols-3 md:grid-cols-2 lg:gap-5">
           { quickstartMessages.map((message, index) => (
             <button
               key={index}
