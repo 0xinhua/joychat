@@ -24,6 +24,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import useChatStore from '@/store/useChatStore'
 import { defaultModel, isLocalMode } from '@/lib/const'
 import { Chat as IChat } from '@/lib/types'
+import { useSession } from 'next-auth/react'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
@@ -31,10 +32,9 @@ export interface ChatProps extends React.ComponentProps<'div'> {
   id?: string
   title?: string
   loading?: boolean
-  userId?: string | null
 }
 
-export function Chat({ id, initialMessages, className, title, loading, userId }: ChatProps) {
+export function Chat({ id, initialMessages, className, title, loading }: ChatProps) {
   const router = useRouter()
   const path = usePathname()
   const [previewToken, setPreviewToken] = useLocalStorage<string | null>(
@@ -45,6 +45,7 @@ export function Chat({ id, initialMessages, className, title, loading, userId }:
   const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '')
 
   const { fetchHistory, chats, setChats } = useChatStore()
+  const { data: session, status } = useSession()
 
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
@@ -76,11 +77,10 @@ export function Chat({ id, initialMessages, className, title, loading, userId }:
               chat_id: id as string,
               title: input.substring(0, 100),
               created_at: new Date(),
-              user_id: userId || undefined,
+              user_id: session?.user.id || '',
               path: `/chat/${id}`,
               messages: [...(initialMessages || []), { role: 'user', content: input, id: nanoid() }, message],
             }
-
             setChats([newChat, ...chats])
           }
         }
