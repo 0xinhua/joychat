@@ -30,14 +30,10 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             </ExternalLink></span>
           </h1>
           <p className="mb-2 leading-normal text-muted-foreground dark:text-gray-300">
-            A beautiful open source AI chatbot built by {' '}
-            <ExternalLink href="https://twitter.com/0xinhua">
-              0xinhua
-            </ExternalLink>
-            .
+            My goal is to be your helpful personal AI. Ask me for advice, answers, etc.
           </p>
           <p className="leading-normal text-muted-foreground dark:text-gray-300">
-            You can start a conversation here or try with the following quickstart question.
+            Let's chat about anything on your mind, or try one of our quickstart questions.
           </p>
         </div>
         <div className="col-span-1 md:col-span-2 flex flex-col gap-y-1 leading-normal text-muted-foreground sm:pb-0 pb-4">

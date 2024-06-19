@@ -5,7 +5,7 @@
 </a>
 
 <p align="center">
-  A beautiful, customizable AI chatbot built with Next.js, Vercel AI SDK, OpenAI, and Supabase.
+  A beautiful, customizable, personal AI chatbot built with Next.js, Vercel AI SDK, OpenAI, and Supabase.
 </p>
 
 <p align="center">
@@ -19,7 +19,7 @@
 
 ## Usage
 
-  👋 Hey, you can use [joychat.io](https://joychat.io/) for **Free** as long as my OpenAI key quota allows it. If it exceeds what I can afford later, I will consider limiting frequency of use.
+  👋 Hey there, you can use [joychat.io](https://joychat.io/) for **Free** as long as my OpenAI key quota allows it. If it exceeds what I can afford later, I will consider limiting frequency of use. My goal is to build a beautiful, helpful personal AI assistant, feel free to start a conversation and give feedback.
 
 ## Stacks
 
