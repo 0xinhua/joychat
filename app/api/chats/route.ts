@@ -1,6 +1,5 @@
 import { auth } from '@/auth'
 import { NextResponse } from 'next/server'
-import { pgPool } from '@/lib/pg'
 import { supabase } from '@/lib/supabase'
 
 export async function GET(req: Request) {
@@ -18,32 +17,25 @@ export async function GET(req: Request) {
 
   try {
 
-    const query = `
-    SELECT * 
-    FROM chat_dataset.chats 
-    WHERE user_id = $1 
-    ORDER BY updated_at DESC;
-    `
-    const { rows } = await pgPool.query(query, [
-      userId
-    ])
+    const { data: rows, error } = await supabase.rpc('get_user_chats', { p_user_id: userId })
 
-    // console.log('rows data =>', rows)
+    console.log('rows data =>', rows, error)
 
-    if (rows.length === 0) {
+    if (error) {
+      console.error('get_user_chats rpc error:', error)
       return NextResponse.json({
         data: [],
-        code: 0
+        code: 0,
       })
     }
 
     return NextResponse.json({
-      data: rows,
+      data: rows ? rows : [],
       code: 0
     })
 
   } catch (error) {
-    console.log('error', error)
+    console.log('get_user_chats rpc error', error)
     return NextResponse.json({
       data: [],
       code: 0
@@ -65,7 +57,7 @@ export async function DELETE(req: Request) {
 
   try {
 
-    const { data, error } = await supabase.rpc('delete_user_chats', { p_user_id: userId });
+    const { data, error } = await supabase.rpc('delete_user_chats', { p_user_id: userId })
 
     console.log('delete rows data', error)
 

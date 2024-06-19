@@ -35,13 +35,11 @@ export const quickstartMessages = [
   {
     heading: '💡 Data analysis',
     message: `Summarize the key characteristics of this dataset. Include information on data types, missing values, and basic statistics. The following dataset: 
-
 \n`
   },
   {
     heading: `📖 Summarize content`,
     message: `Summarize content you are provided with for a second-grade student: 
-
 \n`
   },
   {
@@ -49,15 +47,13 @@ export const quickstartMessages = [
     message: `Proofread and format [email]. Also, give suggestions for getting the point across effectively.
 
 [email] following: 
-
 \n`
   },
   {
     heading: '🔠 Translate English',
     message: `You will be provided with statements, and your task is to convert them to standard English.
 
-[statements] following: 
-
+[statements] following:
 \n`
   },
   {
@@ -65,7 +61,6 @@ export const quickstartMessages = [
     message: `You will be provided with statements, and your task is to convert them to simplified Chinese, In the translated text, English words and numbers should be preceded and followed by a space.
 
 [statements] following: 
-
 \n`
   },
   {

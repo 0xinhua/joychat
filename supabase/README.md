@@ -149,6 +149,41 @@ END;
 $$;
 ```
 
+- **Function to get all Chat history**
+
+```sql
+-- Execute the following SQL statement in the Supabase SQL Editor to create the function
+create or replace function get_user_chats(p_user_id uuid)
+returns table(
+  id bigint, 
+  chat_id text, 
+  user_id uuid, 
+  title text, 
+  path text, 
+  created_at bigint, 
+  messages jsonb, 
+  share_path text, 
+  updated_at bigint
+) as $$
+begin
+  return query
+  select 
+    c.id, 
+    c.chat_id, 
+    c.user_id, 
+    c.title, 
+    c.path, 
+    c.created_at, 
+    c.messages, 
+    c.share_path, 
+    c.updated_at
+  from chat_dataset.chats c
+  where c.user_id = p_user_id
+  order by c.updated_at desc;
+end;
+$$ language plpgsql;
+```
+
 - **Function to Delete all Chat data**
 
 ```sql
