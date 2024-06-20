@@ -7,7 +7,8 @@ import { GoogleGenerativeAIStream, Message } from 'ai'
 import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 import { supabase } from '@/lib/supabase'
-import { isLocalMode } from '@/lib/const'
+import { isLocalMode, useLangfuse } from '@/lib/const'
+import langfuse from '@/lib/langfuse'
 
 // export const runtime = 'edge'
 
@@ -30,6 +31,8 @@ const groqOpenAI = new OpenAI({
   baseURL: 'https://api.groq.com/openai/v1',
   apiKey: process.env.GROQ_API_KEY,
 })
+
+let trace: any, generation: any;
 
 async function handleCompletion(completion: string, messages: Message[], id: string, userId: string) {
 
@@ -90,7 +93,29 @@ export async function POST(req: Request) {
     })
   }
 
-  console.log('isLocalMode model id', isLocalMode, model, id,)
+  console.log('isLocalMode model chatId: ', isLocalMode, model, id)
+
+  const messageHistory = messages.map(({ content, role }: { content: string, role: string}) => ({
+    content,
+    role: role,
+  }))
+
+  if (useLangfuse) {
+    trace = langfuse.trace({
+      name: "chat",
+      sessionId: "joychat.conversation." + id,
+      userId: userId,
+      metadata: {
+        pathname: new URL(req.headers.get("Referer") as string).pathname,
+      },
+    })
+
+    generation = trace.generation({
+      name: "generation",
+      input: messageHistory as any,
+      model,
+    })
+  }
 
   // use groqOpenAI llama provider
   if (model.startsWith('llama3')) {
@@ -106,13 +131,40 @@ export async function POST(req: Request) {
 
     const stream = OpenAIStream(res, {
 
+      onStart: () => {
+
+        if (useLangfuse) {
+          generation.update({
+            completionStartTime: new Date(),
+          })
+        }
+      },
       async onCompletion(completion) {
-        handleCompletion(completion, messages, id, userId)
+        if (useLangfuse) {
+          generation.end({
+            output: completion,
+            level: completion.includes("I don't know how to help with that")
+              ? "WARNING"
+              : "DEFAULT",
+            statusMessage: completion.includes("I don't know how to help with that")
+              ? "Refused to answer"
+              : undefined,
+          })
+        }
+        if (!isLocalMode) {
+          handleCompletion(completion, messages, id, userId)
+        }
+        if (useLangfuse) {
+          await langfuse.shutdownAsync()
+        }
       }
     })
 
-    return new StreamingTextResponse(stream)
-
+    return new StreamingTextResponse(stream, {
+      headers: {
+        "X-Trace-Id": trace.id || '',
+      },
+    })
   }
 
   // use google gemini provider
@@ -151,9 +203,30 @@ export async function POST(req: Request) {
   })
 
   const stream = OpenAIStream(res, {
+    onStart: () => {
+      if (useLangfuse) {
+        generation.update({
+          completionStartTime: new Date(),
+        })
+      }
+    },
     async onCompletion(completion) {
+      if (useLangfuse) {
+        generation.end({
+          output: completion,
+          level: completion.includes("I don't know how to help with that")
+            ? "WARNING"
+            : "DEFAULT",
+          statusMessage: completion.includes("I don't know how to help with that")
+            ? "Refused to answer"
+            : undefined,
+        })
+      }
       if (!isLocalMode) {
         handleCompletion(completion, messages, id, userId)
+      }
+      if (useLangfuse) {
+        await langfuse.shutdownAsync()
       }
     }
   })

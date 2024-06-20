@@ -3,6 +3,9 @@ import { IconBard, IconMeta, IconOpenai } from "@/components/ui/icons"
 export const defaultSystemPrompt = "You are a helpful assistant, you always give concise answers."
 export const isLocalMode = process.env.NEXT_PUBLIC_STORAGE_MODE === 'local'
 export const defaultModel = process.env.NEXT_PUBLIC_DEFAULT_MODEL || 'gpt-4o'
+export const useLangfuse = !!process.env.NEXT_PUBLIC_LANGFUSE_PUBLIC_KEY && !!process.env.NEXT_PUBLIC_LANGFUSE_BASE_URL
+
+console.log('useLangfuse', useLangfuse)
 
 export const models = [
   {

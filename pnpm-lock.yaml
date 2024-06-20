@@ -83,6 +83,9 @@ dependencies:
   geist:
     specifier: ^1.2.1
     version: 1.2.1(next@14.1.0)
+  langfuse:
+    specifier: ^3.12.1
+    version: 3.12.1
   localforage:
     specifier: ^1.10.0
     version: 1.10.0
@@ -3620,6 +3623,20 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
+  /langfuse-core@3.12.1:
+    resolution: {integrity: sha512-TTNrs0s88Fl4LJ2RNiimoV6muFZcrTNxt9DY45YrORH+zo+M7VHNX0MJvI96xk4zA6bxKFy0ONxFC75+ipsBRw==}
+    engines: {node: '>=18'}
+    dependencies:
+      mustache: 4.2.0
+    dev: false
+
+  /langfuse@3.12.1:
+    resolution: {integrity: sha512-hzhth+lGyVhJgmSKaGVTBCg+GnILMdUKK0jgN5hFvwkKcLZRRQl3VZMA53mfj9PIMMU4QIJkwU9GvUpH42qIoA==}
+    engines: {node: '>=18'}
+    dependencies:
+      langfuse-core: 3.12.1
+    dev: false
+
   /language-subtag-registry@0.3.22:
     resolution: {integrity: sha512-tN0MCzyWnoz/4nHS6uxdlFWoUZT7ABptwKPQ52Ea7URk6vll88bWBVhodtnlfEuCcKWNGoc+uGbw1cwa9IKh/w==}
     dev: true
@@ -4223,6 +4240,11 @@ packages:
 
   /ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
+
+  /mustache@4.2.0:
+    resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
+    hasBin: true
+    dev: false
 
   /mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}

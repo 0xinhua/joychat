@@ -38,6 +38,7 @@
     "focus-trap-react": "^10.2.3",
     "framer-motion": "^10.18.0",
     "geist": "^1.2.1",
+    "langfuse": "^3.12.1",
     "localforage": "^1.10.0",
     "lucide-react": "^0.356.0",
     "mixpanel": "^0.18.0",
