@@ -58,7 +58,7 @@ export default function ChatPage({ params }: ChatPageProps) {
         </div>
         : <Chat
           id={params.id}
-          initialMessages={chat?.messages}
+          initialMessages={chat?.messages || []}
           title={chat?.title}
         />
       }

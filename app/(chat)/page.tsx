@@ -21,8 +21,8 @@ export default function IndexPage() {
   return <Chat
     id={id}
     initialMessages={[{
-    id:'system-prompt',
-    role: 'system',
-    content: systemPrompt || "You are a helpful assistant.",
+      id:'system-prompt',
+      role: 'system',
+      content: systemPrompt || "You are a helpful assistant.",
   }]} />
 }

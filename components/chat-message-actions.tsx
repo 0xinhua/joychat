@@ -27,7 +27,7 @@ export function ChatMessageActions({
     <div
       className={cn(
         `flex items-center space-x-1 px-2.5 bg-white dark:bg-neutral-900 border border-gray-200/80 dark:border-neutral-700 justify-end
-          transition-opacity md:absolute md:right-3 md:-bottom-4 absolute opacity-0 rounded-lg shadow-sm transition`,
+          md:absolute md:right-3 md:-bottom-4 absolute opacity-0 rounded-lg shadow-sm transition`,
         className
       )}
       {...props}
