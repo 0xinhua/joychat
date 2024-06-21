@@ -2,10 +2,10 @@
 
 import { type Message } from 'ai'
 
-import { Button } from '@/components/ui/button'
 import { IconCopied, IconCopy } from '@/components/ui/icons'
 import { useCopyToClipboard } from '@/lib/hooks/use-copy-to-clipboard'
 import { cn } from '@/lib/utils'
+import { ChatMessageFeedback } from './chat-message-feedback'
 
 interface ChatMessageActionsProps extends React.ComponentProps<'div'> {
   message: Message
@@ -26,17 +26,19 @@ export function ChatMessageActions({
   return (
     <div
       className={cn(
-        'flex items-center justify-end transition-opacity md:absolute md:right-9 md:bottom-2 absolute opacity-0',
+        `flex items-center space-x-1 px-2.5 bg-white dark:bg-neutral-900 border border-gray-200/80 dark:border-neutral-700 justify-end
+          transition-opacity md:absolute md:right-3 md:-bottom-4 absolute opacity-0 rounded-lg shadow-sm transition`,
         className
       )}
       {...props}
     >
-      <Button variant="ghost" size="icon" onClick={onCopy} className="hover:bg-transparent">
+      <div className="cursor-pointer" onClick={onCopy}>
         {isCopied
-        ? <span className="flex items-center gap-x-1 text-[12px] px-2 py-1 bg-white rounded-md dark:bg-neutral-900"><IconCopied />Copied</span>
-        : <span className="flex items-center gap-x-1 text-[12px] px-2.5 py-1 bg-white/60 hover:bg-white dark:bg-neutral-900 rounded-md"><IconCopy />Copy</span>}
+        ? <div className="flex items-center gap-x-1 text-[12px] py-1 rounded-md dark:bg-neutral-900"><IconCopied />Copied</div>
+        : <div className="flex items-center gap-x-1 text-[12px] py-1 hover:bg-white dark:bg-neutral-900 rounded-md"><IconCopy />Copy</div>}
         <span className="sr-only">Copy message</span>
-      </Button>
+      </div>
+      { message?.id ?<ChatMessageFeedback message={message} /> : null}
     </div>
   )
 }

@@ -10,7 +10,7 @@ import { FooterText } from '@/components/footer'
 import { ChatShareDialog } from '@/components/chat-share-dialog'
 import { useRouter } from 'next/navigation'
 import { useSidebar } from '@/lib/hooks/use-sidebar'
-import { cn } from '@/lib/utils'
+import { cn, nanoid } from '@/lib/utils'
 
 export interface ChatPanelProps
   extends Pick<
@@ -25,6 +25,7 @@ export interface ChatPanelProps
   > {
   id?: string
   title?: string
+  onSubmit: (value: string) => void
 }
 
 export function ChatPanel({
@@ -36,7 +37,8 @@ export function ChatPanel({
   reload,
   input,
   setInput,
-  messages
+  messages,
+  onSubmit
 }: ChatPanelProps) {
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
   const router = useRouter()
@@ -99,11 +101,7 @@ export function ChatPanel({
         ">
           <PromptForm
             onSubmit={async value => {
-              await append({
-                id,
-                content: value,
-                role: 'user'
-              })
+              onSubmit(value)
             }}
             input={input}
             setInput={setInput}

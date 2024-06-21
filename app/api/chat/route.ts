@@ -32,9 +32,9 @@ const groqOpenAI = new OpenAI({
   apiKey: process.env.GROQ_API_KEY,
 })
 
-let trace: any, generation: any;
+let trace: any, generation: any, messageId: string
 
-async function handleCompletion(completion: string, messages: Message[], id: string, userId: string) {
+async function handleCompletion(completion: string, messages: Message[], id: string, userId: string, messageId: string) {
 
   const nonSystemMessages = messages.filter((message: Message) => message.role !== 'system')
   const firstNonSystemMessage = nonSystemMessages.find((message: Message) => message.role !== 'system')
@@ -46,6 +46,7 @@ async function handleCompletion(completion: string, messages: Message[], id: str
   const newMessage = {
     content: completion,
     role: 'assistant',
+    id: messageId
   }
 
   const updatedMessages = [
@@ -95,9 +96,10 @@ export async function POST(req: Request) {
 
   console.log('isLocalMode model chatId: ', isLocalMode, model, id)
 
-  const messageHistory = messages.map(({ content, role }: { content: string, role: string}) => ({
+  const messageHistory = messages.map(({ content, role, id }: { content: string, role: string, id: string }) => ({
     content,
-    role: role,
+    role,
+    id,
   }))
 
   if (useLangfuse) {
@@ -116,6 +118,10 @@ export async function POST(req: Request) {
       model,
     })
   }
+
+  console.log('trace.id message useLangfuse', trace?.id, useLangfuse)
+
+  messageId = useLangfuse ? trace?.id : nanoid()
 
   // use groqOpenAI llama provider
   if (model.startsWith('llama3')) {
@@ -152,7 +158,7 @@ export async function POST(req: Request) {
           })
         }
         if (!isLocalMode) {
-          handleCompletion(completion, messages, id, userId)
+          handleCompletion(completion, messages, id, userId, messageId)
         }
         if (useLangfuse) {
           await langfuse.shutdownAsync()
@@ -162,7 +168,7 @@ export async function POST(req: Request) {
 
     return new StreamingTextResponse(stream, {
       headers: {
-        "X-Trace-Id": trace.id || '',
+        "X-Trace-Id": trace?.id || messageId,
       },
     })
   }
@@ -179,7 +185,7 @@ export async function POST(req: Request) {
     // Convert the response into a friendly text-stream
     const stream = GoogleGenerativeAIStream(geminiStream, {
       onCompletion: async (completion) => {
-        handleCompletion(completion, messages, id, userId)      
+        handleCompletion(completion, messages, id, userId, messageId)      
       }
     })
 
@@ -223,7 +229,7 @@ export async function POST(req: Request) {
         })
       }
       if (!isLocalMode) {
-        handleCompletion(completion, messages, id, userId)
+        handleCompletion(completion, messages, id, userId, messageId)
       }
       if (useLangfuse) {
         await langfuse.shutdownAsync()
@@ -231,5 +237,9 @@ export async function POST(req: Request) {
     }
   })
 
-  return new StreamingTextResponse(stream)
+  return new StreamingTextResponse(stream, {
+    headers: {
+      "X-Trace-Id": trace?.id || messageId,
+    },
+  })
 }

@@ -16,19 +16,19 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
 import { usePathname, useRouter } from 'next/navigation'
 import useChatStore from '@/store/useChatStore'
-import { defaultModel, isLocalMode } from '@/lib/const'
+import { defaultModel, isLocalMode, useLangfuse } from '@/lib/const'
 import { Chat as IChat } from '@/lib/types'
 import { useSession } from 'next-auth/react'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
-  initialMessages?: Message[]
+  initialMessages: Message[]
   id?: string
   title?: string
   loading?: boolean
@@ -46,8 +46,12 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
 
   const { fetchHistory, chats, setChats } = useChatStore()
   const { data: session, status } = useSession()
+  const latestTraceId = useRef<string | null>(null)
 
-  const { messages, append, reload, stop, isLoading, input, setInput } =
+  const updatedMessages = useRef<Message[]>([]);
+  const latestUserMessage = useRef<Message | null>(null);
+
+  const { messages, setMessages, append, reload, stop, isLoading, input, setInput } =
     useChat({
       initialMessages,
       id,
@@ -56,9 +60,14 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
         previewToken,
         model: localStorage.getItem('selected-model')?.replaceAll('"', '') || defaultModel
       },
+      sendExtraMessageFields: true,
       onResponse(response) {
         if (response.status === 401) {
           toast.error(response.statusText)
+        }
+        if (useLangfuse) {
+          const newTraceId = response.headers.get("X-Trace-Id")
+          latestTraceId.current = newTraceId
         }
       },
       onFinish(message: Message) {
@@ -84,6 +93,20 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
             setChats([newChat, ...chats])
           }
         }
+        
+        if (latestUserMessage.current) {
+          updatedMessages.current.push({
+            ...latestUserMessage.current,
+            id: latestUserMessage.current.id ?? nanoid(),
+          })
+          latestUserMessage.current = null
+        }
+        updatedMessages.current.push({
+          ...message,
+          id: latestTraceId.current ?? message.id,
+        })
+  
+        setMessages([...(initialMessages || []), ...updatedMessages.current])
 
         if (!path.includes('chat')) {
           router.replace(`/chat/${id}`)
@@ -122,6 +145,15 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
         messages={messages}
         input={input}
         setInput={setInput}
+        onSubmit={async (value) => {
+          const userMessage: Message = {
+            id: nanoid(),
+            content: input,
+            role: "user",
+          }
+          latestUserMessage.current = userMessage
+          await append(userMessage)
+        }}
       />
 
       <Dialog open={previewTokenDialog} onOpenChange={setPreviewTokenDialog}>

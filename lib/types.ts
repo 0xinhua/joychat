@@ -18,3 +18,5 @@ export type ServerActionResult<Result> = Promise<
       error: string
     }
 >
+
+export type Feedback = "positive" | "negative"

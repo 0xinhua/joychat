@@ -83,7 +83,7 @@ export function ChatMessage({ message, user, ...props }: ChatMessageProps) {
         >
           {message.content}
         </MemoizedReactMarkdown>
-        <ChatMessageActions message={message} className="group-hover:opacity-100" />
+        { message.role === 'assistant' ? <ChatMessageActions message={message} className="group-hover:opacity-100" /> : null }
       </div>
     </div>
   )
