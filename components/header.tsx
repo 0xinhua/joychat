@@ -50,7 +50,7 @@ export async function Header() {
           </div>
         ) : (
           <Button variant="link" asChild className="-ml-2">
-            <Link href="/sign-in?callbackUrl=/">Login</Link>
+            <Link href="/login?callbackUrl=/">Login</Link>
           </Button>
         )}
       </div>

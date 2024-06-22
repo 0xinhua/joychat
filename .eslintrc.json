@@ -10,7 +10,8 @@
   "rules": {
     "tailwindcss/no-custom-classname": "off",
     "tailwindcss/classnames-order": "off",
-    "tailwindcss/enforces-shorthand": "off"
+    "tailwindcss/enforces-shorthand": "off",
+    "tailwindcss/no-contradicting-classname": "off"
   },
   "settings": {
     "tailwindcss": {

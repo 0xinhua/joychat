@@ -25,8 +25,8 @@ export default async function SignInPage() {
         <div className="mx-auto grid w-[320px] gap-6">
           <div className="grid gap-2 text-center">
             <div className="flex text-center items-center justify-center ">
-              <IconChatBot className='mr-1.5 mt-1.5 mt-0.5 size-8 dark:hidden' />
-              <IconChatBotDark className='mr-1.5 mt-1.5 mt-0.5 size-8 hidden dark:block' />
+              <IconChatBot className='mr-1.5 mt-1.5 size-8 dark:hidden' />
+              <IconChatBotDark className='mr-1.5 mt-1.5 size-8 hidden dark:block' />
               <h1 className="text-2xl font-semibold tracking-tight">
               JoyChat
               </h1>
