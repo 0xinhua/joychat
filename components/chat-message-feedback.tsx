@@ -57,7 +57,7 @@ export function ChatMessageFeedback({ message }: { message: Message }) {
           variant="outline"
           className="flex border-none dark:bg-transparent shadow-none items-center px-1 hover:bg-transparent"
         >
-          <IconThumbsUp className="h-4 w-4 text-gray-700 dark:text-gray-200" />
+          <IconThumbsUp className="size-3 text-gray-700 dark:text-gray-200" />
         </Button>
         <Button
           onClick={() =>
@@ -69,7 +69,7 @@ export function ChatMessageFeedback({ message }: { message: Message }) {
           variant="outline"
           className="flex border-none shadow-none dark:bg-transparent items-center px-1 hover:bg-transparent"
         >
-          <IconThumbsDown className="h-4 w-4 text-gray-700 dark:text-gray-200" />
+          <IconThumbsDown className="size-3 text-gray-700 dark:text-gray-200" />
         </Button>
       </div>
 
@@ -88,7 +88,7 @@ export function ChatMessageFeedback({ message }: { message: Message }) {
             className="min-h-[100px]"
           />
           <DialogFooter>
-            <Button className="sm:h-10 h-10" onClick={handleSubmitFeedback}>Submit</Button>
+            <Button className="sm:h-9 h-8 py-2" onClick={handleSubmitFeedback}>Submit</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

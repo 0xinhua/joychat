@@ -26,7 +26,7 @@ export function ChatMessageActions({
   return (
     <div
       className={cn(
-        `flex items-center space-x-1 px-2.5 bg-white dark:bg-neutral-900 border border-gray-200/80 dark:border-neutral-700 justify-end
+        `flex items-center space-x-1 px-2.5 max-h-[30px] bg-white dark:bg-neutral-950 border border-gray-200/80 dark:border-neutral-700 justify-end
           md:absolute md:right-3 md:-bottom-4 absolute opacity-0 rounded-lg shadow-sm transition`,
         className
       )}
@@ -34,8 +34,8 @@ export function ChatMessageActions({
     >
       <div className="cursor-pointer" onClick={onCopy}>
         {isCopied
-        ? <div className="flex items-center gap-x-1 text-[12px] py-1 rounded-md dark:bg-neutral-900"><IconCopied />Copied</div>
-        : <div className="flex items-center gap-x-1 text-[12px] py-1 hover:bg-white dark:bg-neutral-900 rounded-md"><IconCopy />Copy</div>}
+        ? <div className="flex items-center gap-x-1 text-[12px] py-1 rounded-md dark:bg-neutral-900"><IconCopied  className="size-3" />Copied</div>
+        : <div className="flex items-center gap-x-1 text-[12px] py-1 hover:bg-white dark:bg-neutral-900 rounded-md"><IconCopy className="size-3" />Copy</div>}
         <span className="sr-only">Copy message</span>
       </div>
       { message?.id ?<ChatMessageFeedback message={message} /> : null}
