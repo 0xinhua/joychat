@@ -58,7 +58,7 @@ export const {
     }
   },
   pages: {
-    signIn: '/sign-in', // overrides the next-auth default signin page https://authjs.dev/guides/basics/pages
+    signIn: '/login', // overrides the next-auth default signin page https://authjs.dev/guides/basics/pages
     error: '/apply',
   }
 })
