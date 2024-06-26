@@ -28,7 +28,6 @@ To store chat data in Supabase, follow these steps:
 ```env
 SUPABASE_CONNECTION_STRING="your_supabase_connection_string"
 NEXT_PUBLIC_SUPABASE_URL="your_supabase_url"
-SUPABASE_PUBLIC_ANON_KEY="your_supabase_public_anon_key"
 ```
 
 ### SQL Configuration
