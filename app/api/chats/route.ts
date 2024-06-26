@@ -19,8 +19,6 @@ export async function GET(req: Request) {
 
     const { data: rows, error } = await supabase.rpc('get_user_chats', { p_user_id: userId })
 
-    console.log('rows data =>', rows, error)
-
     if (error) {
       console.error('get_user_chats rpc error:', error)
       return NextResponse.json({
