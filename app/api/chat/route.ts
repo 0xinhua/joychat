@@ -128,9 +128,17 @@ export async function POST(req: Request) {
 
     console.log('llama3-8b-8192')
 
+  // remove id from message
+  const newMessages = messages.map(({role, content}: Message) => {
+    return {
+      content,
+      role
+    }
+  })
+
     const res = await groqOpenAI.chat.completions.create({
       model: 'llama3-8b-8192',
-      messages,
+      messages: newMessages,
       temperature: 0.7,
       stream: true
     })
