@@ -32,7 +32,7 @@ export function ChatMessage({ message, user, ...props }: ChatMessageProps) {
             : 'bg-primary bg-zinc-100/60 dark:bg-transparent text-primary-foreground'
         )}
       >
-        { message.role === 'user' ? (user ? <span className="text-gray-500 dark:text-gray-300">{user?.name?.substring(0, 1)?.toUpperCase()}</span> : <IconUser />)
+        { message.role === 'user' ? (user?.name ? <span className="text-gray-500 dark:text-gray-300">{user?.name?.substring(0, 1)?.toUpperCase()}</span> : <IconUser />)
         : <IconBot className="h-[20px] w-[20px] text-gray-500 dark:text-gray-300 mb-0.5" />}
       </div>
       <div className={cn(`

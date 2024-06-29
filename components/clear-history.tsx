@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { IconSpinner } from '@/components/ui/icons'
 import useChatStore from '@/store/useChatStore'
+import { useMode } from './mode'
 
 interface ClearHistoryProps {
   isEnabled: boolean
@@ -25,27 +26,26 @@ interface ClearHistoryProps {
 export function ClearHistory({
   isEnabled = false,
 }: ClearHistoryProps) {
+
+  const { mode } = useMode()
   const [open, setOpen] = React.useState(false)
   const [isPending, startTransition] = React.useTransition()
   const router = useRouter()
-  const { removeChats } = useChatStore(state => ({
-    removeChats: state.removeChats
-  }))
+  const { removeChats, fetchRemoveChats } = useChatStore()
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <Button variant="ghost" disabled={!isEnabled || isPending} className="px-2 font-normal hover:bg-zinc-200 dark:hover:bg-neutral-700">
           {isPending && <IconSpinner className="mr-2" />}
-          Clear history
+          { isEnabled ? 'Clear history' : ''}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete your chat history and remove your data
-            from our servers.
+            This will permanently delete your chat history and remove all data.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -57,6 +57,7 @@ export function ClearHistory({
               startTransition(async () => {
                 setOpen(false)
                 await removeChats()
+                mode === 'cloud' && fetchRemoveChats()
                 router.push('/')
               })
             }}

@@ -7,7 +7,7 @@ import { GoogleGenerativeAIStream, Message } from 'ai'
 import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 import { supabase } from '@/lib/supabase'
-import { isLocalMode, useLangfuse } from '@/lib/const'
+import { useLangfuse } from '@/lib/const'
 import langfuse from '@/lib/langfuse'
 
 // export const runtime = 'edge'
@@ -94,7 +94,7 @@ export async function POST(req: Request) {
     })
   }
 
-  console.log('isLocalMode model chatId: ', isLocalMode, model, id)
+  console.log('model chatId: ', model, id)
 
   const messageHistory = messages.map(({ content, role, id }: { content: string, role: string, id: string }) => ({
     content,
@@ -165,9 +165,7 @@ export async function POST(req: Request) {
               : undefined,
           })
         }
-        if (!isLocalMode) {
-          handleCompletion(completion, messages, id, userId, messageId)
-        }
+        handleCompletion(completion, messages, id, userId, messageId)
         if (useLangfuse) {
           await langfuse.shutdownAsync()
         }
@@ -236,9 +234,7 @@ export async function POST(req: Request) {
             : undefined,
         })
       }
-      if (!isLocalMode) {
-        handleCompletion(completion, messages, id, userId, messageId)
-      }
+      handleCompletion(completion, messages, id, userId, messageId)
       if (useLangfuse) {
         await langfuse.shutdownAsync()
       }

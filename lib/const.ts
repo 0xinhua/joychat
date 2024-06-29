@@ -5,8 +5,6 @@ export const isLocalMode = process.env.NEXT_PUBLIC_STORAGE_MODE === 'local'
 export const defaultModel = process.env.NEXT_PUBLIC_DEFAULT_MODEL || 'gpt-4o'
 export const useLangfuse = !!process.env.NEXT_PUBLIC_LANGFUSE_PUBLIC_KEY && !!process.env.NEXT_PUBLIC_LANGFUSE_BASE_URL
 
-console.log('useLangfuse', useLangfuse)
-
 export const models = [
   {
     value: 'gpt-4o',
@@ -24,7 +22,7 @@ export const models = [
     value: 'llama3-8b',
     label: 'llama3-8b',
     icon: IconMeta,
-    disabled: false
+    disabled: true
   },
   {
     value: 'gemini-1.5-flash-latest',

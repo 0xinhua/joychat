@@ -36,7 +36,7 @@ export async function GET(req: Request,  { params }: { params: { chatId: string 
 
     if (rows.length === 0) {
       return NextResponse.json({
-        data: [],
+        data: null,
         code: 0
       })
     }

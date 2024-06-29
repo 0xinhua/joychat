@@ -49,7 +49,7 @@ export function ChatPanel({
       from-0% to-muted/30 to-50% animate-in duration-300 ease-in-out
       dark:from-background/10 dark:from-10%
       dark:to-background/80`,
-      isSidebarOpen && 'lg:pl-[200px] xl:pl-[250px]'
+      isSidebarOpen && 'lg:pl-[240px] xl:pl-[256px]'
       )}>
       <ButtonScrollToBottom />
       <div className="mx-auto sm:max-w-3xl">
