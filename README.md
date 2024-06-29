@@ -31,7 +31,9 @@
 
 ## Usage
 
-  👋 Hey there, you can use [joychat.io](https://joychat.io/) for **Free** as long as my OpenAI key quota allows it. If it exceeds what I can afford later, I will consider limiting frequency of use. My goal is to build a beautiful, helpful personal AI assistant, feel free to start a conversation and give feedback.
+  👋 Hey there! You can use [joychat.io](https://joychat.io/) for **Free**  while my OpenAI key quota lasts. If usage exceeds my budget, I may need to limit the frequency of use.
+
+My original intention is to create a beautiful and helpful personal AI assistant. Feel free to start a conversation and provide feedback. I hope it brings you joy whenever you interact with it.
 
 ## Stacks
 
