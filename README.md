@@ -5,17 +5,29 @@
 </a>
 
 <p align="center">
-  A beautiful, customizable, personal AI chatbot built with Next.js, Vercel AI SDK, OpenAI, and Supabase.
+  A Beautiful Design, customizable, personal AI chatbot built with Next.js, Vercel AI SDK, OpenAI, and Supabase.
 </p>
 
 <p align="center">
-  <a href="#stacks"><strong>Stacks</strong></a> ·
+  <a href="#features"><strong>Features</strong></a> ·
   <a href="#model-providers"><strong>Model Providers</strong></a> ·
   <a href="#deploy-your-own"><strong>Deploy Your Own</strong></a> ·
   <a href="#running-locally"><strong>Running locally</strong></a> ·
   <a href="#thanks"><strong>Thanks</strong></a>
 </p>
 <br/>
+
+## Features
+
+- 🔒 Secure: Data stored locally in the browser or in the Cloud.
+- 🌟 Beautiful Design: Responsive design and dark mode.
+- ✍️ Markdown Support: Includes code highlighting and more.
+- 🌐 Provider Flexibility: Supports providers other than OpenAI.
+- 🚀 Quick Start: System prompt and quickstart templates available.
+- 👥 Shareable: Easily share your chat with friends.
+- 📊 Quality Feedback: Measured quality through user feedback (Cloud version).
+- 💰 Cost Tracking: Track token usage and costs (Cloud version).
+- 🛠️ Tool Integration: Chat with files, compatible with Anthropic and Groq models (🚧 under construction).
 
 ## Usage
 
@@ -24,15 +36,15 @@
 ## Stacks
 
 - [Next.js](https://nextjs.org) App Router
-- Local browser storage or [Supabase](https://supabase.com/) for Database
+- [Supabase](https://supabase.com/) for Cloud Database
 - [Vercel AI SDK](https://sdk.vercel.ai/docs) for streaming chat UI
-- Support for OpenAI (default), Anthropic, Cohere, Hugging Face, or custom AI chat models and/or LangChain
 - Styling with [shadcn/ui](https://ui.shadcn.com) and [Tailwind CSS](https://tailwindcss.com)
 - [NextAuth.js](https://github.com/nextauthjs/next-auth) for authentication
+- [LangFuse](https://langfuse.com/) for metrics and measure token cost
 
 ## Model Providers
 
-This chatbot ships with OpenAI `gpt-4o` as the default. However, you can switch LLM providers to [Anthropic](https://anthropic.com), [Cohere](https://cohere.com/), [Hugging Face](https://huggingface.co), or using [LangChain](https://js.langchain.com) with just a few lines of code.
+By default, it supports OpenAI gpt-4o. Adaptations for other models such as Anthropic, Cohere, Hugging Face, and those using LangChain are currently being added.
 
 ## Deploy Your Own
 
