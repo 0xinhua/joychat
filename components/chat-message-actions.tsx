@@ -6,6 +6,7 @@ import { IconCopied, IconCopy } from '@/components/ui/icons'
 import { useCopyToClipboard } from '@/lib/hooks/use-copy-to-clipboard'
 import { cn } from '@/lib/utils'
 import { ChatMessageFeedback } from './chat-message-feedback'
+import { useMode } from './mode'
 
 interface ChatMessageActionsProps extends React.ComponentProps<'div'> {
   message: Message
@@ -23,6 +24,8 @@ export function ChatMessageActions({
     copyToClipboard(message.content)
   }
 
+  const { mode } = useMode()
+
   return (
     <div
       className={cn(
@@ -38,7 +41,7 @@ export function ChatMessageActions({
         : <div className="flex items-center gap-x-1 text-[12px] py-1 hover:bg-white dark:bg-neutral-900 rounded-md"><IconCopy className="size-3" />Copy</div>}
         <span className="sr-only">Copy message</span>
       </div>
-      { message?.id ?<ChatMessageFeedback message={message} /> : null}
+      { message?.id && mode === 'cloud' ?<ChatMessageFeedback message={message} /> : null}
     </div>
   )
 }

@@ -21,6 +21,7 @@ import { ExternalLink } from "./external-link"
 import useUserSettingStore from "@/store/useSettingStore"
 import { useEffect, useState } from "react"
 import { defaultSystemPrompt } from "@/lib/const"
+import { useMode } from "./mode"
 
 const settingFormSchema = z.object({
   systemPrompt: z
@@ -36,7 +37,8 @@ export function SystemPromptForm() {
 
   const {
     systemPrompt, 
-    updateSystemPrompt
+    updateSystemPrompt,
+    fetchUpdatePrompt
   } = useUserSettingStore()
 
   const defaultValues: Partial<SettingsFormValues> = {
@@ -44,6 +46,7 @@ export function SystemPromptForm() {
   }
 
   const [isFirstRender, setIsFirstRender] = useState(true)
+  const { mode, setMode } = useMode()
 
   useEffect(() => {
     if (isFirstRender) {
@@ -64,7 +67,10 @@ export function SystemPromptForm() {
 
   async function onSubmit(data: SettingsFormValues) {
     console.log('data', data)
-    const resp = await updateSystemPrompt(data.systemPrompt)
+    await updateSystemPrompt(data.systemPrompt)
+    if (mode === 'cloud') {
+      await fetchUpdatePrompt(data.systemPrompt)
+    }
     toast({
       title: "Succeed",
       description: 'System prompt has been updated.',

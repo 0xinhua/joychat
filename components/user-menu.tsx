@@ -18,7 +18,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { IconExternalLink } from '@/components/ui/icons'
+import { IconAnonymous, IconExternalLink, IconLSignIn, IconSetting, IconSwitch } from '@/components/ui/icons'
 import useChatStore from '@/store/useChatStore'
 
 import {
@@ -35,9 +35,11 @@ import {
 import { useTheme } from 'next-themes'
 import { SettingsDialog } from './settings'
 import useUserSettingStore from '@/store/useSettingStore'
+import { useRouter } from 'next/navigation'
+import { useMode } from './mode'
 
 export interface UserMenuProps {
-  user: Session['user']
+  user?: Session['user'] | null
 }
 
 function getUserInitials(name: string) {
@@ -48,7 +50,11 @@ function getUserInitials(name: string) {
 export function UserMenu({ user }: UserMenuProps) {
 
   const { setTheme } = useTheme()
+  const router = useRouter()
+  const { mode, setMode } = useMode()
   const {
+    isLoginDialogOpen,
+    setLoginDialogOpen,
     setSettingsDialogOpen,
   } = useUserSettingStore()
 
@@ -70,45 +76,30 @@ export function UserMenu({ user }: UserMenuProps) {
               unoptimized={true}
             />
           ) : (
-            <div className="flex items-center justify-center text-xs font-medium uppercase rounded-full select-none size-7 shrink-0 bg-muted/50 text-muted-foreground">
-              {user?.name ? getUserInitials(user?.name) : null}
+            <div className="flex items-center cursor-pointer justify-center text-xs font-medium uppercase rounded-full select-none size-7 shrink-0 text-muted-foreground">
+              {user?.name ? getUserInitials(user?.name) : <div className="px-8 py-2 cursor-pointer text-gray-600 hover:text-accent-foreground dark:text-gray-200">
+                <IconAnonymous className='size-6 stroke-1.5' />
+              </div>}
             </div>
           )}
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-48 dark:bg-neutral-900 ml-2">
-        <DropdownMenuLabel>
-        <div className="text-[15px] font-medium">{user?.name}</div>
+      <DropdownMenuContent className="w-44 dark:bg-neutral-900 ml-2">
+        { user ? <div><DropdownMenuLabel>
+          <div className="text-[15px] font-medium">{user?.name}</div>
           <div className="text-[13px] text-zinc-500 font-normal">{user?.email}</div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator /></div>
+        : null}
         <DropdownMenuGroup>
-          {/* <DropdownMenuItem>
-            <User className="mr-2 size-4" />
-            <span>Profile</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CreditCard className="mr-2 size-4" />
-            <span>Billing</span>
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem> */}
           <DropdownMenuItem className="cursor-pointer dark:hover:bg-zinc-800" onClick={e => setSettingsDialogOpen(true)}>
             <Settings className="mr-2 size-4" />
             <span>Setting</span>
-            {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
           </DropdownMenuItem>
-          {/* <DropdownMenuItem>
-            <Keyboard className="mr-2 size-4" />
-            <span>Keyboard shortcuts</span>
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-          </DropdownMenuItem> */}
         </DropdownMenuGroup>
-        {/* <DropdownMenuSeparator /> */}
         <DropdownMenuGroup>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="dark:hover:bg-zinc-800">
-              {/* <Button variant="ghost" size="icon" className="outline-none shadow-none focus:border-transparent focus:ring-0 focus-visible:ring-0 focus-visible:ring-transparent hover:bg-zinc-200 dark:hover:bg-neutral-700"> */}
               <Sun className="size-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 mr-2" />
               <Moon className="absolute size-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 mr-2" />
               <span>Theme</span>
@@ -148,10 +139,11 @@ export function UserMenu({ user }: UserMenuProps) {
           <span>Support</span>
         </DropdownMenuItem> */}
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => {
+        {user ? <DropdownMenuItem onClick={() => {
             signOut({
               callbackUrl: '/'
             }).then(() => {
+              setMode('local')
               reset()
             })
             }
@@ -162,6 +154,16 @@ export function UserMenu({ user }: UserMenuProps) {
           <span>Log out</span>
           {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
         </DropdownMenuItem>
+       : <DropdownMenuItem onClick={() => {
+            setLoginDialogOpen(true)
+          }
+        }
+            className="cursor-pointer dark:hover:bg-zinc-800"
+          >
+          <IconLSignIn className="mr-2 size-4" />
+          <span> Sign in</span>
+          {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
+        </DropdownMenuItem>}
       </DropdownMenuContent>
     </DropdownMenu>
   )

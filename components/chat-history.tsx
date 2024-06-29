@@ -12,25 +12,21 @@ import { buttonVariants } from './ui/button'
 import { IconPlus } from './ui/icons'
 import { Session } from 'next-auth'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip'
+import { useMode } from './mode'
 
 interface ChatHistoryProps {
   userId?: string,
-  session?: Session
+  session?: Session | null | undefined
 }
 
 export function ChatHistory({ userId, session }: ChatHistoryProps) {
-  const { isSidebarOpen, isLoading, toggleSidebar } = useSidebar()
-
-  const { chats, fetchHistory } = useChatStore(state => ({
-    chats: state.chats,
-    fetchHistory: state.fetchHistory
-  }))
+  const { isSidebarOpen, toggleSidebar } = useSidebar()
+  const { mode } = useMode()
+  const { chats, fetchChats } = useChatStore()
 
   useEffect(() => {
-    if (chats.length === 0) {
-      fetchHistory()
-    }
-  }, [fetchHistory, chats.length])
+    mode === 'cloud' && session?.user && fetchChats()
+  }, [])
 
   return (
     <div className="flex flex-col h-full">

@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/tooltip'
 import useChatStore from '@/store/useChatStore'
 import { revalidatePath } from 'next/cache'
-import { isLocalMode } from '@/lib/const'
+import { useMode } from './mode'
 
 interface SidebarActionsProps {
   chat: Chat
@@ -40,15 +40,14 @@ export function SidebarActions({
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false)
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
   const [isRemovePending, startRemoveTransition] = React.useTransition()
+  const { mode } = useMode()
 
-  const { removeChat } = useChatStore(state => ({
-    removeChat: state.removeChat
-  }))
+  const { removeChat, fetchRemoveChat } = useChatStore()
 
   return (
     <>
       <div className="space-x-1">
-        { isLocalMode ?  null : <Tooltip>
+        { mode === 'local' ?  null : <Tooltip>
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
@@ -89,7 +88,7 @@ export function SidebarActions({
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This will permanently delete your chat message and remove your
-              data from our servers.
+              data.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -102,6 +101,7 @@ export function SidebarActions({
                 event.preventDefault()
                 // @ts-ignore
                 startRemoveTransition(async () => {
+                  mode === 'cloud' && await fetchRemoveChat(chat.chat_id)
                   await removeChat(chat.chat_id)
                   setDeleteDialogOpen(false)
                   router.push('/')

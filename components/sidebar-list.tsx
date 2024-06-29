@@ -9,7 +9,7 @@ import { SettingsDialog } from './settings'
 
 interface SidebarListProps {
   userId?: string,
-  session?: Session
+  session?: Session | null
   chats: Chat[],
   children?: React.ReactNode
 }
@@ -30,10 +30,10 @@ export function SidebarList({ chats, session }: SidebarListProps) {
         )}
       </div>
       <div className="flex items-center justify-between py-4 px-3 sm:pl-4">
-        { session?.user ? <div>
+         <div>
           <SettingsDialog />
-          <UserMenu user={session.user} />
-        </div> : null }
+          <UserMenu user={session?.user} />
+        </div>
         <ClearHistory isEnabled={chats?.length > 0} />
       </div>
     </div>
