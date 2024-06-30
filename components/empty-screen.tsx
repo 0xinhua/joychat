@@ -26,7 +26,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
           <h1 className="mb-2 text-lg font-semibold flex items-center">
             👋 Welcome to JoyChat <span className="font-normal ml-2 inline-flex items-center rounded-md border border-gray-100 bg-gray-50 px-1.5 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-zinc-800">
               <ExternalLink className="py-1 tracking-wide" title="JoyChat Changelog" href="https://github.com/0xinhua/joychat/discussions/categories/changelog">
-              v0.1.1
+              v0.2.0
             </ExternalLink></span>
           </h1>
           <p className="mb-2 leading-normal text-muted-foreground dark:text-gray-300">
