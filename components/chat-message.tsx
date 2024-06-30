@@ -26,21 +26,21 @@ export function ChatMessage({ message, user, ...props }: ChatMessageProps) {
     >
       <div
         className={cn(
-          'flex size-9 shrink-0 select-none items-center justify-center rounded-2xl border border-gray-100 dark:border-neutral-800',
+          'flex size-9 shrink-0 select-none items-center justify-center rounded-2xl dark:border-neutral-800',
           message.role === 'user'
             ? 'bg-transparent'
-            : 'bg-primary bg-zinc-100/60 dark:bg-transparent text-primary-foreground'
+            : 'bg-primary border border-gray-100 bg-zinc-100/60 dark:bg-transparent text-primary-foreground'
         )}
       >
-        { message.role === 'user' ? (user?.name ? <span className="text-gray-500 dark:text-gray-300">{user?.name?.substring(0, 1)?.toUpperCase()}</span> : <IconUser />)
-        : <IconBot className="h-[20px] w-[20px] text-gray-500 dark:text-gray-300 mb-0.5" />}
+        { message.role === 'user' ? (user?.name ? <span className="text-gray-500 text-sm dark:text-gray-300"></span> : <IconUser />)
+        : <IconOpenAI className="h-[20px] w-[20px] text-gray-500 dark:text-gray-300 mb-0.5" />}
       </div>
       <div className={cn(`
-        group flex-1 ml-4 space-y-2 overflow-hidden min-h-[calc(2rem+theme(spacing[3.5])*2)] min-w-[60px] 
+        group flex-1 space-y-2 overflow-hidden min-h-[calc(2rem+theme(spacing[3.5]))] min-w-[60px] 
         break-words rounded-xl bg-transparent px-5 py-1 text-gray-600 
         prose-pre:my-2 dark:border-neutral-800 dark:from-transparent dark:text-gray-300 transition-all
       `,
-        message.role === 'assistant' && 'py-4 border border-gray-100 bg-zinc-100/60 dark:bg-neutral-900 dark:hover:bg-neutral-950 hover:bg-zinc-100/80'
+        message.role === 'assistant' && 'ml-4 py-4 border border-gray-100 bg-zinc-100/60 dark:bg-neutral-900 dark:hover:bg-neutral-950 hover:bg-zinc-100/80'
       )}>
         <MemoizedReactMarkdown
           className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"

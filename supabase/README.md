@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS
     ),
     messages jsonb not null,
     share_path text null,
+    current_model_name VARCHAR(50),
     updated_at bigint null default (
       extract(
         epoch
@@ -86,7 +87,7 @@ CREATE TABLE IF NOT EXISTS
 - **Function to Get Chat Data**
 
 ```sql
-CREATE OR REPLACE FUNCTION get_chat_data(p_user_id uuid, p_chat_id text)
+CREATE OR REPLACE FUNCTION chat_dataset.get_chat_data(p_user_id uuid, p_chat_id text)
 RETURNS TABLE (
   id bigint,
   chat_id text,
@@ -94,6 +95,7 @@ RETURNS TABLE (
   title text,
   path text,
   created_at bigint,
+  current_model_name VARCHAR(50),
   messages jsonb,
   share_path text,
   updated_at bigint
@@ -109,6 +111,7 @@ BEGIN
     c.title,
     c.path,
     c.created_at,
+    c.current_model_name,
     c.messages,
     c.share_path,
     c.updated_at
@@ -121,21 +124,26 @@ $$;
 - **Function to Upsert Chat Data**
 
 ```sql
-CREATE OR REPLACE FUNCTION upsert_chat(
+CREATE OR REPLACE FUNCTION chat_dataset.upsert_chat(
   p_chat_id text,
   p_title text,
   p_user_id uuid,
   p_created_at bigint,
   p_path text,
   p_messages jsonb,
-  p_share_path text
+  p_share_path text,
+  p_current_model_name VARCHAR(50)
 )
 RETURNS void
 LANGUAGE plpgsql
 AS $$
 BEGIN
-  INSERT INTO chat_dataset.chats (chat_id, title, user_id, created_at, path, messages, share_path)
-  VALUES (p_chat_id, p_title, p_user_id, p_created_at, p_path, p_messages, p_share_path)
+  INSERT INTO chat_dataset.chats (
+    chat_id, title, user_id, created_at, path, messages, share_path, current_model_name
+  )
+  VALUES (
+    p_chat_id, p_title, p_user_id, p_created_at, p_path, p_messages, p_share_path, p_current_model_name
+  )
   ON CONFLICT (chat_id) DO UPDATE
   SET 
     title = EXCLUDED.title,
@@ -143,7 +151,8 @@ BEGIN
     created_at = EXCLUDED.created_at,
     path = EXCLUDED.path,
     messages = EXCLUDED.messages,
-    share_path = EXCLUDED.share_path;
+    share_path = EXCLUDED.share_path,
+    current_model_name = EXCLUDED.current_model_name;
 END;
 $$;
 ```
@@ -161,7 +170,8 @@ returns table(
   path text, 
   created_at bigint, 
   messages jsonb, 
-  share_path text, 
+  share_path text,
+  current_model_name VARCHAR(50),
   updated_at bigint
 ) as $$
 begin
@@ -175,6 +185,7 @@ begin
     c.created_at, 
     c.messages, 
     c.share_path, 
+    c.current_model_name,
     c.updated_at
   from chat_dataset.chats c
   where c.user_id = p_user_id

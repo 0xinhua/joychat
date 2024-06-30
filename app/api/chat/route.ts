@@ -34,7 +34,7 @@ const groqOpenAI = new OpenAI({
 
 let trace: any, generation: any, messageId: string
 
-async function handleCompletion(completion: string, messages: Message[], id: string, userId: string, messageId: string) {
+async function handleCompletion(completion: string, messages: Message[], id: string, userId: string, messageId: string, model: string) {
 
   const nonSystemMessages = messages.filter((message: Message) => message.role !== 'system')
   const firstNonSystemMessage = nonSystemMessages.find((message: Message) => message.role !== 'system')
@@ -65,7 +65,8 @@ async function handleCompletion(completion: string, messages: Message[], id: str
       p_created_at: createdAt,
       p_path: path,
       p_messages: updatedMessages,
-      p_share_path: null
+      p_share_path: null,
+      p_current_model_name: model
     })
 
     const endTime = Date.now()
@@ -165,7 +166,7 @@ export async function POST(req: Request) {
               : undefined,
           })
         }
-        handleCompletion(completion, messages, id, userId, messageId)
+        handleCompletion(completion, messages, id, userId, messageId, model)
         if (useLangfuse) {
           await langfuse.shutdownAsync()
         }
@@ -191,7 +192,7 @@ export async function POST(req: Request) {
     // Convert the response into a friendly text-stream
     const stream = GoogleGenerativeAIStream(geminiStream, {
       onCompletion: async (completion) => {
-        handleCompletion(completion, messages, id, userId, messageId)      
+        handleCompletion(completion, messages, id, userId, messageId, model)      
       }
     })
 
@@ -234,7 +235,7 @@ export async function POST(req: Request) {
             : undefined,
         })
       }
-      handleCompletion(completion, messages, id, userId, messageId)
+      handleCompletion(completion, messages, id, userId, messageId, model)
       if (useLangfuse) {
         await langfuse.shutdownAsync()
       }
