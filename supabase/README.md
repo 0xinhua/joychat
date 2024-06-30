@@ -161,8 +161,8 @@ $$;
 
 ```sql
 -- Execute the following SQL statement in the Supabase SQL Editor to create the function
-create or replace function get_user_chats(p_user_id uuid)
-returns table(
+CREATE OR REPLACE FUNCTION chat_dataset.get_user_chats(p_user_id uuid)
+RETURNS TABLE(
   id bigint, 
   chat_id text, 
   user_id uuid, 
@@ -173,10 +173,10 @@ returns table(
   share_path text,
   current_model_name VARCHAR(50),
   updated_at bigint
-) as $$
-begin
-  return query
-  select 
+) AS $$
+BEGIN
+  RETURN QUERY
+  SELECT 
     c.id, 
     c.chat_id, 
     c.user_id, 
@@ -187,11 +187,11 @@ begin
     c.share_path, 
     c.current_model_name,
     c.updated_at
-  from chat_dataset.chats c
-  where c.user_id = p_user_id
-  order by c.updated_at desc;
-end;
-$$ language plpgsql;
+  FROM chat_dataset.chats c
+  WHERE c.user_id = p_user_id
+  ORDER BY c.updated_at DESC;
+END;
+$$ LANGUAGE plpgsql;
 ```
 
 - **Function to Delete all Chat data**
