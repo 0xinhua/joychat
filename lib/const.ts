@@ -121,3 +121,21 @@ export const quickstartMessages = [
     `
   }
 ]
+
+export type Plan = 'free' | 'pro';
+
+export const plans: Record<Plan | string, { name: string; model: string; tokenLimit: number; }> = {
+  'free': {
+    "name": "free",
+    "model": "gpt-4o",
+    "tokenLimit": 199800,
+  },
+  'pro': {
+    "name": "pro",
+    "model": "gpt-4o",
+    "tokenLimit": 1114286,
+  }
+}
+
+export const inputCostPerMillion = 5.00
+export const outputCostPerMillion = 15.00

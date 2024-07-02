@@ -3,13 +3,14 @@ import OpenAI from 'openai'
 
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { GoogleGenerativeAIStream, Message } from 'ai'
+import { encodingForModel } from "js-tiktoken"
 
 import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 import { supabase } from '@/lib/supabase'
-import { useLangfuse } from '@/lib/const'
+import { Plan, inputCostPerMillion, outputCostPerMillion, plans, useLangfuse } from '@/lib/const'
 import langfuse from '@/lib/langfuse'
-import { use } from 'react'
+import { kv } from '@vercel/kv'
 
 // export const runtime = 'edge'
 
@@ -94,11 +95,27 @@ export async function POST(req: Request) {
     return new Response('Unauthorized', {
       status: 401
     })
-  }
+  }  
 
-  const { id: userId } = user
+  const { id: userId, plan = 'free' } = user
 
   console.log('model chatId userId: ', model, id, userId)
+
+  const userUsageCost = await kv.hgetall(`token:cost:${userId}`)
+
+  console.log('userUsageCost', userUsageCost)
+
+  if (userUsageCost) {
+
+    const { totalTokens } = userUsageCost
+    console.log('plan', plan, totalTokens)
+    if (totalTokens && totalTokens as number > plans[plan]['tokenLimit']) {
+      console.log(`${plan} plan Token limit exceeded`);
+      return new Response(`${plan} plan Token limit exceeded`, {
+        status: 500
+      })
+    }
+  }
 
   const messageHistory = messages.map(({ content, role, id }: { content: string, role: string, id: string }) => ({
     content,
@@ -216,12 +233,23 @@ export async function POST(req: Request) {
     model = 'gpt-4-turbo'
   }
 
+  const enc = encodingForModel(model);  // js-tiktoken
+
+  const promptTokens = messages.reduce(
+    (total: number, msg: Message) => total + enc.encode(msg.content ?? '').length,
+    0,
+  );
+
+  console.log('promptTokens', promptTokens)
+
   const res = await openai.chat.completions.create({
     model,
     messages,
     temperature: 0.7,
     stream: true
   })
+
+  let completionTokens = 0;
 
   const stream = OpenAIStream(res, {
     onStart: () => {
@@ -230,6 +258,14 @@ export async function POST(req: Request) {
           completionStartTime: new Date(),
         })
       }
+    },
+    onToken: (content) => {
+      const tokenList = enc.encode(content);
+      completionTokens += tokenList.length;
+    },
+    onFinal: async () => {
+      console.log(`Token count: ${completionTokens}`);
+      await calculateAndStoreTokensCost(userId, promptTokens, completionTokens)
     },
     async onCompletion(completion) {
       if (useLangfuse) {
@@ -255,4 +291,46 @@ export async function POST(req: Request) {
       "X-Trace-Id": trace?.id || messageId,
     },
   })
+}
+
+interface UsageCostData {
+  inputTokens: number;
+  outputTokens: number;
+  inputCost: number;
+  outputCost: number;
+  totalTokens:number;
+  totalCost: number;
+}
+
+// Function to calculate and store token values and costs
+async function calculateAndStoreTokensCost(userId:  string, inputTokens: number, outputTokens: number) {
+  const inputCost = (inputTokens / 1000000) * inputCostPerMillion;
+  const outputCost = (outputTokens / 1000000) * outputCostPerMillion;
+  const totalCost = inputCost + outputCost;
+
+  const userDataKey = `token:cost:${userId}`;
+  const currentData = await kv.hgetall(userDataKey) as Partial<UsageCostData> || {};
+  const currentInputTokens = currentData?.inputTokens ? parseFloat(currentData?.inputTokens.toString()) : 0;
+  const currentOutputTokens = currentData.outputTokens ? parseFloat(currentData.outputTokens.toString()) : 0;
+  const currentInputCost = currentData.inputCost? parseFloat(currentData.inputCost.toString()) : 0;
+  const currentOutputCost = currentData.outputCost ? parseFloat(currentData.outputCost.toString()) : 0;
+  const currentTotalCost = currentData.totalCost ? parseFloat(currentData.totalCost.toString()) : 0;
+
+  const newInputTokens = currentInputTokens + inputTokens
+  const newOutputTokens = currentOutputTokens + outputTokens
+  const newInputCost = currentInputCost + inputCost
+  const newOutputCost = currentOutputCost + outputCost
+  const newTotalCost = currentTotalCost + totalCost
+  const newTotalTokens = newInputTokens + newOutputTokens
+
+  await kv.hset(userDataKey, {
+    inputTokens: newInputTokens,
+    outputTokens: newOutputTokens,
+    inputCost: newInputCost,
+    outputCost: newOutputCost,
+    totalTokens: newTotalTokens,
+    totalCost: newTotalCost,
+  });
+
+  console.log(`usage cost saved userId: ${userId}`);
 }

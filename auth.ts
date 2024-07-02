@@ -8,7 +8,9 @@ declare module 'next-auth' {
   interface Session {
     user: {
       /** The user's id. */
-      id: string
+      id: string,
+      plan: string,
+      created_at: number,
     } & DefaultSession['user']
   }
 }
@@ -42,7 +44,7 @@ export const {
       if (session?.user && token?.sub) {
         session.user.id = process.env.NODE_ENV === 'production' ? String(token.sub) : process.env.MOCK_USERID as string
       }
-      console.log('auth session => ', session)
+      console.log('auth session => ', session, user)
       return session
     },
     authorized({ auth }) {
