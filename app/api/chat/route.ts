@@ -9,6 +9,7 @@ import { nanoid } from '@/lib/utils'
 import { supabase } from '@/lib/supabase'
 import { useLangfuse } from '@/lib/const'
 import langfuse from '@/lib/langfuse'
+import { use } from 'react'
 
 // export const runtime = 'edge'
 
@@ -87,15 +88,17 @@ export async function POST(req: Request) {
   const json = await req.json()
 
   let { messages, previewToken, model, id } = json
-  const userId = (await auth())?.user.id
+  const user = (await auth())?.user
 
-  if (!userId) {
+  if (!user || !user?.id) {
     return new Response('Unauthorized', {
       status: 401
     })
   }
 
-  console.log('model chatId: ', model, id)
+  const { id: userId } = user
+
+  console.log('model chatId userId: ', model, id, userId)
 
   const messageHistory = messages.map(({ content, role, id }: { content: string, role: string, id: string }) => ({
     content,
@@ -109,8 +112,13 @@ export async function POST(req: Request) {
       sessionId: "joychat.conversation." + id,
       userId: userId,
       metadata: {
+        chatId: id,
         pathname: new URL(req.headers.get("Referer") as string).pathname,
+        model,
+        userId: userId,
+        user: user.name || ''
       },
+      tags: [process.env.NODE_ENV],
     })
 
     generation = trace.generation({
