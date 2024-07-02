@@ -12,12 +12,12 @@ export const models = [
     icon: IconOpenai,
     disabled: false
   },
-  {
-    value: 'gpt-4',
-    label: 'gpt-4-turbo',
-    icon: IconOpenai,
-    disabled: false
-  },
+  // {
+  //   value: 'gpt-4',
+  //   label: 'gpt-4-turbo',
+  //   icon: IconOpenai,
+  //   disabled: false
+  // },
   {
     value: 'llama3-8b',
     label: 'llama3-8b',
