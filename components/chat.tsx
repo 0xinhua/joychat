@@ -8,13 +8,13 @@ import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
 import { useEffect, useRef } from 'react'
-import { toast } from 'react-hot-toast'
 import { usePathname, useRouter } from 'next/navigation'
 import useChatStore from '@/store/useChatStore'
 import { defaultModel, useLangfuse } from '@/lib/const'
 import { Chat as IChat } from '@/lib/types'
 import { useSession } from 'next-auth/react'
 import { LoginDialog } from './login-dialog'
+import { useToast } from "@/components/ui/use-toast"
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages: Message[]
@@ -24,8 +24,10 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 }
 
 export function Chat({ id, initialMessages, className, title, loading }: ChatProps) {
+
   const router = useRouter()
   const path = usePathname()
+  const { toast } = useToast()
 
   const { fetchChats } = useChatStore()
   const { data: session, status } = useSession()
@@ -45,11 +47,21 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
       sendExtraMessageFields: true,
       onResponse(response) {
         if (response.status === 401) {
-          toast.error(response.statusText)
+          toast({
+            title: "Unauthorized",
+            description: "You need to log in to authorize your account.",
+          })
         }
         if (useLangfuse) {
           const newTraceId = response.headers.get("X-Trace-Id")
           latestTraceId.current = newTraceId
+        }
+        if (response.status !== 200 ) {
+          console.log(response)
+          toast({
+            title: "Chat completion failed",
+            description: response?.statusText,
+          })
         }
       },
       onFinish(message: Message) {

@@ -11,6 +11,7 @@ import { supabase } from '@/lib/supabase'
 import { Plan, inputCostPerMillion, outputCostPerMillion, plans, useLangfuse } from '@/lib/const'
 import langfuse from '@/lib/langfuse'
 import { kv } from '@vercel/kv'
+import { NextResponse } from 'next/server'
 
 // export const runtime = 'edge'
 
@@ -112,8 +113,9 @@ export async function POST(req: Request) {
     console.log('plan', plan, totalTokens, plans[plan]['tokenLimit'])
     if (totalTokens && Number(totalTokens) as number > plans[plan]['tokenLimit']) {
       console.log(`${plan} plan Token limit exceeded`);
-      return new Response(`${plan} plan Token limit exceeded`, {
-        status: 500
+      return NextResponse.json({ }, {
+        status: 500,
+        statusText: `${plan} plan Token limit exceeded, please contact the website maintenance.`
       })
     }
   }
@@ -263,7 +265,7 @@ export async function POST(req: Request) {
     },
     onFinal: async () => {
       console.log(`completionTokens: ${completionTokens}`);
-      await calculateAndStoreTokensCost(userId, promptTokens, completionTokens)
+      calculateAndStoreTokensCost(userId, promptTokens, completionTokens)
     },
     async onCompletion(completion) {
       if (useLangfuse) {
@@ -321,6 +323,8 @@ async function calculateAndStoreTokensCost(userId:  string, inputTokens: number,
   const newTotalCost = currentTotalCost + totalCost
   const newTotalTokens = newInputTokens + newOutputTokens
 
+  console.log('totalTokens', newTotalTokens)
+
   await kv.hset(userDataKey, {
     inputTokens: newInputTokens,
     outputTokens: newOutputTokens,
@@ -330,5 +334,5 @@ async function calculateAndStoreTokensCost(userId:  string, inputTokens: number,
     totalCost: newTotalCost,
   })
 
-  console.log(`usage cost saved userId: ${userId}`);
+  console.log(`usage cost saved userId: ${userId} newTotalTokens`, newTotalTokens);
 }
