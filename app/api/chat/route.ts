@@ -101,15 +101,16 @@ export async function POST(req: Request) {
 
   console.log('model chatId userId: ', model, id, userId)
 
-  const userUsageCost = await kv.hgetall(`token:cost:${userId}`)
+  const totalTokens = await kv.hget(`token:cost:${userId}`, 'totalTokens')
 
-  console.log('userUsageCost', userUsageCost)
+  console.log('userUsageCost: ', totalTokens)
 
-  if (userUsageCost) {
+  const startTime = Date.now() // 记录开始时间
 
-    const { totalTokens } = userUsageCost
-    console.log('plan', plan, totalTokens)
-    if (totalTokens && totalTokens as number > plans[plan]['tokenLimit']) {
+  if (totalTokens) {
+
+    console.log('plan', plan, totalTokens, plans[plan]['tokenLimit'])
+    if (totalTokens && Number(totalTokens) as number > plans[plan]['tokenLimit']) {
       console.log(`${plan} plan Token limit exceeded`);
       return new Response(`${plan} plan Token limit exceeded`, {
         status: 500
@@ -117,11 +118,16 @@ export async function POST(req: Request) {
     }
   }
 
-  const messageHistory = messages.map(({ content, role, id }: { content: string, role: string, id: string }) => ({
-    content,
-    role,
-    id,
-  }))
+  const endTime = Date.now() // 记录结束时间
+  console.log(`Query execution time: ${endTime - startTime} ms`) // 计算并打印查询执行时间
+
+  // remove id from message
+  const newMessages = messages.map(({role, content}: Message) => {
+    return {
+      content,
+      role
+    }
+  })
 
   if (useLangfuse) {
     trace = langfuse.trace({
@@ -140,7 +146,7 @@ export async function POST(req: Request) {
 
     generation = trace.generation({
       name: "generation",
-      input: messageHistory as any,
+      input: newMessages as any,
       model,
     })
   }
@@ -153,14 +159,6 @@ export async function POST(req: Request) {
   if (model.startsWith('llama3')) {
 
     console.log('llama3-8b-8192')
-
-  // remove id from message
-  const newMessages = messages.map(({role, content}: Message) => {
-    return {
-      content,
-      role
-    }
-  })
 
     const res = await groqOpenAI.chat.completions.create({
       model: 'llama3-8b-8192',
@@ -238,7 +236,7 @@ export async function POST(req: Request) {
   const promptTokens = messages.reduce(
     (total: number, msg: Message) => total + enc.encode(msg.content ?? '').length,
     0,
-  );
+  )
 
   console.log('promptTokens', promptTokens)
 
@@ -264,7 +262,7 @@ export async function POST(req: Request) {
       completionTokens += tokenList.length;
     },
     onFinal: async () => {
-      console.log(`Token count: ${completionTokens}`);
+      console.log(`completionTokens: ${completionTokens}`);
       await calculateAndStoreTokensCost(userId, promptTokens, completionTokens)
     },
     async onCompletion(completion) {
@@ -330,7 +328,7 @@ async function calculateAndStoreTokensCost(userId:  string, inputTokens: number,
     outputCost: newOutputCost,
     totalTokens: newTotalTokens,
     totalCost: newTotalCost,
-  });
+  })
 
   console.log(`usage cost saved userId: ${userId}`);
 }
