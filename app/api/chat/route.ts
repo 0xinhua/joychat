@@ -60,6 +60,7 @@ async function handleCompletion(completion: string, messages: Message[], id: str
   try {
     const startTime = Date.now()
 
+    console.time('upsert_chat')
     // see README function upsert_chat definition
     const { data: rows, error } = await supabase.rpc('upsert_chat', {
       p_chat_id: chatId,
@@ -71,6 +72,8 @@ async function handleCompletion(completion: string, messages: Message[], id: str
       p_share_path: null,
       p_current_model_name: model
     })
+
+    console.timeEnd('upsert_chat')
 
     const endTime = Date.now()
     const executionTime = endTime - startTime
@@ -102,26 +105,39 @@ export async function POST(req: Request) {
 
   console.log('model chatId userId: ', model, id, userId)
 
-  const totalTokens = await kv.hget(`token:cost:${userId}`, 'totalTokens')
+  const startTime = Date.now() // startTime
 
-  console.log('userUsageCost: ', totalTokens)
+  const record = await kv.hmget(`token:usage:${userId}`, 'inputTokens', 'outputTokens')
 
-  const startTime = Date.now() // 记录开始时间
+  console.log('user token usage record: ', record)
 
-  if (totalTokens) {
+  console.time('tokenUsageCheck')
 
-    console.log('plan', plan, totalTokens, plans[plan]['tokenLimit'])
-    if (totalTokens && Number(totalTokens) as number > plans[plan]['tokenLimit']) {
-      console.log(`${plan} plan Token limit exceeded`);
-      return NextResponse.json({ }, {
-        status: 500,
-        statusText: `${plan} plan Token limit exceeded, please contact the website maintenance.`
-      })
+  if (record) {
+
+    const { inputTokens, outputTokens} = record as { inputTokens: number; outputTokens: number }
+
+    if (inputTokens && outputTokens) {
+
+      const totalTokens = Number(inputTokens) + Number(outputTokens)
+
+      console.log('user totalTokens: ', totalTokens)
+
+      console.log('plan', plan, totalTokens, plans[plan]['tokenLimit'])
+      if (totalTokens && Number(totalTokens) as number > plans[plan]['tokenLimit']) {
+        console.log(`${plan} plan Token limit exceeded`);
+        return NextResponse.json({ }, {
+          status: 500,
+          statusText: `${plan} plan Token limit exceeded, please contact the website maintenance.`
+        })
+      }
     }
   }
 
-  const endTime = Date.now() // 记录结束时间
-  console.log(`Query execution time: ${endTime - startTime} ms`) // 计算并打印查询执行时间
+  console.timeEnd('tokenUsageCheck')
+
+  const endTime = Date.now() // endTime
+  console.log(`Query execution time: ${endTime - startTime} ms`)
 
   // remove id from message
   const newMessages = messages.map(({role, content}: Message) => {
@@ -265,9 +281,12 @@ export async function POST(req: Request) {
     },
     onFinal: async () => {
       console.log(`completionTokens: ${completionTokens}`);
+      console.time('totalExecutionTime');
       calculateAndStoreTokensCost(userId, promptTokens, completionTokens)
+      console.timeEnd('totalExecutionTime');
     },
     async onCompletion(completion) {
+      console.time('useLangfuseGeneration');
       if (useLangfuse) {
         generation.end({
           output: completion,
@@ -279,7 +298,10 @@ export async function POST(req: Request) {
             : undefined,
         })
       }
+      console.timeEnd('useLangfuseGeneration');
+      console.time('start completion')
       handleCompletion(completion, messages, id, userId, messageId, model)
+      console.timeEnd('end completion')
       if (useLangfuse) {
         await langfuse.shutdownAsync()
       }
@@ -293,46 +315,28 @@ export async function POST(req: Request) {
   })
 }
 
-interface UsageCostData {
+export interface UsageCostData {
   inputTokens: number;
   outputTokens: number;
-  inputCost: number;
-  outputCost: number;
-  totalTokens:number;
-  totalCost: number;
 }
 
 // Function to calculate and store token values and costs
 async function calculateAndStoreTokensCost(userId:  string, inputTokens: number, outputTokens: number) {
-  const inputCost = (inputTokens / 1000000) * inputCostPerMillion;
-  const outputCost = (outputTokens / 1000000) * outputCostPerMillion;
-  const totalCost = inputCost + outputCost;
 
-  const userDataKey = `token:cost:${userId}`;
+  const userDataKey = `token:usage:${userId}`;
   const currentData = await kv.hgetall(userDataKey) as Partial<UsageCostData> || {};
   const currentInputTokens = currentData?.inputTokens ? parseFloat(currentData?.inputTokens.toString()) : 0;
   const currentOutputTokens = currentData.outputTokens ? parseFloat(currentData.outputTokens.toString()) : 0;
-  const currentInputCost = currentData.inputCost? parseFloat(currentData.inputCost.toString()) : 0;
-  const currentOutputCost = currentData.outputCost ? parseFloat(currentData.outputCost.toString()) : 0;
-  const currentTotalCost = currentData.totalCost ? parseFloat(currentData.totalCost.toString()) : 0;
 
   const newInputTokens = currentInputTokens + inputTokens
   const newOutputTokens = currentOutputTokens + outputTokens
-  const newInputCost = currentInputCost + inputCost
-  const newOutputCost = currentOutputCost + outputCost
-  const newTotalCost = currentTotalCost + totalCost
-  const newTotalTokens = newInputTokens + newOutputTokens
 
-  console.log('totalTokens', newTotalTokens)
+  console.log('totalTokens', newInputTokens, newOutputTokens)
 
   await kv.hset(userDataKey, {
     inputTokens: newInputTokens,
     outputTokens: newOutputTokens,
-    inputCost: newInputCost,
-    outputCost: newOutputCost,
-    totalTokens: newTotalTokens,
-    totalCost: newTotalCost,
   })
 
-  console.log(`usage cost saved userId: ${userId} newTotalTokens`, newTotalTokens);
+  console.log(`usage cost saved userId: ${userId} newTotalTokens`, newInputTokens, newOutputTokens)
 }
