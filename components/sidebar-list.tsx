@@ -17,7 +17,7 @@ interface SidebarListProps {
 export function SidebarList({ chats, session }: SidebarListProps) {
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden">
+    <div className="flex h-[calc(100vh-3.8rem)] flex-col overflow-hidden">
       <div className="flex-1 overflow-auto">
         {chats?.length ? (
           <div className="space-y-1 px-3">
