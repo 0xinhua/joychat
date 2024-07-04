@@ -299,9 +299,9 @@ export async function POST(req: Request) {
         })
       }
       console.timeEnd('useLangfuseGeneration');
-      console.time('start completion')
+      console.time('handleCompletion')
       handleCompletion(completion, messages, id, userId, messageId, model)
-      console.timeEnd('end completion')
+      console.timeEnd('handleCompletion')
       if (useLangfuse) {
         await langfuse.shutdownAsync()
       }
