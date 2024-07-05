@@ -26,7 +26,7 @@ export function ChatHistory({ userId, session }: ChatHistoryProps) {
 
   useEffect(() => {
     mode === 'cloud' && session?.user && fetchChats()
-  }, [])
+  }, [session?.user])
 
   return (
     <div className="flex flex-col h-full">

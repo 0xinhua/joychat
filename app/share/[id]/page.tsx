@@ -1,10 +1,11 @@
-import { type Metadata } from 'next'
-import { notFound } from 'next/navigation'
+'use client'
 
 import { formatDate } from '@/lib/utils'
-import { getSharedChat } from '@/app/actions'
 import { ChatList } from '@/components/chat-list'
 import { FooterText } from '@/components/footer'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { Chat } from '@/lib/types'
 
 interface SharePageProps {
   params: {
@@ -12,38 +13,51 @@ interface SharePageProps {
   }
 }
 
-export async function generateMetadata({
-  params
-}: SharePageProps): Promise<Metadata> {
-  const chat = await getSharedChat(params.id)
+export default function SharePage({ params }: SharePageProps) {
 
-  return {
-    title: chat?.title.slice(0, 50) ?? 'Chat'
-  }
-}
+  const [chat, setChat] = useState<Chat | null>(null)
+  const [loading, setLoading] = useState(false)
 
-export default async function SharePage({ params }: SharePageProps) {
-  const chat = await getSharedChat(params.id)
+  useEffect(() => {
 
-  if (!chat || !chat?.share_path) {
-    notFound()
-  }
+    const getSharedChat = async () => {
+      setLoading(true)
+      const resp = await axios(`/api/chats/${params.id}/share`)
+      const { data } = resp
+      console.log('data share', data)
+      setLoading(false)
+      if (data?.data) {
+        setChat(data.data)
+      }
+    }
+
+    getSharedChat()
+
+  }, [])
+
+  useEffect(() => {
+    if (chat?.title) {
+      document.title = chat.title.toString().slice(0, 50)
+    } else {
+      document.title = 'Shared Chat - JoyChat'
+    }
+  }, [chat?.title])
 
   return (
     <>
-      <div className="flex-1 space-y-6">
+     { chat ? <div className="flex-1 space-y-6">
         <div className="px-4 py-6 border-b bg-background md:px-6 md:py-8">
           <div className="max-w-2xl mx-auto md:px-6">
             <div className="space-y-1 md:-mx-8">
-              <h1 className="text-2xl font-bold">{chat.title}</h1>
+              <h1 className="text-2xl font-bold">{chat?.title}</h1>
               <div className="text-sm text-muted-foreground">
-                {formatDate(chat.created_at * 1)} · {chat.messages.length} messages
+                {formatDate(Number(chat?.created_at))} · {chat?.messages?.length} messages
               </div>
             </div>
           </div>
         </div>
         <ChatList messages={chat.messages} />
-      </div>
+      </div> : null }
       <FooterText className="py-8" />
     </>
   )

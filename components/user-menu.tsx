@@ -18,7 +18,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { IconAnonymous, IconExternalLink, IconLSignIn, IconSetting, IconSwitch } from '@/components/ui/icons'
+import { IconAnonymous, IconExternalLink, IconSignIn, IconSetting, IconSwitch, IconHelp, IconMail } from '@/components/ui/icons'
 import useChatStore from '@/store/useChatStore'
 
 import {
@@ -122,18 +122,34 @@ export function UserMenu({ user }: UserMenuProps) {
             </DropdownMenuPortal>
           </DropdownMenuSub>
         </DropdownMenuGroup>
-        <DropdownMenuItem className="dark:hover:bg-zinc-800">
-          <GithubIcon className="mr-2 size-4" />
-          <a
-            href="https://github.com/0xinhua/joychat"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-between w-full dark:hover:bg-zinc-800"
-          >
-            GitHub
-            <IconExternalLink className="size-4 ml-auto" />
-          </a>
-        </DropdownMenuItem>
+        <DropdownMenuGroup>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger className="dark:hover:bg-zinc-800">
+              <IconHelp className="mr-2 size-4" />
+              <span>Help & Support</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent className="dark:bg-zinc-900">
+                <DropdownMenuItem className="cursor-pointer dark:hover:bg-zinc-800">
+                  {/* <IconMail className="mr-2 size-4" /> */}
+                  <a href="mailto:support@joychat.io">Support@joychat.io</a>
+                  <IconExternalLink className="size-4 ml-2" />
+                </DropdownMenuItem>
+                <DropdownMenuItem className="dark:hover:bg-zinc-800">
+                  <a
+                    href="https://github.com/0xinhua/joychat/discussions/categories/q-a"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-between w-full dark:hover:bg-zinc-800"
+                  >
+                    GitHub Discussions
+                    <IconExternalLink className="size-4 ml-auto" />
+                  </a>
+                </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
+        </DropdownMenuGroup>
         {/* <DropdownMenuItem>
           <LifeBuoy className="mr-2 size-4" />
           <span>Support</span>
@@ -160,7 +176,7 @@ export function UserMenu({ user }: UserMenuProps) {
         }
             className="cursor-pointer dark:hover:bg-zinc-800"
           >
-          <IconLSignIn className="mr-2 size-4" />
+          <IconSignIn className="mr-2 size-4" />
           <span> Sign in</span>
           {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
         </DropdownMenuItem>}

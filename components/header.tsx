@@ -4,12 +4,11 @@ import * as React from 'react'
 import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
-import { auth } from '@/auth'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
   IconChatBot,
   IconGitHub,
-  IconLSignIn,
+  IconSignIn,
   IconNextChat,
   IconSeparator,
   IconVercel
@@ -44,7 +43,7 @@ export function Header() {
           </div>
         ) : (
           <div className="-ml-2 block md:hidden" onClick={() => setLoginDialogOpen(true)}>
-            { !isLoginDialogOpen ? <IconLSignIn className="mr-2 size-5" /> : null }
+            { !isLoginDialogOpen ? <IconSignIn className="mr-2 size-5" /> : null }
           </div>
         )}
       </div>

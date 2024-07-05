@@ -1,4 +1,3 @@
-import { auth } from '@/auth'
 import { LoginButton, LoginGoogleButton } from '@/components/login-button'
 import { redirect } from 'next/navigation'
 
@@ -14,11 +13,6 @@ export const metadata = {
 }
 
 export default async function SignInPage() {
-  const session = await auth()
-  // redirect to home if user is already logged in
-  if (session?.user) {
-    // redirect('/')
-  }
 
   return (
     <div className="w-full lg:grid min-h-screen lg:grid-cols-1 flex justify-center items-center dark:bg-black">

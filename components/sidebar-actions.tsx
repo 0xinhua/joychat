@@ -29,12 +29,10 @@ import { useMode } from './mode'
 
 interface SidebarActionsProps {
   chat: Chat
-  shareChat: (id: string) => ServerActionResult<Chat>
 }
 
 export function SidebarActions({
   chat,
-  shareChat
 }: SidebarActionsProps) {
   const router = useRouter()
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false)
@@ -77,7 +75,6 @@ export function SidebarActions({
       </div>
       <ChatShareDialog
         chat={chat}
-        shareChat={shareChat}
         open={shareDialogOpen}
         onOpenChange={setShareDialogOpen}
         onCopy={() => setShareDialogOpen(false)}

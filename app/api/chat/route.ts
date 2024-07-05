@@ -13,7 +13,7 @@ import langfuse from '@/lib/langfuse'
 import { kv } from '@vercel/kv'
 import { NextResponse } from 'next/server'
 
-// export const runtime = 'edge'
+export const runtime = 'edge'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY

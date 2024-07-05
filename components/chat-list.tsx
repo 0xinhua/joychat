@@ -10,7 +10,7 @@ export interface ChatList {
 }
 
 export function ChatList({ messages, user }: ChatList) {
-  if (!messages.length) {
+  if (!messages?.length) {
     return null
   }
 

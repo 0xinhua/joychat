@@ -1,6 +1,7 @@
+'use client'
+
 import { Sidebar } from '@/components/sidebar'
 
-import { auth } from '@/auth'
 import { ChatHistory } from '@/components/chat-history'
 import { IconChatBot, IconChatBotDark, IconSquarePen } from './ui/icons'
 import Link from 'next/link'
@@ -13,9 +14,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { UserMenu } from './user-menu'
+import { useSession } from 'next-auth/react'
 
-export async function SidebarDesktop() {
-  const session = await auth() || null
+export function SidebarDesktop() {
+  // const session = await auth() || null
+  const { data: session, status } = useSession()
 
   return (
     <Sidebar className="peer absolute inset-y-0 z-30 hidden -translate-x-full duration-300 ease-in-out data-[state=open]:translate-x-0 lg:flex lg:w-[240px] xl:w-[256px]">

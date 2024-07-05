@@ -818,7 +818,7 @@ function IconAnonymous({
   )
 }
 
-function IconLSignIn({
+function IconSignIn({
   className,
   ...props
 }: React.ComponentProps<'svg'>) {
@@ -827,6 +827,33 @@ function IconLSignIn({
       <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
       <polyline points="10 17 15 12 10 7"/>
     <line x1="15" x2="3" y1="12" y2="12"/>
+    </svg>
+  )
+}
+
+function IconHelp({
+  className,
+  ...props
+}: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>
+    </svg>
+  )
+}
+
+function IconMail({
+  className,
+  ...props
+}: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)}  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="20" height="16" x="2" y="4" rx="2"/>
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
     </svg>
   )
 }
@@ -880,5 +907,7 @@ export {
   IconSetting,
   IconSwitch,
   IconAnonymous,
-  IconLSignIn
+  IconSignIn,
+  IconHelp,
+  IconMail
 }

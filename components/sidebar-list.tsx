@@ -1,7 +1,6 @@
 import { ClearHistory } from '@/components/clear-history'
 import { SidebarItems } from '@/components/sidebar-items'
 import { cache } from 'react'
-import { auth } from '@/auth'
 import { Chat } from '@/lib/types'
 import { UserMenu } from './user-menu'
 import { Session } from 'next-auth'

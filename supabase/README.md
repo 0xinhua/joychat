@@ -26,8 +26,8 @@ To store chat data in Supabase, follow these steps:
 2. **Update environment variables** in your `.env` file with the credentials provided by Supabase:
 
 ```env
-SUPABASE_CONNECTION_STRING="your_supabase_connection_string"
 NEXT_PUBLIC_SUPABASE_URL="your_supabase_url"
+SUPABASE_SERVICE_ROLE_KEY="******"
 ```
 
 ### SQL Configuration
@@ -157,6 +157,21 @@ END;
 $$;
 ```
 
+- **Function to delete user chat**
+
+```sql
+CREATE OR REPLACE FUNCTION chat_dataset.delete_chat(user_id UUID, chat_id UUID)
+RETURNS TABLE (deleted_chat chat_dataset.chats) AS $$
+BEGIN
+    RETURN QUERY
+    DELETE FROM chat_dataset.chats
+    WHERE user_id = user_id AND chat_id = chat_id
+    RETURNING *;
+END;
+$$ LANGUAGE plpgsql;
+
+```
+
 - **Function to get all Chat history**
 
 ```sql
@@ -260,6 +275,36 @@ begin
 end;
 $$;
 
+```
+
+- **Function to get shared chat data**
+
+```sql
+CREATE OR REPLACE FUNCTION chat_dataset.get_shared_chat(chat_id UUID)
+RETURNS TABLE (chat_record chat_dataset.chats) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT * 
+    FROM chat_dataset.chats
+    WHERE chat_id = chat_id;
+END;
+$$ LANGUAGE plpgsql;
+
+```
+
+- **Function to update shared chat data**
+
+```sql
+CREATE OR REPLACE FUNCTION chat_dataset.update_share_path(a_chat_id TEXT, a_user_id UUID, a_share_path TEXT)
+RETURNS SETOF chat_dataset.chats AS $$
+BEGIN
+    RETURN QUERY
+    UPDATE chat_dataset.chats
+    SET share_path = a_share_path
+    WHERE chat_dataset.chats.chat_id = a_chat_id AND chat_dataset.chats.user_id = a_user_id
+    RETURNING *;
+END;
+$$ LANGUAGE plpgsql;
 ```
 
 By following these steps, you can configure your AI chatbot to store chat data either locally in the browser or in the cloud using Supabase.

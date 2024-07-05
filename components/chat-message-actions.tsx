@@ -7,6 +7,7 @@ import { useCopyToClipboard } from '@/lib/hooks/use-copy-to-clipboard'
 import { cn } from '@/lib/utils'
 import { ChatMessageFeedback } from './chat-message-feedback'
 import { useMode } from './mode'
+import { usePathname } from 'next/navigation'
 
 interface ChatMessageActionsProps extends React.ComponentProps<'div'> {
   message: Message
@@ -18,6 +19,8 @@ export function ChatMessageActions({
   ...props
 }: ChatMessageActionsProps) {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2500 })
+  const pathname = usePathname()
+  console.log('pathname', pathname)
 
   const onCopy = () => {
     if (isCopied) return
@@ -41,7 +44,7 @@ export function ChatMessageActions({
         : <div className="flex items-center gap-x-1 text-[12px] py-1 hover:bg-white dark:bg-neutral-900 rounded-md"><IconCopy className="size-3" />Copy</div>}
         <span className="sr-only">Copy message</span>
       </div>
-      { message?.id && mode === 'cloud' ?<ChatMessageFeedback message={message} /> : null}
+      { message?.id && mode === 'cloud' && pathname.includes('/chat') ?<ChatMessageFeedback message={message} /> : null}
     </div>
   )
 }

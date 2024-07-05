@@ -1,8 +1,9 @@
 import { auth } from '@/auth'
 import { NextResponse } from 'next/server'
-import { pgPool } from '@/lib/pg'
 import { revalidatePath } from 'next/cache'
 import { supabase } from '@/lib/supabase'
+
+export const runtime = 'edge'
 
 export async function GET(req: Request,  { params }: { params: { chatId: string } }) {
 
@@ -66,27 +67,21 @@ export async function DELETE(req: Request, { params }: { params: { chatId: strin
     })
   }
 
-  console.log('chatId', chatId)
+  console.log('delet chatId: ', chatId)
 
   try {
-    const query = `
-    DELETE FROM chat_dataset.chats
-    WHERE user_id = $1 AND chat_id = $2
-    RETURNING *;
-    `
-    const { rows } = await pgPool.query(query, [
-      userId,
-      chatId
-    ])
 
-    const chat = rows[0]
+    const { data, error } = await supabase.rpc('delete_chat', {
+      user_id: userId,
+      chat_id: chatId
+    })
 
     // revalidatePath('/')
-    revalidatePath(chat.path)
+    revalidatePath(`/chat/${chatId}`)
 
-    if (rows.length === 0) {
+    if (error) {
       return NextResponse.json({
-        message: 'Chat not found or not authorized to delete',
+        message: 'Chat not found or not authorized to delete this chat',
         code: 1
       })
     }

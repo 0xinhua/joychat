@@ -16,19 +16,20 @@ import {
 } from '@/components/ui/dialog'
 import { IconSpinner } from '@/components/ui/icons'
 import { useCopyToClipboard } from '@/lib/hooks/use-copy-to-clipboard'
+import axios from 'axios'
 
 interface ChatShareDialogProps extends DialogProps {
   chat: Pick<Chat, 'chat_id' | 'title' | 'messages'>
-  shareChat: (chat_id: string) => ServerActionResult<Chat>
   onCopy: () => void
 }
 
 export function ChatShareDialog({
   chat,
-  shareChat,
   onCopy,
   ...props
 }: ChatShareDialogProps) {
+
+  const [loading, setLoading] = React.useState(false)
   const { copyToClipboard } = useCopyToClipboard({ timeout: 1000 })
   const [isSharePending, startShareTransition] = React.useTransition()
 
@@ -58,6 +59,17 @@ export function ChatShareDialog({
     [copyToClipboard, onCopy]
   )
 
+  const shareChat = async(chatId: string) => {
+    setLoading(true)
+    const resp = await axios.post(`/api/chats/${chatId}/share`)
+    setLoading(false)
+    if (resp?.data) {
+      const { data } = resp
+      return data ? data.data : null
+    }
+    return null
+  }
+
   return (
     <Dialog {...props}>
       <DialogContent>
@@ -80,13 +92,10 @@ export function ChatShareDialog({
               // @ts-ignore
               startShareTransition(async () => {
                 const result = await shareChat(chat.chat_id)
-
-                if (result && 'error' in result) {
-                  toast.error(result.error)
-                  return
+                if (result) {
+                  console.log('share chat', result)
+                  copyShareLink(result)
                 }
-
-                copyShareLink(result)
               })
             }}
           >
