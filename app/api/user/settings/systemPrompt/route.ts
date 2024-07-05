@@ -48,7 +48,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { data, error } = await supabase.rpc('upsert_system_prompt', {
+    const { error } = await supabase.rpc('upsert_system_prompt', {
       _user_id: userId,
       _prompt: prompt
     })

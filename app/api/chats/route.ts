@@ -57,7 +57,7 @@ export async function DELETE(req: Request) {
 
   try {
 
-    const { data, error } = await supabase.rpc('delete_user_chats', { p_user_id: userId })
+    const { error } = await supabase.rpc('delete_user_chats', { p_user_id: userId })
 
     console.log('delete rows data', error)
 
