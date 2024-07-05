@@ -72,12 +72,14 @@ export async function DELETE(req: Request, { params }: { params: { chatId: strin
   try {
 
     const { data, error } = await supabase.rpc('delete_chat', {
-      user_id: userId,
-      chat_id: chatId
+      p_user_id: userId,
+      p_chat_id: chatId
     })
 
     // revalidatePath('/')
     revalidatePath(`/chat/${chatId}`)
+
+    console.log('error', error)
 
     if (error) {
       return NextResponse.json({

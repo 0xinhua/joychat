@@ -160,12 +160,12 @@ $$;
 - **Function to delete user chat**
 
 ```sql
-CREATE OR REPLACE FUNCTION chat_dataset.delete_chat(user_id UUID, chat_id UUID)
+CREATE OR REPLACE FUNCTION chat_dataset.delete_chat(p_user_id UUID, p_chat_id text)
 RETURNS TABLE (deleted_chat chat_dataset.chats) AS $$
 BEGIN
     RETURN QUERY
     DELETE FROM chat_dataset.chats
-    WHERE user_id = user_id AND chat_id = chat_id
+    WHERE user_id = p_user_id AND chat_id = p_chat_id
     RETURNING *;
 END;
 $$ LANGUAGE plpgsql;
