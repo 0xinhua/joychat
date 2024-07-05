@@ -12,7 +12,7 @@ import { kv } from '@vercel/kv'
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
-export const runtime = 'edge'
+// export const runtime = 'edge'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
