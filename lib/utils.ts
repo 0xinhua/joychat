@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from 'clsx'
 import { customAlphabet } from 'nanoid'
 import { twMerge } from 'tailwind-merge'
+import { kv } from '@vercel/kv'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -40,4 +41,30 @@ export function formatDate(input: string | number | Date): string {
     day: 'numeric',
     year: 'numeric'
   })
+}
+
+export interface UsageCostData {
+  inputTokens: number;
+  outputTokens: number;
+}
+
+// Function to calculate and store token values and costs
+export async function calculateAndStoreTokensCost(userId:  string, inputTokens: number, outputTokens: number) {
+
+  const userDataKey = `token:usage:${userId}`;
+  const currentData = await kv.hgetall(userDataKey) as Partial<UsageCostData> || {};
+  const currentInputTokens = currentData?.inputTokens ? parseFloat(currentData?.inputTokens.toString()) : 0;
+  const currentOutputTokens = currentData.outputTokens ? parseFloat(currentData.outputTokens.toString()) : 0;
+
+  const newInputTokens = currentInputTokens + inputTokens
+  const newOutputTokens = currentOutputTokens + outputTokens
+
+  console.log('totalTokens', newInputTokens, newOutputTokens)
+
+  await kv.hset(userDataKey, {
+    inputTokens: newInputTokens,
+    outputTokens: newOutputTokens,
+  })
+
+  console.log(`usage cost saved userId: ${userId} newTotalTokens`, newInputTokens, newOutputTokens)
 }

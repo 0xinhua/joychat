@@ -1,17 +1,17 @@
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
 
-import { GoogleGenerativeAI } from '@google/generative-ai'
+// import { GoogleGenerativeAI } from '@google/generative-ai'
 import { GoogleGenerativeAIStream, Message } from 'ai'
 import { encodingForModel } from "js-tiktoken"
 
 import { auth } from '@/auth'
-import { nanoid } from '@/lib/utils'
-import { supabase } from '@/lib/supabase'
-import { Plan, inputCostPerMillion, outputCostPerMillion, plans, useLangfuse } from '@/lib/const'
+import { calculateAndStoreTokensCost, nanoid } from '@/lib/utils'
+import { plans, useLangfuse } from '@/lib/const'
 import langfuse from '@/lib/langfuse'
 import { kv } from '@vercel/kv'
 import { NextResponse } from 'next/server'
+import { supabase } from '@/lib/supabase'
 
 export const runtime = 'edge'
 
@@ -19,21 +19,21 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 })
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || '')
+// const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || '')
 
-const buildGoogleGenAIPrompt = (messages: Message[]) => ({
-  contents: messages
-    .filter(message => message.role === 'user' || message.role === 'assistant')
-    .map(message => ({
-      role: message.role === 'user' ? 'user' : 'model',
-      parts: [{ text: message.content }],
-    })),
-})
+// const buildGoogleGenAIPrompt = (messages: Message[]) => ({
+//   contents: messages
+//     .filter(message => message.role === 'user' || message.role === 'assistant')
+//     .map(message => ({
+//       role: message.role === 'user' ? 'user' : 'model',
+//       parts: [{ text: message.content }],
+//     })),
+// })
 
-const groqOpenAI = new OpenAI({
-  baseURL: 'https://api.groq.com/openai/v1',
-  apiKey: process.env.GROQ_API_KEY,
-})
+// const groqOpenAI = new OpenAI({
+//   baseURL: 'https://api.groq.com/openai/v1',
+//   apiKey: process.env.GROQ_API_KEY,
+// })
 
 let trace: any, generation: any, messageId: string
 
@@ -174,72 +174,72 @@ export async function POST(req: Request) {
   messageId = useLangfuse ? trace?.id : nanoid()
 
   // use groqOpenAI llama provider
-  if (model.startsWith('llama3')) {
+  // if (model.startsWith('llama3')) {
 
-    console.log('llama3-8b-8192')
+  //   console.log('llama3-8b-8192')
 
-    const res = await groqOpenAI.chat.completions.create({
-      model: 'llama3-8b-8192',
-      messages: newMessages,
-      temperature: 0.7,
-      stream: true
-    })
+  //   const res = await groqOpenAI.chat.completions.create({
+  //     model: 'llama3-8b-8192',
+  //     messages: newMessages,
+  //     temperature: 0.7,
+  //     stream: true
+  //   })
 
-    const stream = OpenAIStream(res, {
+  //   const stream = OpenAIStream(res, {
 
-      onStart: () => {
+  //     onStart: () => {
 
-        if (useLangfuse) {
-          generation.update({
-            completionStartTime: new Date(),
-          })
-        }
-      },
-      async onCompletion(completion) {
-        if (useLangfuse) {
-          generation.end({
-            output: completion,
-            level: completion.includes("I don't know how to help with that")
-              ? "WARNING"
-              : "DEFAULT",
-            statusMessage: completion.includes("I don't know how to help with that")
-              ? "Refused to answer"
-              : undefined,
-          })
-        }
-        handleCompletion(completion, messages, id, userId, messageId, model)
-        if (useLangfuse) {
-          await langfuse.shutdownAsync()
-        }
-      }
-    })
+  //       if (useLangfuse) {
+  //         generation.update({
+  //           completionStartTime: new Date(),
+  //         })
+  //       }
+  //     },
+  //     async onCompletion(completion) {
+  //       if (useLangfuse) {
+  //         generation.end({
+  //           output: completion,
+  //           level: completion.includes("I don't know how to help with that")
+  //             ? "WARNING"
+  //             : "DEFAULT",
+  //           statusMessage: completion.includes("I don't know how to help with that")
+  //             ? "Refused to answer"
+  //             : undefined,
+  //         })
+  //       }
+  //       handleCompletion(completion, messages, id, userId, messageId, model)
+  //       if (useLangfuse) {
+  //         await langfuse.shutdownAsync()
+  //       }
+  //     }
+  //   })
 
-    return new StreamingTextResponse(stream, {
-      headers: {
-        "X-Trace-Id": trace?.id || messageId,
-      },
-    })
-  }
+  //   return new StreamingTextResponse(stream, {
+  //     headers: {
+  //       "X-Trace-Id": trace?.id || messageId,
+  //     },
+  //   })
+  // }
 
   // use google gemini provider
-  if (model.startsWith('gemini')) {
+  // if (model.startsWith('gemini')) {
 
-    console.log('gemini model')
+  //   console.log('gemini model')
 
-    const geminiStream = await genAI
-    .getGenerativeModel({ model: 'gemini-pro' })
-    .generateContentStream(buildGoogleGenAIPrompt(messages))
+  //   const geminiStream = await genAI
+  //   .getGenerativeModel({ model: 'gemini-pro' })
+  //   .generateContentStream(buildGoogleGenAIPrompt(messages))
 
-    // Convert the response into a friendly text-stream
-    const stream = GoogleGenerativeAIStream(geminiStream, {
-      onCompletion: async (completion) => {
-        handleCompletion(completion, messages, id, userId, messageId, model)      
-      }
-    })
+  //   Convert the response into a friendly text-stream
+  //   const stream = GoogleGenerativeAIStream(geminiStream, {
+  //     onCompletion: async (completion) => {
+  //       handleCompletion(completion, messages, id, userId, messageId, model)      
+  //     }
+  //   })
 
-    // Respond with the stream
-    return new StreamingTextResponse(stream)
-  }
+  //   Respond with the stream
+  //   return new StreamingTextResponse(stream)
+  // }
 
   if (previewToken) {
     openai.apiKey = previewToken
@@ -313,30 +313,4 @@ export async function POST(req: Request) {
       "X-Trace-Id": trace?.id || messageId,
     },
   })
-}
-
-export interface UsageCostData {
-  inputTokens: number;
-  outputTokens: number;
-}
-
-// Function to calculate and store token values and costs
-async function calculateAndStoreTokensCost(userId:  string, inputTokens: number, outputTokens: number) {
-
-  const userDataKey = `token:usage:${userId}`;
-  const currentData = await kv.hgetall(userDataKey) as Partial<UsageCostData> || {};
-  const currentInputTokens = currentData?.inputTokens ? parseFloat(currentData?.inputTokens.toString()) : 0;
-  const currentOutputTokens = currentData.outputTokens ? parseFloat(currentData.outputTokens.toString()) : 0;
-
-  const newInputTokens = currentInputTokens + inputTokens
-  const newOutputTokens = currentOutputTokens + outputTokens
-
-  console.log('totalTokens', newInputTokens, newOutputTokens)
-
-  await kv.hset(userDataKey, {
-    inputTokens: newInputTokens,
-    outputTokens: newOutputTokens,
-  })
-
-  console.log(`usage cost saved userId: ${userId} newTotalTokens`, newInputTokens, newOutputTokens)
 }
