@@ -1,8 +1,7 @@
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
 
-// import { GoogleGenerativeAI } from '@google/generative-ai'
-import { GoogleGenerativeAIStream, Message } from 'ai'
+import { Message } from 'ai'
 import { encodingForModel } from "js-tiktoken"
 
 import { auth } from '@/auth'
@@ -18,22 +17,6 @@ export const runtime = 'edge'
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 })
-
-// const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || '')
-
-// const buildGoogleGenAIPrompt = (messages: Message[]) => ({
-//   contents: messages
-//     .filter(message => message.role === 'user' || message.role === 'assistant')
-//     .map(message => ({
-//       role: message.role === 'user' ? 'user' : 'model',
-//       parts: [{ text: message.content }],
-//     })),
-// })
-
-// const groqOpenAI = new OpenAI({
-//   baseURL: 'https://api.groq.com/openai/v1',
-//   apiKey: process.env.GROQ_API_KEY,
-// })
 
 let trace: any, generation: any, messageId: string
 
@@ -172,74 +155,6 @@ export async function POST(req: Request) {
   console.log('trace.id message useLangfuse', trace?.id, useLangfuse)
 
   messageId = useLangfuse ? trace?.id : nanoid()
-
-  // use groqOpenAI llama provider
-  // if (model.startsWith('llama3')) {
-
-  //   console.log('llama3-8b-8192')
-
-  //   const res = await groqOpenAI.chat.completions.create({
-  //     model: 'llama3-8b-8192',
-  //     messages: newMessages,
-  //     temperature: 0.7,
-  //     stream: true
-  //   })
-
-  //   const stream = OpenAIStream(res, {
-
-  //     onStart: () => {
-
-  //       if (useLangfuse) {
-  //         generation.update({
-  //           completionStartTime: new Date(),
-  //         })
-  //       }
-  //     },
-  //     async onCompletion(completion) {
-  //       if (useLangfuse) {
-  //         generation.end({
-  //           output: completion,
-  //           level: completion.includes("I don't know how to help with that")
-  //             ? "WARNING"
-  //             : "DEFAULT",
-  //           statusMessage: completion.includes("I don't know how to help with that")
-  //             ? "Refused to answer"
-  //             : undefined,
-  //         })
-  //       }
-  //       handleCompletion(completion, messages, id, userId, messageId, model)
-  //       if (useLangfuse) {
-  //         await langfuse.shutdownAsync()
-  //       }
-  //     }
-  //   })
-
-  //   return new StreamingTextResponse(stream, {
-  //     headers: {
-  //       "X-Trace-Id": trace?.id || messageId,
-  //     },
-  //   })
-  // }
-
-  // use google gemini provider
-  // if (model.startsWith('gemini')) {
-
-  //   console.log('gemini model')
-
-  //   const geminiStream = await genAI
-  //   .getGenerativeModel({ model: 'gemini-pro' })
-  //   .generateContentStream(buildGoogleGenAIPrompt(messages))
-
-  //   Convert the response into a friendly text-stream
-  //   const stream = GoogleGenerativeAIStream(geminiStream, {
-  //     onCompletion: async (completion) => {
-  //       handleCompletion(completion, messages, id, userId, messageId, model)      
-  //     }
-  //   })
-
-  //   Respond with the stream
-  //   return new StreamingTextResponse(stream)
-  // }
 
   if (previewToken) {
     openai.apiKey = previewToken
