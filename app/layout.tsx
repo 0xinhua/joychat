@@ -16,7 +16,7 @@ export const metadata = {
     default: 'JoyChat',
     template: `%s - Your personal AI assistant`
   },
-  description: 'Talk with JoyChat, an AI assistant powered by OpenAI GPT-4-turbo built with love by 0xinhua.',
+  description: 'Your personal AI assistant powered by OpenAI GPT-4o.',
   icons: {
     icon: [
       {
