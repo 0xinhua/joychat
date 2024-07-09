@@ -3,7 +3,6 @@ import { GeistMono } from 'geist/font/mono'
 
 import '@/app/globals.css'
 import { cn } from '@/lib/utils'
-import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { Providers } from '@/components/providers'
 import { Header } from '@/components/header'
 import Script from 'next/script'
@@ -16,7 +15,7 @@ export const metadata = {
     default: 'JoyChat',
     template: `%s - Your personal AI assistant`
   },
-  description: 'Your personal AI assistant powered by OpenAI GPT-4o.',
+  description: 'Your personal AI assistant powered by GPT-4o.',
   icons: {
     icon: [
       {
@@ -77,7 +76,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
               {children}
             </main>
           </div>
-          {/* <TailwindIndicator /> */}
         </Providers>
       </body>
     </html>
