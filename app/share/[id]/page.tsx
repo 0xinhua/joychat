@@ -53,7 +53,7 @@ export default function SharePage({ params }: SharePageProps) {
             <div className="space-y-1 md:-mx-8">
               <h1 className="text-2xl font-bold">{chat?.title}</h1>
               <div className="text-sm text-muted-foreground">
-                {formatDate(Number(chat?.created_at))} · {chat?.messages?.length} messages
+                {formatDate(Number(chat?.created_at))} · {chat?.messages?.filter(msg => msg?.role !== 'system')?.length} messages
               </div>
             </div>
           </div>
