@@ -197,7 +197,7 @@ export async function POST(req: Request) {
     onFinal: async () => {
       console.log(`completionTokens: ${completionTokens}`);
       console.time('totalExecutionTime');
-      calculateAndStoreTokensCost(userId, promptTokens, completionTokens)
+      await calculateAndStoreTokensCost(userId, promptTokens, completionTokens)
       console.timeEnd('totalExecutionTime');
     },
     async onCompletion(completion) {
