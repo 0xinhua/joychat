@@ -42,7 +42,8 @@ export const quickstartMessages = [
     heading: `📖 Summarize content`,
     message: `Your task is to review the provided content and create a concise summary that captures the essential information.
 Use clear and professional language. summarized content use the language in which the user entered the content, Organize the summary logically with appropriate formatting, such as headings, subheadings, and bullet points. Ensure that the summary is easy to understand.
-  \n The content: `
+  \n The content: 
+  \n`
   },
   {
     heading: '📧 Format and correct email',
