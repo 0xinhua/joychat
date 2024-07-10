@@ -6,6 +6,7 @@ import { FooterText } from '@/components/footer'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Chat } from '@/lib/types'
+import { IconLoading } from '@/components/ui/icons'
 
 interface SharePageProps {
   params: {
@@ -27,6 +28,7 @@ export default function SharePage({ params }: SharePageProps) {
       console.log('data share', data)
       setLoading(false)
       if (data?.data) {
+        console.log('data?.data',data?.data)
         setChat(data.data)
       }
     }
@@ -57,8 +59,8 @@ export default function SharePage({ params }: SharePageProps) {
           </div>
         </div>
         <ChatList messages={chat.messages} />
-      </div> : null }
-      <FooterText className="py-8" />
+        <FooterText className="py-8" />
+      </div> : loading ? <div className="mx-auto my-10 animate-spin"><IconLoading /></div> : <div className="mx-auto my-10" >{`Share chat: ${params.id} not found. `}</div> }
     </>
   )
 }

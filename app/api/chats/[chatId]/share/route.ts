@@ -21,7 +21,7 @@ export async function POST(req: Request, { params }: { params: { chatId: string 
     })
   }
 
-  console.log('chatId get ->', chatId)
+  console.log('chatId POST ->', chatId)
 
   try {
 
@@ -33,7 +33,7 @@ export async function POST(req: Request, { params }: { params: { chatId: string 
 
     if (!rows || !rows?.length) {
       return NextResponse.json({
-        message: 'The chat has since been removed',
+        message: 'The chat not found',
         code: 1
       })
     }
@@ -94,20 +94,27 @@ export async function GET(req: Request, { params }: { params: { chatId: string }
     if (error) {
       console.error('get_shared_chat rpc error:', error)
       return NextResponse.json({
-        data: [],
+        data: null,
         code: 0,
       })
     }
 
+    const filterRows = rows && rows.length ? rows.map(chat => ({
+      created_at: chat.created_at,
+      messages: chat.messages,
+      title: chat.title,
+      current_model_name: chat.current_model_name
+    })) : null;
+
     return NextResponse.json({
-      data: rows ? rows[0] : [],
+      data: filterRows[0],
       code: 0
     })
 
   } catch (error) {
     console.log('get_shared_chat rpc error', error)
     return NextResponse.json({
-      data: [],
+      data: null,
       code: 0
     })
   }
