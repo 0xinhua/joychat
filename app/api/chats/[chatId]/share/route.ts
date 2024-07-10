@@ -1,6 +1,7 @@
 import { auth } from '@/auth'
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { Chat } from '@/lib/types'
 
 export const runtime = 'edge'
 
@@ -99,7 +100,7 @@ export async function GET(req: Request, { params }: { params: { chatId: string }
       })
     }
 
-    const filterRows = rows && rows.length ? rows.map(chat => ({
+    const filterRows = rows && rows.length ? rows.map((chat: Chat) => ({
       created_at: chat.created_at,
       messages: chat.messages,
       title: chat.title,
