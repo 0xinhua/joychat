@@ -52,7 +52,7 @@ export function ChatPanel({
       )}>
       <ButtonScrollToBottom />
       <div className="mx-auto sm:max-w-3xl">
-        <div className="flex items-center justify-center md:h-12 h-10">
+        <div className="flex items-center justify-center md:h-12 h-10 mb-1">
           {isLoading ? (
             <Button
               variant="outline"
