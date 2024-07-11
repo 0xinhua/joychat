@@ -13,9 +13,9 @@ export const metadata = {
   metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
   title: {
     default: 'JoyChat',
-    template: `%s - Your personal AI assistant`
+    template: `%s - AI Chatbot access GPT-4o and LLMs all in one place!`
   },
-  description: 'Your personal AI assistant powered by GPT-4o.',
+  description: 'Your free AI assistant, a beautiful and secure chatbot alternative to ChatGPT, offering a joyful experience with AI.',
   icons: {
     icon: [
       {

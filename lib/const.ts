@@ -1,4 +1,5 @@
 import { IconBard, IconMeta, IconOpenai } from "@/components/ui/icons"
+import { nanoid } from "./utils"
 
 export const defaultSystemPrompt = "You are a helpful assistant, you always give concise answers."
 export const isLocalMode = process.env.NEXT_PUBLIC_STORAGE_MODE === 'local'
@@ -18,18 +19,18 @@ export const models = [
   //   icon: IconOpenai,
   //   disabled: false
   // },
-  {
-    value: 'llama3-8b',
-    label: 'llama3-8b',
-    icon: IconMeta,
-    disabled: true
-  },
-  {
-    value: 'gemini-1.5-flash-latest',
-    label: 'gemini-1.5-flash-latest',
-    icon: IconBard,
-    disabled: true
-  },
+  // {
+  //   value: 'llama3-8b',
+  //   label: 'llama3-8b',
+  //   icon: IconMeta,
+  //   disabled: true
+  // },
+  // {
+  //   value: 'gemini-1.5-flash-latest',
+  //   label: 'gemini-1.5-flash-latest',
+  //   icon: IconBard,
+  //   disabled: true
+  // },
 ]
 
 export const quickstartMessages = [
@@ -41,7 +42,7 @@ export const quickstartMessages = [
   {
     heading: `📖 Summarize content`,
     message: `Your task is to review the provided content and create a concise summary that captures the essential information.
-Use clear and professional language. summarized content use the language in which the user entered the content, Organize the summary logically with appropriate formatting, such as headings, subheadings, and bullet points. Ensure that the summary is easy to understand.
+Use clear and professional language. summarized content use the language in which the user entered the content, organize the summary logically with appropriate formatting, such as headings, subheadings, and bullet points. Ensure that the summary is easy to understand.
   \n The content: 
   \n`
   },

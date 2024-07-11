@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from 'clsx'
 import { customAlphabet } from 'nanoid'
 import { twMerge } from 'tailwind-merge'
 import { kv } from '@vercel/kv'
+import { Message } from 'ai'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -68,3 +69,9 @@ export async function calculateAndStoreTokensCost(userId:  string, inputTokens: 
 
   console.log(`usage cost saved userId: ${userId} newTotalTokens`, newInputTokens, newOutputTokens)
 }
+
+export const getDefaultSystemMessage = (systemPrompt: string): Message[] => ([{
+  id: nanoid(),
+  role: 'system',
+  content: systemPrompt || "You are a helpful assistant.",
+}])
