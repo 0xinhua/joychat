@@ -29,7 +29,7 @@ export function ChatMessage({ message, user, ...props }: ChatMessageProps) {
           'flex size-9 shrink-0 select-none items-center justify-center rounded-2xl dark:border-neutral-800',
           message.role === 'user'
             ? 'bg-transparent'
-            : 'bg-primary transition-all border border-gray-100 bg-zinc-100/60 group-hover:bg-zinc-100 group-hover:border-gray-200/80 dark:bg-transparent text-primary-foreground'
+            : 'bg-primary transition-all border border-gray-100 bg-zinc-100/60 group-hover:bg-zinc-100 dark:group-hover:bg-zinc-950 group-hover:border-gray-200/80 dark:group-hover:border-neutral-700 dark:bg-transparent text-primary-foreground'
         )}
       >
         { message.role === 'user' ? (user?.name ? <span className="text-gray-400 text-xs dark:text-gray-300"></span> : <IconUser />)
