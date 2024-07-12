@@ -107,7 +107,7 @@ export function ChatPanel({
           />
           {/* <FooterText className="hidden sm:block" /> */}
         </div>
-        {messages?.filter(msg => msg.role !== 'system').length ? <span className="text-xs py-1 text-gray-400/90 flex items-center justify-center ">JoyChat can make mistakes, generated content may be inaccurate or false.</span> : null}
+        {messages?.filter(msg => msg.role !== 'system').length ? <span className="text-xs hidden sm:flex py-1 text-gray-400/90 flex items-center justify-center ">JoyChat can make mistakes, generated content may be inaccurate or false.</span> : null}
       </div>
     </div>
   )
