@@ -30,13 +30,13 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             </ExternalLink></span>
           </h1>
           <p className="mb-2 leading-normal text-muted-foreground dark:text-gray-300">
-            Your personal AI assistant, let&apos;s chat about anything on your mind.
+            I’m here to be your friendly AI companion 😊.
           </p>
           <p className="leading-normal text-muted-foreground dark:text-gray-300">
-            Ask me for advice, answers, etc, or try one of our quickstart questions.
+          Let&apos;s chat about anything on your mind, or try one of quickstart questions.
           </p>
         </div>
-        <div className="col-span-1 md:col-span-2 flex flex-col gap-y-1 leading-normal text-muted-foreground sm:pb-0 pb-4">
+        <div className="col-span-1 mt-3 md:col-span-2 flex flex-col gap-y-1 leading-normal text-muted-foreground sm:pb-0 pb-4">
           <h1 className="mb-2 text-lg font-semibold text-foreground">✨ Model</h1>
           <Select defaultValue={model} onValueChange={setModel}>
             <SelectTrigger className="w-[154px] shadow-none">
