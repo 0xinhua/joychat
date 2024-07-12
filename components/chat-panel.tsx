@@ -4,7 +4,7 @@ import { type UseChatHelpers } from 'ai/react'
 import { Button } from '@/components/ui/button'
 import { PromptForm } from '@/components/prompt-form'
 import { ButtonScrollToBottom } from '@/components/button-scroll-to-bottom'
-import { IconRefresh, IconShare, IconStop } from '@/components/ui/icons'
+import { IconAlert, IconRefresh, IconShare, IconStop } from '@/components/ui/icons'
 import { FooterText } from '@/components/footer'
 import { ChatShareDialog } from '@/components/chat-share-dialog'
 import { useRouter } from 'next/navigation'
@@ -52,7 +52,7 @@ export function ChatPanel({
       )}>
       <ButtonScrollToBottom />
       <div className="mx-auto sm:max-w-3xl">
-        <div className="flex items-center justify-center md:h-12 h-10 mb-1">
+        <div className="flex items-center justify-center md:h-12 h-10 mb-2">
           {isLoading ? (
             <Button
               variant="outline"
@@ -107,6 +107,7 @@ export function ChatPanel({
           />
           {/* <FooterText className="hidden sm:block" /> */}
         </div>
+        {messages?.filter(msg => msg.role !== 'system').length ? <span className="text-xs py-1 text-gray-400/90 flex items-center justify-center ">JoyChat can make mistakes, generated content may be inaccurate or false.</span> : null}
       </div>
     </div>
   )
