@@ -1,5 +1,5 @@
 {
-  "redirects": [
+  "rewrites": [
     {
       "source": "/blogs",
       "destination": "https://joychat-content.vercel.app/"
