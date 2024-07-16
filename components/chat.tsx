@@ -58,7 +58,7 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
         }
         if (response.status !== 200 ) {
           toast({
-            title: "Chat completion failed",
+            title: "Chat failed",
             description: response?.statusText,
           })
         }

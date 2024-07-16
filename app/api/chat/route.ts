@@ -111,7 +111,7 @@ export async function POST(req: Request) {
         console.log(`${plan} plan Token limit exceeded`);
         return NextResponse.json({ }, {
           status: 500,
-          statusText: `${plan} plan Token limit exceeded, please contact the website maintenance.`
+          statusText: `You have reached the usage limit of ${plan} plan. If you need more free credits, please email the administrator at support@joychat.io .`
         })
       }
     }
