@@ -57,7 +57,6 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
           latestTraceId.current = newTraceId
         }
         if (response.status !== 200 ) {
-          console.log(response)
           toast({
             title: "Chat completion failed",
             description: response?.statusText,

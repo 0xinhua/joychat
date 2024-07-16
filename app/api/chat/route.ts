@@ -86,7 +86,7 @@ export async function POST(req: Request) {
 
   const { id: userId, plan = 'free' } = user
 
-  console.log('model chatId userId: ', model, id, userId)
+  console.log('model chatId userId: ', model, id, userId, plan)
 
   const startTime = Date.now() // startTime
 
