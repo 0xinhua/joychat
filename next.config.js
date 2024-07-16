@@ -5,22 +5,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 /** @type {import('next').NextConfig} */
 module.exports = withBundleAnalyzer({
   reactStrictMode: false,
-  async rewrites() {
-    return [
-      {
-        source: '/blogs',
-        destination: 'https://joychat-content.vercel.app',
-      },
-      {
-        source: '/blog/:path*',
-        destination: 'https://joychat-content.vercel.app/blog/:path*',
-      },
-      {
-        source: '/:path(tos|privacy|cookies|about|blogs)', // 匹配 /tos, /privacy, /cookies 路径
-        destination: 'https://joychat-content.vercel.app/:path', // 目标路径
-      },
-    ]
-  },
   images: {
     remotePatterns: [
       {
