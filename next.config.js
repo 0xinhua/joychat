@@ -92,7 +92,5 @@ module.exports = withBundleAnalyzer({
     }
   ],
   transpilePackages: ['validation-schemas'],
-  assetPrefix: isProd
-  ? (pathname => pathname.startsWith('/blogs') ? 'https://joychat-content.vercel.app' : 'https://joychat.io')
-  : undefined
+  assetPrefix: isProd ? 'https://joychat.io' : undefined
 })
