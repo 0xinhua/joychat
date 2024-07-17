@@ -92,5 +92,5 @@ module.exports = withBundleAnalyzer({
     }
   ],
   transpilePackages: ['validation-schemas'],
-  assetPrefix: undefined
+  assetPrefix: isProd ? 'https://joychat.io' : undefined
 })
