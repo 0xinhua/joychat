@@ -89,6 +89,22 @@ module.exports = withBundleAnalyzer({
     {
       source: "/blogs/:match*",
       destination: "https://joychat-content.vercel.app/content/blogs/:match*"
+    },
+    {
+      source: "/content/_next/:path*",
+      destination: "https://joychat-content.vercel.app/content/_next/:path*"
+    },
+    {
+      source: "/content/:match*",
+      destination: "https://joychat-content.vercel.app/content/:match*"
+    },
+    {
+      source: "/site.webmanifest",
+      destination: "https://joychat-content.vercel.app/content/static/favicons/site.webmanifest"
+    },
+    {
+      source: "/search.json",
+      destination: "https://joychat-content.vercel.app/content/search.json"
     }
   ],
   transpilePackages: ['validation-schemas'],
