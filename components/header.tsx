@@ -26,7 +26,7 @@ export function Header() {
     setLoginDialogOpen,
   } = useUserSettingStore()
   return (
-    <header className="sticky top-0 z-1 flex items-center justify-between w-full h-16 px-4 lg:px-5 shrink-0 dark:bg-zinc-900">
+    <header className="sticky top-0 z-1 flex items-center justify-between w-full h-16 md:h-8 px-4 lg:px-5 shrink-0 dark:bg-zinc-900">
       <div className="flex items-center">
         <React.Suspense fallback={<div className="flex-1 overflow-auto" />}>
           <>

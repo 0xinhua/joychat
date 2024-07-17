@@ -28,7 +28,7 @@ export function SidebarList({ chats, session }: SidebarListProps) {
           </div>
         )}
       </div>
-      <div className="flex items-center justify-between py-4 pt-2 px-3 sm:pl-4">
+      <div className="flex items-center justify-between py-4 pt-2 mb-2 px-3 sm:pl-4">
          <div>
           <SettingsDialog />
           <UserMenu user={session?.user} />

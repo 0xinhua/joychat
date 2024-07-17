@@ -26,7 +26,7 @@ export function SidebarDesktop() {
         href="/"
         className={cn(
           buttonVariants({ variant: 'outline' }),
-          'flex w-full h-fit px-3 mt-2 border-none justify-start font-normal shadow-none transition-colors text-gray-600 max-xl:text-sm hover:bg-transparent'
+          'flex w-full h-fit px-3 mt-2.5 border-none justify-start font-normal shadow-none transition-colors text-gray-600 max-xl:text-sm hover:bg-transparent'
         )}
         >
         <div className="flex h-10 rounded-md px-2 py-4 w-full items-center justify-between font-medium hover:bg-zinc-200 dark:border-gray-800 dark:bg-neutral-800 dark:text-gray-300 dark:hover:bg-neutral-700">

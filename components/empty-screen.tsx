@@ -39,7 +39,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
         <div className="col-span-1 mt-3 md:col-span-2 flex flex-col gap-y-1 leading-normal text-muted-foreground sm:pb-0 pb-4">
           <h1 className="mb-2 text-lg font-semibold text-foreground">✨ Model</h1>
           <Select defaultValue={model} onValueChange={setModel}>
-            <SelectTrigger className="w-[154px] shadow-none">
+            <SelectTrigger className="w-[154px] shadow-none dark:border-[#3e3e3e]">
               <SelectValue placeholder="Select a model" />
             </SelectTrigger>
             <SelectContent className="dark:bg-zinc-900">
@@ -66,7 +66,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             <button
               title={message.message}
               key={index}
-              className="rounded-md border bg-gray-50 p-2.5 px-3 text-gray-600 hover:bg-gray-100 max-xl:text-sm dark:border-gray-800 dark:bg-neutral-800 dark:text-gray-300 dark:hover:bg-neutral-700 text-left"
+              className="rounded-md border bg-gray-50 p-2.5 px-3 text-gray-600 hover:bg-gray-100 max-xl:text-sm dark:border-[#3e3e3e] dark:bg-neutral-800 dark:text-gray-300 dark:hover:bg-neutral-700 text-left"
               onClick={() => setInput(message.message)}
             >
               { message.heading }
