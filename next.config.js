@@ -99,7 +99,7 @@ module.exports = withBundleAnalyzer({
       destination: "https://joychat-content.vercel.app/content/:match*"
     },
     {
-      source: "/site.webmanifest",
+      source: "/static/favicons/site.webmanifest",
       destination: "https://joychat-content.vercel.app/content/static/favicons/site.webmanifest"
     },
     {
