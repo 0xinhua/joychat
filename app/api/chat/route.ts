@@ -6,7 +6,7 @@ import { encodingForModel } from "js-tiktoken"
 
 import { auth } from '@/auth'
 import { calculateAndStoreTokensCost, nanoid } from '@/lib/utils'
-import { plans, useLangfuse } from '@/lib/const'
+import { ModelName, PlanName, plans, useLangfuse } from '@/lib/const'
 import langfuse from '@/lib/langfuse'
 import { kv } from '@vercel/kv'
 import { NextResponse } from 'next/server'
@@ -90,11 +90,14 @@ export async function POST(req: Request) {
 
   const startTime = Date.now() // startTime
 
-  const record = await kv.hmget(`token:usage:${userId}`, 'inputTokens', 'outputTokens')
+  const userDataKey = `token:usage:${userId}:${plan}:${model}`
+
+  const record = await kv.hmget(userDataKey, 'inputTokens', 'outputTokens')
 
   console.log('user token usage record: ', record)
 
-  console.time('tokenUsageCheck')
+  const modelName = model as ModelName
+  const planName = plan as PlanName
 
   if (record) {
 
@@ -106,12 +109,14 @@ export async function POST(req: Request) {
 
       console.log('user totalTokens: ', totalTokens)
 
-      console.log('plan', plan, totalTokens, plans[plan]['tokenLimit'])
-      if (totalTokens && Number(totalTokens) as number > plans[plan]['tokenLimit']) {
-        console.log(`${plan} plan Token limit exceeded`);
+      const planLimits = plans[planName][modelName]
+      console.log('plan', plan, totalTokens, planLimits.tokenLimit)
+
+      if (totalTokens && Number(totalTokens) as number > planLimits.tokenLimit) {
+        console.log(`${plan} plan Token limit exceeded`)
         return NextResponse.json({ }, {
           status: 500,
-          statusText: `You have reached the usage limit of ${plan} plan. If you need more free credits, please email the administrator at support@joychat.io .`
+          statusText: `You have reached the ${modelName} model usage limit of ${plan} plan. If you need more free credits, please email the administrator at support@joychat.io .`
         })
       }
     }
@@ -191,17 +196,17 @@ export async function POST(req: Request) {
       }
     },
     onToken: (content) => {
-      const tokenList = enc.encode(content);
-      completionTokens += tokenList.length;
+      const tokenList = enc.encode(content)
+      completionTokens += tokenList.length
     },
     onFinal: async () => {
-      console.log(`completionTokens: ${completionTokens}`);
-      console.time('totalExecutionTime');
-      await calculateAndStoreTokensCost(userId, promptTokens, completionTokens)
-      console.timeEnd('totalExecutionTime');
+      console.log(`completionTokens: ${completionTokens}`)
+      console.time('totalExecutionTime')
+      await calculateAndStoreTokensCost(userId, planName, modelName, promptTokens, completionTokens)
+      console.timeEnd('totalExecutionTime')
     },
     async onCompletion(completion) {
-      console.time('useLangfuseGeneration');
+      console.time('useLangfuseGeneration')
       if (useLangfuse) {
         generation.end({
           output: completion,

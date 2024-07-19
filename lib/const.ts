@@ -6,7 +6,13 @@ export const isLocalMode = process.env.NEXT_PUBLIC_STORAGE_MODE === 'local'
 export const defaultModel = process.env.NEXT_PUBLIC_DEFAULT_MODEL || 'gpt-4o'
 export const useLangfuse = !!process.env.NEXT_PUBLIC_LANGFUSE_PUBLIC_KEY && !!process.env.NEXT_PUBLIC_LANGFUSE_BASE_URL
 
-export const models = [
+export const availableModels = [
+  {
+    value: 'gpt-4o-mini',
+    label: 'gpt-4o-mini',
+    icon: IconOpenai,
+    disabled: true
+  },
   {
     value: 'gpt-4o',
     label: 'gpt-4o',
@@ -130,20 +136,47 @@ Use clear and professional language. summarized content use the language in whic
   }
 ]
 
-export type Plan = 'free' | 'pro';
+export type PlanName = 'free' | 'pro'
+export type ModelName = 'gpt-4o' | 'gpt-4o-mini'
 
-export const plans: Record<Plan | string, { name: string; model: string; tokenLimit: number; }> = {
+export const plans: Record<PlanName, Record<ModelName, { model: string; tokenLimit: number; inputTokenLimit: number; outputTokenLimit: number; }>> = {
   'free': {
-    "name": "free",
-    "model": "gpt-4o",
-    "tokenLimit": 199800,
+    'gpt-4o': {
+      model: "gpt-4o",
+      tokenLimit: 142857,
+      inputTokenLimit: 114286,
+      outputTokenLimit: 28571,
+    },
+    'gpt-4o-mini': {
+      model: "gpt-4o-mini",
+      tokenLimit: 4166666,
+      inputTokenLimit: 3333333,
+      outputTokenLimit: 833333,
+    },
   },
   'pro': {
-    "name": "pro",
-    "model": "gpt-4o",
-    "tokenLimit": 1114286,
+    'gpt-4o': {
+      model: "gpt-4o",
+      tokenLimit: 2142857,
+      inputTokenLimit: 1714286,
+      outputTokenLimit: 428571,
+    },
+    'gpt-4o-mini': {
+      model: "gpt-4o-mini",
+      tokenLimit: 62500000,
+      inputTokenLimit: 50000000,
+      outputTokenLimit: 12500000,
+    },
   }
 }
 
-export const inputCostPerMillion = 5.00
-export const outputCostPerMillion = 15.00
+export const tokenCosts = {
+  'gpt-4o': {
+    inputCostPerMillion: 5.00,
+    outputCostPerMillion: 15.00
+  },
+  'gpt-4o-mini': {
+    inputCostPerMillion: 0.150,
+    outputCostPerMillion: 0.600
+  }
+}

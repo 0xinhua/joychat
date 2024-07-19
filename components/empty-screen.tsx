@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
-import { defaultModel, models, quickstartMessages } from '@/lib/const'
+import { defaultModel, availableModels, quickstartMessages } from '@/lib/const'
 
 export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
 
@@ -44,7 +44,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             </SelectTrigger>
             <SelectContent className="dark:bg-zinc-900">
               <SelectGroup>
-                {models.map((model) => (
+                {availableModels.map((model) => (
                   <SelectItem key={model.value} value={model.value} className={model.disabled ? 'cursor-not-allowed' : 'cursor-pointer dark:hover:bg-zinc-800'} disabled={model.disabled}>
                     <div className="flex items-center justify-center gap-x-1.5">
                       {<model.icon />}
