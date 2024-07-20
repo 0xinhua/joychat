@@ -84,12 +84,12 @@ export function UserMenu({ user }: UserMenuProps) {
           )}
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-44 dark:bg-neutral-900 ml-2">
+      <DropdownMenuContent className="w-48 dark:bg-neutral-900 ml-2 dark:border-muted">
         { user ? <div><DropdownMenuLabel>
           <div className="text-[15px] font-medium">{user?.name}</div>
-          <div className="text-[13px] text-zinc-500 font-normal">{user?.email}</div>
+          <div className="text-[13px] text-zinc-400 font-normal">{user?.email}</div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator /></div>
+        <DropdownMenuSeparator className="dark:bg-muted" /></div>
         : null}
         <DropdownMenuGroup>
           <DropdownMenuItem className="cursor-pointer dark:hover:bg-zinc-800" onClick={e => setSettingsDialogOpen(true)}>
@@ -105,7 +105,7 @@ export function UserMenu({ user }: UserMenuProps) {
               <span>Theme</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="dark:bg-zinc-900">
+              <DropdownMenuSubContent className="dark:bg-zinc-900 dark:border-muted">
                 <DropdownMenuItem onClick={() => setTheme("light")} className="cursor-pointer dark:hover:bg-zinc-800">
                   <Sun className="mr-2 size-4" />
                   <span>Light</span>
@@ -129,7 +129,7 @@ export function UserMenu({ user }: UserMenuProps) {
               <span>Help & Support</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="dark:bg-zinc-900">
+              <DropdownMenuSubContent className="dark:bg-zinc-900 dark:border-muted">
                 <DropdownMenuItem className="cursor-pointer dark:hover:bg-zinc-800">
                   {/* <IconMail className="mr-2 size-4" /> */}
                   <a href="mailto:support@joychat.io">Support@joychat.io</a>
