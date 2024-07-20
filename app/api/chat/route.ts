@@ -92,6 +92,8 @@ export async function POST(req: Request) {
 
   const userDataKey = `token:usage:${userId}:${plan}:${model}`
 
+  console.time('tokenUsageCheck')
+
   const record = await kv.hmget(userDataKey, 'inputTokens', 'outputTokens')
 
   console.log('user token usage record: ', record)
