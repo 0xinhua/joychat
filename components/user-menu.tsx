@@ -132,7 +132,7 @@ export function UserMenu({ user }: UserMenuProps) {
               <DropdownMenuSubContent className="dark:bg-zinc-900 dark:border-muted">
                 <DropdownMenuItem className="cursor-pointer dark:hover:bg-zinc-800">
                   {/* <IconMail className="mr-2 size-4" /> */}
-                  <a href="mailto:support@joychat.io">Support@joychat.io</a>
+                  <a href="mailto:support@joychat.io">support@joychat.io</a>
                   <IconExternalLink className="size-4 ml-2" />
                 </DropdownMenuItem>
                 <DropdownMenuItem className="dark:hover:bg-zinc-800">
