@@ -7,7 +7,7 @@ import { User } from 'next-auth'
 export interface ChatList {
   messages: Message[],
   user?: User,
-  reload: ((chatRequestOptions?: ChatRequestOptions | undefined) => Promise<string | null | undefined>) | undefined
+  reload?: ((chatRequestOptions?: ChatRequestOptions | undefined) => Promise<string | null | undefined>) | undefined
 }
 
 export function ChatList({ messages, reload, user }: ChatList) {
