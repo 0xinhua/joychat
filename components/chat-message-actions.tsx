@@ -24,7 +24,6 @@ export function ChatMessageActions({
 }: ChatMessageActionsProps) {
   const { isCopied, copyToClipboard } = useCopyToClipboard({ timeout: 2500 })
   const pathname = usePathname()
-  console.log('pathname', pathname)
 
   const onCopy = () => {
     if (isCopied) return
