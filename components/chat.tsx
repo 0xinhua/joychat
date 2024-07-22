@@ -7,11 +7,10 @@ import { ChatList } from '@/components/chat-list'
 import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import useChatStore from '@/store/useChatStore'
 import { defaultModel, useLangfuse } from '@/lib/const'
-import { Chat as IChat } from '@/lib/types'
 import { useSession } from 'next-auth/react'
 import { LoginDialog } from './login-dialog'
 import { useToast } from "@/components/ui/use-toast"
@@ -33,8 +32,10 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
   const { data: session, status } = useSession()
   const latestTraceId = useRef<string | null>(null)
 
-  const updatedMessages = useRef<Message[]>([]);
-  const latestUserMessage = useRef<Message | null>(null);
+  const updatedMessages = useRef<Message[]>([])
+  const latestUserMessage = useRef<Message | null>(null)
+  const messagesEndRef = useRef(null)
+  const [isScrollButtonVisible, setIsScrollButtonVisible] = useState(false)
 
   const { messages, setMessages, append, reload, stop, isLoading, input, setInput } =
     useChat({
@@ -86,7 +87,7 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
         }
       }
     })
-
+  
   useEffect(() => {
     if (title) {
       document.title = title.toString().slice(0, 50)
@@ -95,14 +96,40 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
     }
   }, [title])
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsScrollButtonVisible(!entry.isIntersecting)
+      },
+      { threshold: 0.1 }
+    )
+
+    if (messagesEndRef.current) {
+      observer.observe(messagesEndRef.current)
+    }
+
+    return () => {
+      if (messagesEndRef.current) {
+        observer.unobserve(messagesEndRef.current)
+      }
+    }
+  }, [messagesEndRef])
+
   return (
     <>
-      <div className={cn('md:pb-[200px] md:px-4 lg:px-0', className)}>
+      <div className={cn('md:pb-[200px] md:px-4 lg:px-0 overflow-auto', className)}>
         { messages.filter(msg => msg.role !== 'system').length ? (
-          <>
-            <ChatList messages={messages} user={session?.user || {}} />
+          <div>
+            <ChatList
+              messages={messages}
+              user={session?.user || {}}
+              reload={
+                reload
+              }
+            />
             <ChatScrollAnchor trackVisibility={isLoading} />
-          </>
+            <div ref={messagesEndRef} />
+          </div>
         ) : (
           <EmptyScreen setInput={setInput} />
         )}
@@ -116,6 +143,11 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
         messages={messages}
         input={input}
         setInput={setInput}
+        onScrollToBottom={() =>
+          //@ts-ignore
+          messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+        }
+        isScrollButtonVisible={isScrollButtonVisible}
         onSubmit={async (value) => {
           const userMessage: Message = {
             id: nanoid(),

@@ -1,7 +1,7 @@
 // Inspired by Chatbot-UI and modified to fit the needs of this project
 // @see https://github.com/mckaywrigley/chatbot-ui/blob/main/components/Chat/ChatMessage.tsx
 
-import { Message } from 'ai'
+import { ChatRequestOptions, Message } from 'ai'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 
@@ -15,10 +15,12 @@ import { User } from 'next-auth'
 
 export interface ChatMessageProps {
   message: Message,
-  user?: User
+  user?: User,
+  visibleReload: boolean,
+  reload: ((chatRequestOptions?: ChatRequestOptions | undefined) => Promise<string | null | undefined>) | undefined
 }
 
-export function ChatMessage({ message, user, ...props }: ChatMessageProps) {
+export function ChatMessage({ message, reload, visibleReload, user, ...props }: ChatMessageProps) {
   return (
     <div
       className={cn('group relative mb-4 flex items-start md:-ml-12')}
@@ -84,7 +86,7 @@ export function ChatMessage({ message, user, ...props }: ChatMessageProps) {
         >
           {message.content}
         </MemoizedReactMarkdown>
-        { message.role === 'assistant' ? <ChatMessageActions message={message} className="group-hover:opacity-100" /> : null }
+        { message.role === 'assistant' ? <ChatMessageActions message={message} className="group-hover:opacity-100" reload={reload} visibleReload={visibleReload} /> : null }
       </div>
     </div>
   )

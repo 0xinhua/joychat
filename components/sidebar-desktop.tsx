@@ -41,7 +41,7 @@ export function SidebarDesktop() {
                 <div> <IconSquarePen className="-translate-x-1 stroke-1.5 size-5" /></div>
               </TooltipTrigger>
               <TooltipContent>
-                <p className="z-2">New Chat</p>
+                <p className="z-2">New chat</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

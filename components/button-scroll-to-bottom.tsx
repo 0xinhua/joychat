@@ -3,32 +3,41 @@
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
-import { useAtBottom } from '@/lib/hooks/use-at-bottom'
-import { Button, type ButtonProps } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { IconArrowDown } from '@/components/ui/icons'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
-export function ButtonScrollToBottom({ className, ...props }: ButtonProps) {
-  const isAtBottom = useAtBottom()
+export interface ButtonScrollProps {
+  className?: string;
+  onClick?: () => void;
+  visible: boolean
+}
+
+export function ButtonScrollToBottom({ className, onClick, visible, ...props }: ButtonScrollProps) {
 
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      className={cn(
-        'absolute right-4 top-1 z-10 bg-background transition-opacity duration-300 sm:right-8 md:top-2',
-        isAtBottom ? 'opacity-0' : 'opacity-100',
-        className
-      )}
-      onClick={() =>
-        window.scrollTo({
-          top: document.body.offsetHeight,
-          behavior: 'smooth'
-        })
-      }
-      {...props}
-    >
-      <IconArrowDown />
-      <span className="sr-only">Scroll to bottom</span>
-    </Button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          variant="outline"
+          size="icon"
+          className={cn(
+            'z-10 bg-background dark:bg-neutral-900 transition-opacity duration-200 shadow-none dark:border-gray-600',
+            visible ? 'opacity-1 cursor-pointer': 'opacity-0 cursor-default',
+            className
+          )}
+          onClick={onClick}
+          {...props}
+        >
+          <IconArrowDown />
+          <span className="sr-only">Scroll to bottom</span>
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent className={cn(
+        visible ? 'opacity-1': 'opacity-0',
+      )}>
+        Scroll to bottom
+      </TooltipContent>
+    </Tooltip>
   )
 }

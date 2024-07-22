@@ -6,10 +6,8 @@ import { PromptForm } from '@/components/prompt-form'
 import { ButtonScrollToBottom } from '@/components/button-scroll-to-bottom'
 import { IconAlert, IconRefresh, IconShare, IconStop } from '@/components/ui/icons'
 import { FooterText } from '@/components/footer'
-import { ChatShareDialog } from '@/components/chat-share-dialog'
-import { useRouter } from 'next/navigation'
 import { useSidebar } from '@/lib/hooks/use-sidebar'
-import { cn, nanoid } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 
 export interface ChatPanelProps
   extends Pick<
@@ -24,7 +22,9 @@ export interface ChatPanelProps
   > {
   id?: string
   title?: string
-  onSubmit: (value: string) => void
+  onSubmit: (value: string) => void,
+  onScrollToBottom: () => void,
+  isScrollButtonVisible: boolean
 }
 
 export function ChatPanel({
@@ -37,10 +37,10 @@ export function ChatPanel({
   input,
   setInput,
   messages,
-  onSubmit
+  onSubmit,
+  onScrollToBottom,
+  isScrollButtonVisible
 }: ChatPanelProps) {
-  const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
-  const router = useRouter()
   const { isSidebarOpen } = useSidebar()
 
   return (
@@ -50,49 +50,20 @@ export function ChatPanel({
       dark:to-background/80`,
       isSidebarOpen && 'lg:pl-[240px] xl:pl-[256px]'
       )}>
-      <ButtonScrollToBottom />
       <div className="mx-auto sm:max-w-3xl">
         <div className="flex items-center justify-center md:h-12 h-10 mb-2">
           {isLoading ? (
             <Button
               variant="outline"
               onClick={() => stop()}
-              className="bg-background"
+              className="bg-background shadow-none"
             >
               <IconStop className="mr-2" />
               Stop generating
             </Button>
-          ) : (
-            messages?.length >= 2 && (
-              <div className="flex space-x-2">
-                <Button className="shadow-none bg-gray-100 dark:bg-neutral-800 hover:dark:bg-neutral-700" variant="outline" onClick={() => reload()}>
-                  <IconRefresh className="mr-2" />
-                  Regenerate response
-                </Button>
-                {id && title ? (
-                  <>
-                    <Button
-                      variant="outline"
-                      onClick={() => setShareDialogOpen(true)}
-                    >
-                      <IconShare className="mr-2" />
-                      Share
-                    </Button>
-                    <ChatShareDialog
-                      open={shareDialogOpen}
-                      onOpenChange={setShareDialogOpen}
-                      onCopy={() => setShareDialogOpen(false)}
-                      chat={{
-                        chat_id: id,
-                        title,
-                        messages
-                      }}
-                    />
-                  </>
-                ) : null}
-              </div>
-            )
-          )}
+          ) : (messages?.filter(msg => msg.role !== 'system').length >= 2
+          ? (<ButtonScrollToBottom onClick={onScrollToBottom} visible={isScrollButtonVisible} />) : null)
+          }
         </div>
         <div className="p-2 space-y-4 border border-x-0 md:py-2 sm:mb-2
           relative flex w-full max-w-4xl flex-1 items-center sm:rounded-xl md:border bg-gray-100 focus-within:border-gray-300 dark:border-gray-600 dark:bg-neutral-800 dark:focus-within:border-gray-500
@@ -107,7 +78,7 @@ export function ChatPanel({
           />
           {/* <FooterText className="hidden sm:block" /> */}
         </div>
-        {messages?.filter(msg => msg.role !== 'system').length ? <span className="text-xs hidden sm:flex py-1 text-gray-400/90 flex items-center justify-center ">JoyChat can make mistakes, generated content may be inaccurate or false.</span> : null}
+        {messages?.filter(msg => msg.role !== 'system').length ? <span className="text-xs hidden sm:flex py-1 text-gray-400/90 flex items-center justify-center ">AI generated content may be inaccurate or false.</span> : null}
       </div>
     </div>
   )

@@ -40,7 +40,7 @@ export function ChatHistory({ userId, session }: ChatHistoryProps) {
           )}
         >
           <IconPlus className="-translate-x-1 stroke-2" />
-          New Chat
+          New chat
         </Link>
       </div>
       <React.Suspense
