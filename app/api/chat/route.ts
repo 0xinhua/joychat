@@ -138,6 +138,7 @@ export async function POST(req: Request) {
   })
 
   if (useLangfuse) {
+    console.log('useLangfuse model', model)
     trace = langfuse.trace({
       name: "chat",
       sessionId: "joychat.conversation." + id,
@@ -171,14 +172,15 @@ export async function POST(req: Request) {
     model = 'gpt-4-turbo'
   }
 
-  const enc = encodingForModel(model);  // js-tiktoken
+  // hotfix tiktoken when use gpt-4o-mini
+  const enc = encodingForModel(model.startsWith('gpt-4o') ? 'gpt-4o' : model)
 
   const promptTokens = messages.reduce(
     (total: number, msg: Message) => total + enc.encode(msg.content ?? '').length,
     0,
   )
 
-  console.log('promptTokens', promptTokens)
+  console.log('promptTokens model', promptTokens, model)
 
   const res = await openai.chat.completions.create({
     model,
