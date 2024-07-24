@@ -15,8 +15,12 @@ export const metadata = {
     default: 'JoyChat',
     template: `%s - AI Chatbot access GPT-4o and LLMs all in one place!`
   },
-  description: 'Your free AI assistant, a beautiful and secure chatbot alternative to ChatGPT, offering a joyful experience with AI.',
-  keywords: ['AI', 'ai', 'free gpt4o', 'chatgpt', 'ChatGPT locally', 'nextjs chatbot', 'Chat GPT login free', 'ChatGPT nextjs', 'Chat GPT website', 'free chatgpt', 'ChatGPT alternative', 'AI chatbots', 'openai', 'GPT-4o', 'GPT-4o-mini', 'GPT4', 'ai assistant', 'free ai assistant', 'personal AI'],
+  description: 'Your free AI assistant, a beautiful and secure ai chatbot alternative to ChatGPT, offering a joyful experience with AI.',
+  keywords: [
+    'AI', 'ai', 'free gpt4o', 'chatgpt', 'ChatGPT locally', 'nextjs chatbot', 'Chat GPT login free', 'ChatGPT nextjs', 'Chat GPT website',
+   'free chatgpt', 'ChatGPT alternative', 'best AI chatbots', 'openai', 'GPT-4o', 'GPT-4o-mini', 'GPT4', 'ai assistant', 'free ai assistant', 'personal AI',
+  'ai chat', 'chap gpt', 'chat gbt', 'chat gtp'
+  ],
   icons: {
     icon: [
       {
