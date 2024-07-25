@@ -23,7 +23,7 @@ export interface ChatMessageProps {
 export function ChatMessage({ message, reload, visibleReload, user, ...props }: ChatMessageProps) {
   return (
     <div
-      className={cn('group relative mb-4 flex items-start md:-ml-12',
+      className={cn('group relative mb-4 flex items-start md:-ml-12 md:pl-9',
         message.role === 'user' ? 'justify-end' : 'justify-start'
       )}
       {...props}

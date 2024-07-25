@@ -21,7 +21,7 @@ export function ChatList({ messages, reload, user, loading }: ChatList) {
   const filteredMessages = messages.filter(msg => msg.role !== 'system')
   
   return (
-    <div className="relative mx-auto max-w-2xl px-4 transition-all duration-100 ease-in-out">
+    <div className="relative mx-auto max-w-[710px] px-4 transition-all duration-100 ease-in-out">
       {filteredMessages.map((message, index) => (
         <React.Fragment key={message.id || index}>
           <div className="min-h-14">
@@ -33,13 +33,13 @@ export function ChatList({ messages, reload, user, loading }: ChatList) {
             />
           </div>
           {index < filteredMessages.length - 1 && (
-            <Separator className="my-2 md:my-6 border-none bg-transparent" />
+            <Separator className="my-2 md:my-5 border-none bg-transparent" />
           )}
         </React.Fragment>
       ))}
       {loading && (
         <div className="mt-4">
-          <Separator className="my-2 md:my-6 border-none bg-transparent" />
+          <Separator className="my-2 md:my-5 border-none bg-transparent" />
           <LoadingChatMessage />
         </div>
       )}
