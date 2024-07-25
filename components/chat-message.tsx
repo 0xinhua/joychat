@@ -40,7 +40,7 @@ export function ChatMessage({ message, reload, visibleReload, user, ...props }: 
         : <IconOpenAI className="h-5 w-5 hover:w-[22px] hover:h-[22px] text-gray-500 dark:text-gray-300 mb-0.4" />}
       </div>
       <div className={cn(`
-        group transition-all space-y-2 overflow-hidden min-h-[calc(2rem+theme(spacing[3.5]))] min-w-[60px] 
+        group transition-all relative space-y-2 min-h-[calc(2rem+theme(spacing[3.5]))] min-w-[60px] 
         break-words rounded-xl bg-transparent px-5 py-3.5 text-gray-600 
         border-gray-200/40 hover:border-gray-200/60 border ml-4 hover:bg-zinc-50/30 dark:hover:bg-neutral-950/80
         prose-pre:my-2 dark:border-neutral-800 dark:from-transparent dark:text-gray-300 transition-all
