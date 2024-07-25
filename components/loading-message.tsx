@@ -4,7 +4,7 @@ import { IconOpenAI } from '@/components/ui/icons'
 export function LoadingChatMessage({ ...props }) {
   return (
     <div
-      className={cn('group relative mb-4 flex items-start md:-ml-12')}
+      className={cn('group relative mb-4 flex items-start md:pl-8 md:-ml-12')}
       {...props}
     >
       <div
