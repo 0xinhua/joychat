@@ -86,6 +86,10 @@ const config = {
           '100%': {
             transform: "translateX(-100%)"
           }
+        },
+        "spin-666": {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(239760deg)' }, // 666 * 360 degrees
         }
       },
       animation: {
@@ -94,7 +98,8 @@ const config = {
         "slide-to-left":
           "slide-to-left 0.25s cubic-bezier(0.82, 0.085, 0.395, 0.895)",
         "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out"
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "spin-slow": "spin-666 59s cubic-bezier(.34,0,.84,1) 0.05s infinite",
       },
       gridTemplateColumns: {
         // Simple 16 column grid

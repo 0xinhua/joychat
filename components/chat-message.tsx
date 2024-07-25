@@ -23,7 +23,9 @@ export interface ChatMessageProps {
 export function ChatMessage({ message, reload, visibleReload, user, ...props }: ChatMessageProps) {
   return (
     <div
-      className={cn('group relative mb-4 flex items-start md:-ml-12')}
+      className={cn('group relative mb-4 flex items-start md:-ml-12',
+        message.role === 'user' ? 'justify-end' : 'justify-start'
+      )}
       {...props}
     >
       <div
@@ -35,7 +37,7 @@ export function ChatMessage({ message, reload, visibleReload, user, ...props }: 
         )}
       >
         { message.role === 'user' ? (user?.name ? <span className="text-gray-400 text-xs dark:text-gray-300"></span> : <IconUser />)
-        : <IconOpenAI className="h-[20px] w-[20px] text-gray-500 dark:text-gray-300 mb-0.5" />}
+        : <IconOpenAI className="h-5 w-5 hover:w-[22px] hover:h-[22px] text-gray-500 dark:text-gray-300 mb-0.4" />}
       </div>
       <div className={cn(`
         group transition-all space-y-2 overflow-hidden min-h-[calc(2rem+theme(spacing[3.5]))] min-w-[60px] 
@@ -43,7 +45,7 @@ export function ChatMessage({ message, reload, visibleReload, user, ...props }: 
         border-gray-200/40 hover:border-gray-200/60 border ml-4 hover:bg-zinc-50/30 dark:hover:bg-neutral-950/80
         prose-pre:my-2 dark:border-neutral-800 dark:from-transparent dark:text-gray-300 transition-all
       `,
-        message.role === 'assistant' && 'flex-1 border border-gray-100 hover:border-gray-200/80 bg-zinc-100/65 hover:bg-zinc-100 dark:bg-neutral-900/80 dark:hover:bg-neutral-950 hover:bg-zinc-100/80'
+        message.role === 'assistant' && 'border border-gray-100 hover:border-gray-200/80 bg-zinc-100/65 hover:bg-zinc-100 dark:bg-neutral-900/80 dark:hover:bg-neutral-950 hover:bg-zinc-100/80'
       )}>
         <MemoizedReactMarkdown
           className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
