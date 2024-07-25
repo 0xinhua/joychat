@@ -36,6 +36,7 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
   const latestUserMessage = useRef<Message | null>(null)
   const messagesEndRef = useRef(null)
   const [isScrollButtonVisible, setIsScrollButtonVisible] = useState(false)
+  const [isFetching, setIsFetching] = useState(false)
 
   const { messages, setMessages, append, reload, stop, isLoading, input, setInput } =
     useChat({
@@ -47,6 +48,7 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
       },
       sendExtraMessageFields: true,
       onResponse(response) {
+        setIsFetching(false)
         if (response.status === 401) {
           toast({
             title: "Unauthorized",
@@ -63,6 +65,9 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
             description: response?.statusText,
           })
         }
+      },
+      onError() {
+        setIsFetching(false)
       },
       onFinish(message: Message) {
 
@@ -123,9 +128,8 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
             <ChatList
               messages={messages}
               user={session?.user || {}}
-              reload={
-                reload
-              }
+              reload={reload}
+              loading={isFetching}
             />
             <ChatScrollAnchor trackVisibility={isLoading} />
             <div ref={messagesEndRef} />
@@ -138,8 +142,6 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
         id={id}
         isLoading={isLoading}
         stop={stop}
-        append={append}
-        reload={reload}
         messages={messages}
         input={input}
         setInput={setInput}
@@ -155,6 +157,7 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
             role: "user",
           }
           latestUserMessage.current = userMessage
+          setIsFetching(true)
           await append(userMessage)
         }}
       />

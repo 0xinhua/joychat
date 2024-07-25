@@ -12,9 +12,7 @@ import { cn } from '@/lib/utils'
 export interface ChatPanelProps
   extends Pick<
     UseChatHelpers,
-    | 'append'
     | 'isLoading'
-    | 'reload'
     | 'messages'
     | 'stop'
     | 'input'
@@ -32,8 +30,6 @@ export function ChatPanel({
   title,
   isLoading,
   stop,
-  append,
-  reload,
   input,
   setInput,
   messages,

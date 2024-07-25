@@ -15,6 +15,7 @@ interface UseChatOptions {
   }
   onResponse?: (response: Response) => void
   onFinish?: (message: Message) => void
+  onError?: (e: Error | undefined) => void
 }
 
 export function useLocalChat({
@@ -22,7 +23,8 @@ export function useLocalChat({
   id,
   body,
   onResponse,
-  onFinish
+  onFinish,
+  onError
 }: UseChatOptions) {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [isLoading, setIsLoading] = useState(false);
@@ -135,6 +137,9 @@ export function useLocalChat({
       } else {
         console.error('Error in chat completion:', error);
         toast.error('An error occurred while processing your request.');
+      }
+      if (onError) {
+        onError(error as Error);
       }
     } finally {
       setIsLoading(false);

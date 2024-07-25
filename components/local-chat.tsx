@@ -7,7 +7,7 @@ import { ChatList } from '@/components/chat-list'
 import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { usePathname, useRouter } from 'next/navigation'
 import useChatStore from '@/store/useChatStore'
@@ -31,16 +31,21 @@ export function LocalChat({ id, initialMessages, className, title, loading }: Ch
 
   const { setLoginDialogOpen } = useUserSettingStore()
   const [ userPreInput, setUserPreInput ] = useLocalStorage('user_pre_input', '')
-  const [previewToken, setPreviewToken] = useLocalStorage<string | null>(
+  const [ previewToken, setPreviewToken ] = useLocalStorage<string | null>(
     'openai_api_key',
     null
   )
 
+  const messagesEndRef = useRef(null)
+
+  const [isScrollButtonVisible, setIsScrollButtonVisible] = useState(false)
+
   const { chats, setChats } = useChatStore()
   const latestTraceId = useRef<string | null>(null)
 
-  const updatedMessages = useRef<Message[]>([]);
-  const latestUserMessage = useRef<Message | null>(null);
+  const updatedMessages = useRef<Message[]>([])
+  const latestUserMessage = useRef<Message | null>(null)
+  const [isFetching, setIsFetching] = useState(false)
 
   const { messages, setMessages, append, reload, stop, isLoading, input, setInput } =
     useLocalChat({
@@ -55,6 +60,10 @@ export function LocalChat({ id, initialMessages, className, title, loading }: Ch
         if (response.status === 401) {
           toast.error(response.statusText)
         }
+        setIsFetching(false)
+      },
+      onError(error) {
+        setIsFetching(false)
       },
       onFinish(message: Message) {
 
@@ -117,13 +126,33 @@ export function LocalChat({ id, initialMessages, className, title, loading }: Ch
     }
   }, [title])
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsScrollButtonVisible(!entry.isIntersecting)
+      },
+      { threshold: 0.1 }
+    )
+
+    if (messagesEndRef.current) {
+      observer.observe(messagesEndRef.current)
+    }
+
+    return () => {
+      if (messagesEndRef.current) {
+        observer.unobserve(messagesEndRef.current)
+      }
+    }
+  }, [messagesEndRef])
+
   return (
     <>
       <div className={cn('md:pb-[200px] md:px-4 lg:px-0', className)}>
         { messages.filter(msg => msg.role !== 'system').length ? (
           <>
-            <ChatList messages={messages} user={{}} />
+            <ChatList messages={messages} user={{}} loading={isFetching} />
             <ChatScrollAnchor trackVisibility={isLoading} />
+            <div ref={messagesEndRef} />
           </>
         ) : (
           <EmptyScreen setInput={setInput} />
@@ -133,11 +162,14 @@ export function LocalChat({ id, initialMessages, className, title, loading }: Ch
         id={id}
         isLoading={isLoading}
         stop={stop}
-        //@ts-ignore
-        reload={reload}
         messages={messages}
         input={input}
         setInput={setInput}
+        isScrollButtonVisible={isScrollButtonVisible}
+        onScrollToBottom={() =>
+          //@ts-ignore
+          messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+        }
         onSubmit={async (value) => {
           if (!localStorage.getItem('openai_api_key')) {
             setLoginDialogOpen(true)
@@ -150,6 +182,7 @@ export function LocalChat({ id, initialMessages, className, title, loading }: Ch
             role: "user",
           }
           latestUserMessage.current = userMessage
+          setIsFetching(true)
           await append(userMessage)
         }}
       />
