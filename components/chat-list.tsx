@@ -20,7 +20,7 @@ export function ChatList({ messages, reload, user }: ChatList) {
       {messages.filter(msg => msg.role !== 'system').map((message, index) => (
         <div key={index}>
           <ChatMessage message={message} user={user} reload={reload} visibleReload={messages.length >= 2 && index === messages.length - 2} />
-          {index < messages.length - 1 && (
+          { index < messages.length - 2 && (
             <Separator className="my-2 md:my-6 border-none bg-transparent" />
           )}
         </div>
