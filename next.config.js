@@ -75,20 +75,16 @@ module.exports = withBundleAnalyzer({
   },
   rewrites: [
     {
-      source: "/blogs",
-      destination: "https://joychat-content.vercel.app/content"
+      "source": "/blog",
+      "destination": "https://joychat-content.vercel.app/content"
     },
     {
-      source: "/blog/:path*",
-      destination: "https://joychat-content.vercel.app/content/blog/:path*"
+      "source": "/blog/:slug*",
+      "destination": "https://joychat-content.vercel.app/content/blog/:slug*"
     },
     {
-      source: "/:path(tos|privacy|cookies|about|blogs)",
+      source: "/:path(tos|privacy|cookies|about)",
       destination: "https://joychat-content.vercel.app/content/:path*"
-    },
-    {
-      source: "/blogs/:match*",
-      destination: "https://joychat-content.vercel.app/content/blogs/:match*"
     },
     {
       source: "/content/_next/:path*",
