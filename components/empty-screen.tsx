@@ -3,21 +3,10 @@
 import { UseChatHelpers } from 'ai/react'
 import { ExternalLink } from '@/components/external-link'
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { useLocalStorage } from '@/lib/hooks/use-local-storage'
-import { defaultModel, availableModels, quickstartMessages } from '@/lib/const'
+import { quickstartMessages } from '@/lib/const'
+import { ModelSelect } from './model-select'
 
 export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
-
-  const [model, setModel] = useLocalStorage('selected-model', defaultModel)
 
   return (
     <div className="mx-auto max-w-3xl pb-4 px-4 md:px-2">
@@ -36,26 +25,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
           Let&apos;s chat about anything on your mind, or try one of quickstart questions.
           </p>
         </div>
-        <div className="col-span-1 mt-3 md:col-span-2 flex flex-col gap-y-1 leading-normal text-muted-foreground sm:pb-0 pb-4">
-          <h1 className="mb-2 text-lg font-semibold text-foreground">✨ Model</h1>
-          <Select defaultValue={model} onValueChange={setModel}>
-            <SelectTrigger className="w-[154px] shadow-none dark:border-[#3e3e3e]">
-              <SelectValue placeholder="Select a model" />
-            </SelectTrigger>
-            <SelectContent className="dark:bg-zinc-900">
-              <SelectGroup>
-                {availableModels.map((model) => (
-                  <SelectItem key={model.value} value={model.value} className={model.disabled ? 'cursor-not-allowed' : 'cursor-pointer dark:hover:bg-zinc-800'} disabled={model.disabled}>
-                    <div className="flex items-center justify-center gap-x-1.5">
-                      {<model.icon />}
-                      <span className="line-clamp-1">{model.label}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+        <ModelSelect />
       </div>
       <div className="py-2">
         <h1 className="mb-2 text-lg font-semibold">

@@ -73,36 +73,38 @@ module.exports = withBundleAnalyzer({
       }
     ]
   },
-  rewrites: [
-    {
-      "source": "/blog",
-      "destination": "https://joychat-content.vercel.app/content"
-    },
-    {
-      "source": "/blog/:slug*",
-      "destination": "https://joychat-content.vercel.app/content/blog/:slug*"
-    },
-    {
-      source: "/:path(tos|privacy|cookies|about)",
-      destination: "https://joychat-content.vercel.app/content/:path*"
-    },
-    {
-      source: "/content/_next/:path*",
-      destination: "https://joychat-content.vercel.app/content/_next/:path*"
-    },
-    {
-      source: "/content/:match*",
-      destination: "https://joychat-content.vercel.app/content/:match*"
-    },
-    {
-      source: "/static/favicons/site.webmanifest",
-      destination: "https://joychat-content.vercel.app/content/static/favicons/site.webmanifest"
-    },
-    {
-      source: "/search.json",
-      destination: "https://joychat-content.vercel.app/content/search.json"
-    }
-  ],
+  async rewrites() {
+    return [
+      {
+        "source": "/blog",
+        "destination": "https://joychat-content.vercel.app/content"
+      },
+      {
+        "source": "/blog/:slug*",
+        "destination": "https://joychat-content.vercel.app/content/blog/:slug*"
+      },
+      {
+        source: "/:path(tos|privacy|cookies|about)",
+        destination: "https://joychat-content.vercel.app/content/:path*"
+      },
+      {
+        source: "/content/_next/:path*",
+        destination: "https://joychat-content.vercel.app/content/_next/:path*"
+      },
+      {
+        source: "/content/:match*",
+        destination: "https://joychat-content.vercel.app/content/:match*"
+      },
+      {
+        source: "/static/favicons/site.webmanifest",
+        destination: "https://joychat-content.vercel.app/content/static/favicons/site.webmanifest"
+      },
+      {
+        source: "/search.json",
+        destination: "https://joychat-content.vercel.app/content/search.json"
+      }
+    ]
+  },
   transpilePackages: ['validation-schemas'],
   assetPrefix: isProd ? 'https://joychat.io' : undefined
 })

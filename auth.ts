@@ -25,7 +25,8 @@ export const {
     GitHub,
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true
     })
   ],
   adapter: process.env.NODE_ENV === 'production' ? SupabaseAdapter({
@@ -46,7 +47,7 @@ export const {
       if (session?.user && token?.sub) {
         session.user.id = process.env.NODE_ENV === 'production' ? String(token.sub) : process.env.MOCK_USERID as string
       }
-      console.log('auth session => ', session, user)
+      console.log('auth => ', user)
       return session
     },
     authorized({ auth }) {

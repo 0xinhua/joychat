@@ -95,7 +95,7 @@ function IconOpenAI({ className, ...props }: React.ComponentProps<'svg'>) {
       viewBox="0 0 24 24"
       role="img"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn('size-5 hover:animate-spin-slow', className)}
+      className={cn('size-5 hover:animate-spin-slow transition-width transition-height duration-100 ease-in-out', className)}
       {...props}
     >
       <title>🍃 Cool breeze blowing ~</title>
