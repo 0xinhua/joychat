@@ -22,7 +22,9 @@ export const {
   auth
 } = NextAuth({
   providers: [
-    GitHub,
+    GitHub({
+      allowDangerousEmailAccountLinking: true
+    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
