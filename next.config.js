@@ -80,10 +80,6 @@ module.exports = withBundleAnalyzer({
         "destination": "https://joychat-content.vercel.app/content"
       },
       {
-        "source": "/blog/:slug*",
-        "destination": "https://joychat-content.vercel.app/content/blog/:slug*"
-      },
-      {
         source: "/:path(tos|privacy|cookies|about)",
         destination: "https://joychat-content.vercel.app/content/:path*"
       },
