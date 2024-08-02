@@ -13,6 +13,7 @@
     "format:check": "prettier --check \"{app,lib,components}**/*.{ts,tsx,mdx}\" --cache"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^0.0.40",
     "@auth/supabase-adapter": "^1.1.0",
     "@hookform/resolvers": "^3.6.0",
     "@next/bundle-analyzer": "^14.2.4",
@@ -29,13 +30,12 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@supabase/supabase-js": "^2.43.1",
     "@vercel/kv": "^2.0.0",
-    "ai": "^3.0.22",
+    "ai": "^3.2.45",
     "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "framer-motion": "^10.18.0",
     "geist": "^1.2.1",
-    "js-tiktoken": "^1.0.12",
     "langfuse": "^3.12.1",
     "localforage": "^1.10.0",
     "lucide-react": "^0.356.0",

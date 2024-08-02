@@ -1,9 +1,3 @@
-import { OpenAIStream, StreamingTextResponse } from 'ai'
-import OpenAI from 'openai'
-
-import { Message } from 'ai'
-import { encodingForModel } from "js-tiktoken"
-
 import { auth } from '@/auth'
 import { calculateAndStoreTokensCost, nanoid } from '@/lib/utils'
 import { ModelName, PlanName, plans, useLangfuse } from '@/lib/const'
@@ -12,11 +6,10 @@ import { kv } from '@vercel/kv'
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
-// export const runtime = 'edge'
+import { openai } from '@ai-sdk/openai'
+import { streamText, convertToCoreMessages, Message } from 'ai'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-})
+// export const runtime = 'edge'
 
 let trace: any, generation: any, messageId: string
 
@@ -164,77 +157,41 @@ export async function POST(req: Request) {
 
   messageId = useLangfuse ? trace?.id : nanoid()
 
-  if (previewToken) {
-    openai.apiKey = previewToken
-  }
-
-  if (model === 'gpt-4') {
-    model = 'gpt-4-turbo'
-  }
-
-  // hotfix tiktoken when use gpt-4o-mini
-  const enc = encodingForModel(model.startsWith('gpt-4o') ? 'gpt-4o' : model)
-
-  const promptTokens = messages.reduce(
-    (total: number, msg: Message) => total + enc.encode(msg.content ?? '').length,
-    0,
-  )
-
-  console.log('promptTokens model', promptTokens, model)
-
-  const res = await openai.chat.completions.create({
-    model,
-    messages,
+  const res = await streamText({
+    model: openai(model),
+    messages: convertToCoreMessages(messages),
     temperature: 0.7,
-    stream: true
-  })
-
-  let completionTokens = 0;
-
-  const stream = OpenAIStream(res, {
-    onStart: () => {
-      if (useLangfuse) {
-        generation.update({
-          completionStartTime: new Date(),
-        })
-      }
-    },
-    onToken: (content) => {
-      const tokenList = enc.encode(content)
-      completionTokens += tokenList.length
-    },
-    onFinal: async () => {
-      console.log(`completionTokens: ${completionTokens}`)
-      console.time('totalExecutionTime')
+    async onFinish({ text, toolCalls, toolResults, finishReason, usage, rawResponse  }) {
+      // your own logic, e.g. for saving the chat history or recording usage
+      console.log('onFinish, text, usage:', text, usage)
+      const { promptTokens, completionTokens } = usage
+      await handleCompletion(text, messages, id, userId, messageId, model)
       await calculateAndStoreTokensCost(userId, planName, modelName, promptTokens, completionTokens)
-      console.timeEnd('totalExecutionTime')
-    },
-    async onCompletion(completion) {
+
       console.time('useLangfuseGeneration')
       if (useLangfuse) {
         generation.end({
-          output: completion,
-          level: completion.includes("I don't know how to help with that")
+          output: text,
+          level: text.includes("I don't know how to help with that")
             ? "WARNING"
             : "DEFAULT",
-          statusMessage: completion.includes("I don't know how to help with that")
+          statusMessage: text.includes("I don't know how to help with that")
             ? "Refused to answer"
             : undefined,
         })
       }
-      console.timeEnd('useLangfuseGeneration');
-      console.time('handleCompletion')
-      handleCompletion(completion, messages, id, userId, messageId, model)
-      console.timeEnd('handleCompletion')
+      console.timeEnd('useLangfuseGeneration')
       if (useLangfuse) {
         await langfuse.shutdownAsync()
       }
-    }
+    },
   })
 
-  return new StreamingTextResponse(stream, {
-    headers: {
-      "X-Trace-Id": trace?.id || messageId,
-    },
+  return res.toDataStreamResponse({
+    init: {
+      headers: {
+        "X-Trace-Id": trace?.id || messageId,
+      }
+    }
   })
 }
