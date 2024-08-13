@@ -16,7 +16,7 @@ export function ExternalLink({
       href={href}
       title={title || href}
       target="_blank"
-      className={cn("inline-flex flex-1 justify-center gap-1 leading-4 hover:underline", className)}
+      className={cn("inline-flex flex-1 justify-center gap-1 leading-4 underline underline-offset-4 decoration-1 hover:decoration-2", className)}
     >
       <span>{children}</span>
       <svg
