@@ -13,12 +13,12 @@ export const metadata = {
   metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
   title: {
     default: 'JoyChat',
-    template: `%s - AI Chatbot access GPT-4o and LLMs all in one place!`
+    template: `%s - AI assistant for work.`
   },
   description: 'Your free AI assistant, a beautiful and secure ai chatbot alternative to ChatGPT, offering a joyful experience with AI.',
   keywords: [
     'AI', 'ai', 'free gpt4o', 'chatgpt', 'ChatGPT locally', 'nextjs chatbot', 'Chat GPT login free', 'ChatGPT nextjs', 'Chat GPT website',
-    'free chatgpt', 'ChatGPT alternative', 'best AI chatbots', 'openai', 'GPT-4o', 'GPT-4o-mini', 'GPT4', 'ai assistant', 'free ai assistant', 'personal AI',
+    'free chatgpt', 'ChatGPT alternative', 'best AI chatbots', 'openai', 'GPT-4o', 'GPT-4o-mini', 'GPT4', 'Free AI for work', 'free ai assistant', 'Best free AI tools',
     'ai chat', 'chap gpt', 'chat gbt', 'chat gtp'
   ],
   icons: {

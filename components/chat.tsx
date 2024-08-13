@@ -98,7 +98,7 @@ export function Chat({ id, initialMessages, setInitialMessages, className, title
     if (title) {
       document.title = title.toString().slice(0, 50)
     } else {
-      document.title = 'AI copilot for work - JoyChat'
+      document.title = 'A work-life AI assistant - JoyChat'
     }
   }, [title])
 

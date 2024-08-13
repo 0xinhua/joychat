@@ -27,7 +27,7 @@ export function EmptyScreen({ setInput, setInitialMessages }: Pick<UseChatHelper
             </ExternalLink></span>
           </h1>
           <p className="mb-2 leading-normal text-muted-foreground dark:text-gray-300">
-            I’m your friendly AI companion.
+            I’m your friendly AI Assistant.
           </p>
           <p className="leading-normal text-muted-foreground dark:text-gray-300">
           Let&apos;s chat about anything on your mind.
