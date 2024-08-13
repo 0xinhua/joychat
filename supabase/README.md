@@ -295,7 +295,7 @@ BEGIN
     )
     VALUES (
       _user_id,
-      _prompt,
+      COALESCE(_prompt, '')
       _user_prompts,
       EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000,
       EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000

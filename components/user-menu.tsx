@@ -53,14 +53,13 @@ export function UserMenu({ user }: UserMenuProps) {
   const router = useRouter()
   const { mode, setMode } = useMode()
   const {
+    resetPrompt,
     isLoginDialogOpen,
     setLoginDialogOpen,
     setSettingsDialogOpen,
   } = useUserSettingStore()
 
-  const { reset } = useChatStore(state => ({
-    reset: state.reset,
-  }))
+  const { resetChat } = useChatStore()
 
   return (
     <DropdownMenu>
@@ -160,7 +159,8 @@ export function UserMenu({ user }: UserMenuProps) {
               callbackUrl: '/'
             }).then(() => {
               setMode('local')
-              reset()
+              resetChat()
+              resetPrompt()
             })
             }
           }

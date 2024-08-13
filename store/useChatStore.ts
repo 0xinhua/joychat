@@ -14,7 +14,7 @@ export interface ChatState {
   fetchChatById: (id: string) => Promise<void>
   removeChat: (chatId: string) => Promise<void>
   fetchRemoveChat: (chatId: string) => Promise<void>
-  reset: () => void
+  resetChat: () => void
   setChat: (chat: Chat) => void
   chatLoading: boolean
 }
@@ -62,7 +62,7 @@ const useChatStore = create<ChatState>()(
               method: 'delete'
             })
           },
-          reset: () => {
+          resetChat: () => {
             set({ chats: [] })
             localForage.remove('chat-history')
           }

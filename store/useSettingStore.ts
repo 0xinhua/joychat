@@ -29,11 +29,11 @@ interface UserSettingState {
   setLoginDialogOpen: (isOpen: boolean) => void
   setSettingsDialogOpen: (isOpen: boolean) => void
   fetchPrompt: () => Promise<void>
-  getSystemPrompt:  () => Promise<void>
   updateSystemPrompt: (prompt: string) => Promise<void>
   updateCustomPrompt: (prompts: CustomPrompt[]) => Promise<void>
   fetchUpdateSystemPrompt: (prompt: string) => Promise<void>
   fetchUpdateUserPrompt: (customPrompts: CustomPrompt[]) => Promise<void>
+  resetPrompt: () => void
 }
 
 const useUserSettingStore = create<UserSettingState>()(
@@ -50,10 +50,6 @@ const useUserSettingStore = create<UserSettingState>()(
         error: null,
         setSettingsDialogOpen: (isOpen: boolean) => set({ isSettingsDialogOpen: isOpen }),
         setLoginDialogOpen: (isOpen: boolean) => set({ isLoginDialogOpen: isOpen }),
-        getSystemPrompt: async () => {
-          const localChatSetting = await localForage.get('user-setting') as { state: UserSettingState } || null
-          set({ systemPrompt: localChatSetting?.state?.systemPrompt || defaultSystemPrompt })
-        },
         fetchPrompt: async () => {
           set({ fetchLoading: true, error: null })
           try {
@@ -114,6 +110,9 @@ const useUserSettingStore = create<UserSettingState>()(
           } finally {
             set({ userPromptLoading: false })
           }
+        },
+        resetPrompt: () => {
+          set({ systemPrompt: defaultSystemPrompt, customPrompts: defaultCustomPrompts })
         }
       }
     },

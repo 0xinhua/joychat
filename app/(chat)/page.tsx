@@ -15,7 +15,6 @@ export default function IndexPage() {
   const {
     systemPrompt,
     fetchPrompt,
-    getSystemPrompt
   } = useUserSettingStore()
 
   const id = nanoid()
@@ -23,9 +22,10 @@ export default function IndexPage() {
   const [initialMessages, setInitialMessages] = useState(getDefaultSystemMessage(systemPrompt))
 
   useEffect(() => {
-    getSystemPrompt()
-    mode === 'cloud' && session?.user && fetchPrompt()
-  }, [])
+    if (mode === 'cloud' && status === 'authenticated') {
+      fetchPrompt()
+    }
+  }, [status])
 
   return mode === 'cloud' && session?.user ? <Chat
       id={id}
