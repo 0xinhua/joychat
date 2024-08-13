@@ -145,9 +145,9 @@ export function QuickstartPromptForm() {
         >
           <div className="sm:p-6 sm:pb-10 pb-10">
             <div className="space-y-0.5">
-              <h2 className="text-2xl font-bold tracking-tight">Prompts</h2>
+              <h2 className="text-2xl font-bold tracking-tight">Prompt</h2>
               <p className="text-muted-foreground">
-                Customize and save quickstart prompts template.
+                Customize and save your quickstart prompts template.
               </p>
             </div>
             <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">

@@ -21,7 +21,7 @@ export function EmptyScreen({ setInput, setInitialMessages }: Pick<UseChatHelper
       <div className="grid md:grid-cols-10 grid-cols-1">
         <div className="rounded-lg bg-background dark:bg-transparent pb-4 sm:pb-8 md:col-span-8">
           <h1 className="mb-2 text-lg font-semibold flex items-center">
-            👋 Welcome to JoyChat <span className="font-normal ml-2 inline-flex items-center rounded-md border border-gray-100 bg-gray-50 px-1.5 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-zinc-800">
+            👋 Welcome to JoyChat <span className="font-normal ml-2 inline-flex items-center rounded-lg border border-gray-100 bg-gray-50 px-1.5 text-sm text-gray-400 dark:border-gray-700/60 dark:bg-zinc-800">
               <ExternalLink className="py-1 tracking-wide" title="JoyChat Changelog" href="https://github.com/0xinhua/joychat/discussions/categories/changelog">
               v0.3.0
             </ExternalLink></span>
@@ -37,7 +37,7 @@ export function EmptyScreen({ setInput, setInitialMessages }: Pick<UseChatHelper
       </div>
       <div className="py-2">
         <h1 className="mb-2 text-lg font-semibold">
-          💬 Prompts <Badge className="bg-lime-300 text-primary hover:bg-lime-400 dark:bg-green-400/50 dark:hover:bg-green-400/40">New</Badge>
+          💬 Prompts <Badge className="bg-lime-300 text-primary hover:bg-lime-400 dark:bg-green-400/50 dark:hover:bg-green-400/40 rounded-lg ml-1">New</Badge>
         </h1>
         <p className="mb-2 leading-normal text-muted-foreground dark:text-gray-300">
           Try a quickstart prompt or customize your own in <Link href='/settings/prompt' className="underline underline-offset-4 decoration-1 hover:decoration-2" title="setting custom prompts">

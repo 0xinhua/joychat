@@ -41,8 +41,6 @@ export function AppearanceForm() {
     },
   })
 
-  // No need for an onSubmit function since we're updating the theme immediately on selection
-
   return (
     <Form {...form}>
       <form className="space-y-8">
@@ -53,7 +51,7 @@ export function AppearanceForm() {
             <FormItem className="space-y-1">
               <FormLabel>Theme</FormLabel>
               <FormDescription>
-                Select the theme for the chat panel.
+                Choose your preferred website theme.
               </FormDescription>
               <FormMessage />
               <RadioGroup
