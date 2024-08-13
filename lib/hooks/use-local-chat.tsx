@@ -62,8 +62,17 @@ export function useLocalChat({
     setIsLoading(true);
     streamedMessageContent.current = '';
     apiResponseId.current = null;
-    updatedMessages.current = [...updatedMessages.current, message];
-    setMessages(prev => [...prev, message]);
+
+    const latestMessages = [...messages];
+
+    if (latestMessages.length === 0) {
+      latestMessages.push(...initialMessages);
+    }
+  
+    latestMessages.push(message);
+    updatedMessages.current = latestMessages;
+  
+    setMessages([...latestMessages]);
 
     abortControllerRef.current = new AbortController();
 
@@ -125,6 +134,7 @@ export function useLocalChat({
         content: streamedMessageContent.current
       };
       updatedMessages.current.push(finalMessage);
+      console.log('updatedMessages.current', updatedMessages.current)
       onFinish?.(finalMessage);
 
       if (!path.includes('chat')) {
@@ -145,7 +155,7 @@ export function useLocalChat({
       setIsLoading(false);
       abortControllerRef.current = null;
     }
-  }, [body, id, path, router, onResponse, onFinish, appendStreamContent]);
+  }, [body, id, path, router, onResponse, onFinish, appendStreamContent, initialMessages, messages]);
 
   const stop = useCallback(() => {
     if (abortControllerRef.current) {
@@ -180,6 +190,7 @@ export function useLocalChat({
 
   useEffect(() => {
     setMessages(initialMessages);
+    updatedMessages.current = initialMessages; 
   }, [initialMessages]);
 
   return {

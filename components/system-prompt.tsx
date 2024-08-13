@@ -22,6 +22,7 @@ import useUserSettingStore from "@/store/useSettingStore"
 import { useEffect, useState } from "react"
 import { defaultSystemPrompt } from "@/lib/const"
 import { useMode } from "./mode"
+import { IconLoaderCircle } from "./ui/icons"
 
 const settingFormSchema = z.object({
   systemPrompt: z
@@ -36,26 +37,17 @@ type SettingsFormValues = z.infer<typeof settingFormSchema>
 export function SystemPromptForm() {
 
   const {
+    systemPromptLoading,
     systemPrompt, 
     updateSystemPrompt,
-    fetchUpdatePrompt
+    fetchUpdateSystemPrompt
   } = useUserSettingStore()
 
   const defaultValues: Partial<SettingsFormValues> = {
-    systemPrompt: systemPrompt || defaultSystemPrompt,
+    systemPrompt: systemPrompt,
   }
 
-  const [isFirstRender, setIsFirstRender] = useState(true)
   const { mode, setMode } = useMode()
-
-  useEffect(() => {
-    if (isFirstRender) {
-      form.reset({
-        systemPrompt: systemPrompt,
-      })
-      setIsFirstRender(false)
-    }
-  }, [systemPrompt])
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(settingFormSchema),
@@ -63,16 +55,22 @@ export function SystemPromptForm() {
     mode: "onChange",
   })
 
+  useEffect(() => {
+    form.reset({
+      systemPrompt: systemPrompt,
+    })
+  }, [systemPrompt, form])
+
   const watchedSystemPrompt = form.watch("systemPrompt")
 
   async function onSubmit(data: SettingsFormValues) {
     console.log('data', data)
     await updateSystemPrompt(data.systemPrompt)
     if (mode === 'cloud') {
-      await fetchUpdatePrompt(data.systemPrompt)
+      await fetchUpdateSystemPrompt(data.systemPrompt)
     }
     toast({
-      title: "Succeed",
+      title: "Success",
       description: 'System prompt has been updated.',
     })
   }
@@ -80,6 +78,7 @@ export function SystemPromptForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <h3 className="mb text-lg font-medium">System prompt</h3>
         <FormField
           control={form.control}
           name="systemPrompt"
@@ -88,7 +87,7 @@ export function SystemPromptForm() {
               {/* <FormLabel>Prompt</FormLabel> */}
               <FormControl>
                 <Textarea
-                  rows={5}
+                  rows={3}
                   placeholder="You are a helpful assistant."
                   className="resize-none"
                   {...field}
@@ -104,7 +103,7 @@ export function SystemPromptForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={watchedSystemPrompt === defaultValues.systemPrompt}>Save</Button>
+        <Button type="submit" disabled={watchedSystemPrompt === defaultValues.systemPrompt}>{ systemPromptLoading && <IconLoaderCircle className="size-4 mr-1 animate-spin" />}Save</Button>
       </form>
     </Form>
   )

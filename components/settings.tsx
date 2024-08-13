@@ -43,7 +43,7 @@ export function SettingsDialog() {
         onEscapeKeyDown={(e) => e.preventDefault()}
         // onPointerDown={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}
-        // onOpenAutoFocus={e => e.preventDefault()}
+        onOpenAutoFocus={e => e.preventDefault()}
       >
         <div className="space-y-6 sm:p-10 p-6 sm:pb-16 pb-10">
           <div className="space-y-0.5">

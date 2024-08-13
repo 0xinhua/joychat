@@ -5,14 +5,24 @@ import { kv } from '@vercel/kv'
 import { Message } from 'ai'
 import { ModelName, tokenCosts } from './const'
 
+const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
 export const nanoid = customAlphabet(
-  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+  alphabet,
   7
 ) // 7-character random string
+
+const customId = customAlphabet(alphabet, 32)
+
+// generate uuid style ID
+export const generateUUID = () => {
+  const id = customId();
+  return `${id.slice(0, 8)}-${id.slice(8, 12)}-${id.slice(12, 16)}-${id.slice(16, 20)}-${id.slice(20)}`;
+}
 
 export async function fetcher<JSON = any>(
   input: RequestInfo,

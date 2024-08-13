@@ -225,26 +225,28 @@ $$ LANGUAGE plpgsql;
 - **Function to get system prompt data**
 
 ```sql
-CREATE OR REPLACE FUNCTION chat_dataset.get_system_prompt_by_user_id(_user_id UUID)
+CREATE OR REPLACE FUNCTION chat_dataset.get_prompt_by_user_id(_user_id UUID)
 RETURNS TABLE (
   id UUID,
   user_id UUID,
-  prompt TEXT,
+  system_prompt TEXT,
+  user_prompts JSON,
   created_at BIGINT,
   updated_at BIGINT
 ) AS $$
 BEGIN
   RETURN QUERY
   SELECT
-    sp.id,
-    sp.user_id,
-    sp.prompt,
-    sp.created_at,
-    sp.updated_at
+    s.id,
+    s.user_id,
+    s.prompt AS system_prompt,
+    s.user_prompts,
+    s.created_at,
+    s.updated_at
   FROM
-    chat_dataset.system_prompts sp
+    chat_dataset.settings s
   WHERE
-    sp.user_id = _user_id;
+    s.user_id = _user_id;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -253,26 +255,53 @@ $$ LANGUAGE plpgsql;
 - **Function to upsert system prompt data**
 
 ```sql
-create or replace function chat_dataset.upsert_system_prompt(
-  _user_id uuid,
-  _prompt text
+CREATE OR REPLACE FUNCTION chat_dataset.upsert_prompt(
+  _user_id UUID,
+  _prompt TEXT DEFAULT NULL,
+  _user_prompts jsonb DEFAULT NULL
 )
-returns void language plpgsql as $$
-begin
+RETURNS VOID
+LANGUAGE plpgsql AS $$
+BEGIN
   -- Try to update the existing record
-  update chat_dataset.system_prompts
-  set
-    prompt = _prompt,
-    updated_at = extract(epoch from current_timestamp) * 1000
-  where
+  UPDATE chat_dataset.settings
+  SET
+    updated_at = EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000
+  WHERE
     user_id = _user_id;
 
+  -- If prompt is provided, update the prompt field
+  IF _prompt IS NOT NULL THEN
+    UPDATE chat_dataset.settings
+    SET
+      prompt = _prompt
+    WHERE
+      user_id = _user_id;
+  END IF;
+
+  -- If user_prompts is provided, update the user_prompts field
+  IF _user_prompts IS NOT NULL THEN
+    UPDATE chat_dataset.settings
+    SET
+      user_prompts = _user_prompts
+    WHERE
+      user_id = _user_id;
+  END IF;
+
   -- If no rows were updated, insert a new record
-  if not found then
-    insert into chat_dataset.system_prompts (user_id, prompt, created_at, updated_at)
-    values (_user_id, _prompt, extract(epoch from current_timestamp) * 1000, extract(epoch from current_timestamp) * 1000);
-  end if;
-end;
+  IF NOT FOUND THEN
+    INSERT INTO chat_dataset.settings (
+      user_id, prompt, user_prompts, created_at, updated_at
+    )
+    VALUES (
+      _user_id,
+      _prompt,
+      _user_prompts,
+      EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000,
+      EXTRACT(EPOCH FROM CURRENT_TIMESTAMP) * 1000
+    );
+  END IF;
+END;
 $$;
 
 ```

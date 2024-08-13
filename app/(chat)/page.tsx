@@ -3,7 +3,7 @@
 import { getDefaultSystemMessage, nanoid } from '@/lib/utils'
 import { Chat } from '@/components/chat'
 import useUserSettingStore from '@/store/useSettingStore'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { LocalChat } from '@/components/local-chat'
 import { useMode } from '@/components/mode'
 import { useSession } from 'next-auth/react'
@@ -14,24 +14,26 @@ export default function IndexPage() {
   const { data: session, status } = useSession()
   const {
     systemPrompt,
-    fetchSystemPrompt,
+    fetchPrompt,
     getSystemPrompt
   } = useUserSettingStore()
 
   const id = nanoid()
 
-  const initialMessages = getDefaultSystemMessage(systemPrompt)
+  const [initialMessages, setInitialMessages] = useState(getDefaultSystemMessage(systemPrompt))
 
   useEffect(() => {
     getSystemPrompt()
-    mode === 'cloud' && session?.user && fetchSystemPrompt()
-  },[])
+    mode === 'cloud' && session?.user && fetchPrompt()
+  }, [])
 
   return mode === 'cloud' && session?.user ? <Chat
       id={id}
       initialMessages={initialMessages}
+      setInitialMessages={setInitialMessages}
   /> : <LocalChat
       id={id}
       initialMessages={initialMessages}
+      setInitialMessages={setInitialMessages}
   />
 }
