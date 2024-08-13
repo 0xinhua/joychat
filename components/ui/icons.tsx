@@ -202,7 +202,7 @@ function IconBotAvatarDark({ className, ...props }: React.ComponentProps<'svg'>)
   return (
     <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className={cn('size-4', className)}
     {...props}>
-    <rect x="37" y="145" width="440" height="222" rx="62" fill="black" stroke="white" stroke-width="42"/>
+    <rect x="37" y="145" width="440" height="222" rx="62" fill="black" stroke="white" strokeWidth="42"/>
     <circle cx="164" cy="256" r="47" fill="white"/>
     <circle cx="344" cy="256" r="47" fill="white"/>
     <path d="M192 46C192 34.9543 200.954 26 212 26H303C314.046 26 323 34.9543 323 46V54C323 65.0457 314.046 74 303 74H212C200.954 74 192 65.0457 192 54V46Z" fill="white"/>
@@ -217,8 +217,8 @@ function IconBotAvatar({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" className={cn('size-4', className)}>
     <rect x="37" y="145" width="440" height="222" rx="62" fill="black"/>
-    <rect x="37" y="145" width="440" height="222" rx="62" stroke="white" stroke-width="42"/>
-    <rect x="37" y="145" width="440" height="222" rx="62" stroke="black" stroke-opacity="0.2" stroke-width="42"/>
+    <rect x="37" y="145" width="440" height="222" rx="62" stroke="white" strokeWidth="42"/>
+    <rect x="37" y="145" width="440" height="222" rx="62" stroke="black" stroke-opacity="0.2" strokeWidth="42"/>
     <circle cx="164" cy="256" r="47" fill="white"/>
     <circle cx="344" cy="256" r="47" fill="white"/>
     <path d="M192 46C192 34.9543 200.954 26 212 26H303C314.046 26 323 34.9543 323 46V54C323 65.0457 314.046 74 303 74H212C200.954 74 192 65.0457 192 54V46Z" fill="white"/>
@@ -842,7 +842,7 @@ function IconHelp({
   return (
     <svg
       {...props}
-      xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" strokeLinecap="round" strokeLinejoin="round">
+      xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>
     </svg>
   )
@@ -855,7 +855,7 @@ function IconMail({
   return (
     <svg
       {...props}
-      xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)}  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" strokeLinecap="round" strokeLinejoin="round">
+      xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)}  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
       <rect width="20" height="16" x="2" y="4" rx="2"/>
       <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
     </svg>
