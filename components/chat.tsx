@@ -136,7 +136,7 @@ export function Chat({ id, initialMessages, setInitialMessages, className, title
             <div ref={messagesEndRef} />
           </div>
         ) : (
-          <EmptyScreen setInput={setInput} setInitialMessages={setInitialMessages} messages={messages}  />
+          <EmptyScreen setInput={setInput} setInitialMessages={setInitialMessages} />
         )}
       </div>
       <ChatPanel
