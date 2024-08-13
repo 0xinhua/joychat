@@ -27,7 +27,7 @@ export function EmptyScreen({ setInput, setInitialMessages }: Pick<UseChatHelper
             </ExternalLink></span>
           </h1>
           <p className="mb-2 leading-normal text-muted-foreground dark:text-gray-300">
-            I’m your friendly AI Assistant.
+            I’m your friendly AI assistant.
           </p>
           <p className="leading-normal text-muted-foreground dark:text-gray-300">
           Let&apos;s chat about anything on your mind.
@@ -37,7 +37,7 @@ export function EmptyScreen({ setInput, setInitialMessages }: Pick<UseChatHelper
       </div>
       <div className="py-2">
         <h1 className="mb-2 text-lg font-semibold">
-          💬 Prompts <Badge className="bg-[#ADFA1D] text-primary hover:bg-[#ADFA1D]/60">New</Badge>
+          💬 Prompts <Badge className="bg-lime-300 text-primary hover:bg-lime-400 dark:bg-green-400/50 dark:hover:bg-green-400/40">New</Badge>
         </h1>
         <p className="mb-2 leading-normal text-muted-foreground dark:text-gray-300">
           Try a quickstart prompt or customize your own in <Link href='/settings/prompt' className="underline underline-offset-4 decoration-1 hover:decoration-2" title="setting custom prompts">
