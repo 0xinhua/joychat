@@ -37,7 +37,7 @@ const settingFormSchema = z.object({
     .max(1000, { message: "System prompt must be at most 1000 characters." })
   , user_message: z.string()
     .min(2, { message: "User prompt must be at least 2 characters.", })
-    .max(4000, { message: "User prompt must be at most 4000 characters." })
+    .max(2000, { message: "User prompt must be at most 2000 characters." })
   })
 
 type SettingsFormValues = z.infer<typeof settingFormSchema>

@@ -41,10 +41,43 @@ export const availableModels = [
 export const defaultCustomPrompts = [
   {
     id: '2720c512-aaa2-45e5-a667-57c5f70c8718',
-    heading: '💡 Data analysis',
-    system_prompt: defaultSystemPrompt,
-    user_message: `Summarize the key characteristics of this dataset. Include information on data types, missing values, and basic statistics. The following dataset: 
-\n`
+    heading: '✍️ Improve writing',
+    system_prompt: `${defaultSystemPrompt} You're good at spelling correction and sentence optimization.`,
+    user_message: `You are a highly skilled spelling corrector and text improver. Your task is to correct any spelling errors in the given text and suggest improvements to enhance its clarity and readability. Follow these steps carefully:
+
+    1. First, you will be presented with a piece of text that may contain spelling errors and areas for improvement.
+    
+    2. Carefully read through the text and identify any spelling errors. Correct these errors, ensuring that you maintain the original meaning and context of the text.
+    
+    3. After correcting spelling errors, consider ways to improve the text's clarity and readability. This may include:
+       - Simplifying complex sentences
+       - Improving word choice
+       - Enhancing sentence structure
+       - Ensuring consistent tense and voice
+       - Removing redundancies
+    
+    4. Provide your output in the following format:
+    
+      Optimized text:
+      -------
+      [Insert the corrected optimized text here]
+    
+      Corrected detail:
+      -------
+      [Insert the text with spelling errors corrected here, use list "-" and arrow "->", format examples: ]
+    
+      - struture -> structure
+    
+      Improved detail:
+      -------
+    
+      [Insert the improved text here, use list "-" and arrow "->", format examples:]
+    
+      - One of most requested feature -> One of the most requested features
+    
+    Remember to maintain the original meaning and tone of the text while making improvements. If the original text is already well-written and doesn't require significant changes. Here is the text you need to work on: 
+
+    \n`
   },
   {
     id: '5a0372bd-3871-4923-8da9-44a0d511bdb9',
