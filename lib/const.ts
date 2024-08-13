@@ -76,7 +76,6 @@ export const defaultCustomPrompts = [
       - One of most requested feature -> One of the most requested features
     
     Remember to maintain the original meaning and tone of the text while making improvements. If the original text is already well-written and doesn't require significant changes. Here is the text you need to work on: 
-
     \n`
   },
   {

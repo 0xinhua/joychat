@@ -30,7 +30,7 @@ export function PromptForm({
     if (inputRef.current) {
       inputRef.current.focus()
     }
-  }, [])
+  }, [input])
 
   return (
     <form
