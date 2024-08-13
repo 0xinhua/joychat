@@ -1,5 +1,4 @@
 import { IconBard, IconMeta, IconOpenai } from "@/components/ui/icons"
-import { nanoid } from "./utils"
 
 export const defaultSystemPrompt = "You are a helpful assistant, you always give concise answers."
 export const isLocalMode = process.env.NEXT_PUBLIC_STORAGE_MODE === 'local'
@@ -39,36 +38,75 @@ export const availableModels = [
   // },
 ]
 
-export const quickstartMessages = [
+export const defaultCustomPrompts = [
   {
+    id: '2720c512-aaa2-45e5-a667-57c5f70c8718',
     heading: '💡 Data analysis',
-    message: `Summarize the key characteristics of this dataset. Include information on data types, missing values, and basic statistics. The following dataset: 
+    system_prompt: defaultSystemPrompt,
+    user_message: `Summarize the key characteristics of this dataset. Include information on data types, missing values, and basic statistics. The following dataset: 
 \n`
   },
   {
+    id: '5a0372bd-3871-4923-8da9-44a0d511bdb9',
     heading: `📖 Summarize content`,
-    message: `Your task is to review the provided content and create a concise summary that captures the essential information.
-Use clear and professional language. summarized content use the language in which the user entered the content, organize the summary logically with appropriate formatting, such as headings, subheadings, and bullet points. Ensure that the summary is easy to understand.
-  \n The content: 
+    system_prompt: defaultSystemPrompt,
+    user_message: `You are tasked with summarizing a document into a maximum of 10 bullet points.
+
+    To create an effective summary, follow these steps:
+    
+    1. Carefully read through the entire document to understand its main ideas and key points.
+    
+    2. Identify the most important information, focusing on main concepts, crucial details, and significant conclusions.
+    
+    3. Condense this information into clear, concise bullet points.
+    
+    4. Limit your summary to a maximum of 10 bullet points. If the document is short or simple, you may use fewer bullet points, but never exceed 10.
+    
+    5. Ensure that each bullet point captures a distinct and important idea from the document.
+    
+    6. Present the bullet points in a logical order that reflects the structure and flow of the original document.
+    
+    When creating your bullet points, adhere to these guidelines:
+    
+    - Keep each bullet point brief and to the point, ideally no more than one or two sentences.
+    - Use clear, straightforward language.
+    - Avoid redundancy between bullet points.
+    - Do not include minor details or examples unless they are crucial to understanding the main point.
+    - Ensure that the bullet points, when read together, provide a comprehensive overview of the document's key information.
+    
+    Present your summary with each bullet point on a new line, preceded by a dash (-). For example:
+    
+    Summary:
+    - First key point
+    - Second key point
+    - Third key point
+    
+    Begin your summarization now， here is the document to be summarized:
   \n`
   },
   {
+    id: 'ef02948d-48bd-43c9-9fde-5f5de4c16bc5',
     heading: '📧 Format and correct email',
-    message: `Proofread and format [email]. Also, give suggestions for getting the point across effectively.
+    system_prompt: defaultSystemPrompt,
+    user_message: `Proofread and format [email]. Also, give suggestions for getting the point across effectively.
 
 [email] following: 
 \n`
   },
   {
+    id: '396edc07-b571-4377-b32b-730d2db45a89',
     heading: '🔠 Translate English',
-    message: `You will be provided with statements, and your task is to convert them to standard English.
+    system_prompt: defaultSystemPrompt,
+    user_message: `You will be provided with statements, and your task is to convert them to standard English.
 
 [statements] following:
 \n`
   },
   {
+    id: 'b0be08b1-d6aa-4896-8db9-93cca4cc4c07',
     heading: '🈳 Translate Chinese',
-    message: `You will be provided with statements, and your task is to convert them to simplified Chinese, In the translated text, English words and numbers should be preceded and followed by a space.
+    system_prompt: defaultSystemPrompt,
+    user_message: `You will be provided with statements, and your task is to convert them to simplified Chinese, In the translated text, English words and numbers should be preceded and followed by a space.
 
 [statements] following: 
 \n`
@@ -130,10 +168,22 @@ Use clear and professional language. summarized content use the language in whic
   //   `
   // }
   {
+    id: '13464dd7-29e1-4f8c-a2b5-f0c1f6c6e4ea',
     heading: '🐛 Fix code bugs',
-    message: `Your task is to analyze the provided code snippet, identify any bugs or errors present, and provide a corrected version of the code that resolves these issues. Explain the problems you found in the original code and how your fixes address them. The corrected code should be functional, efficient, and adhere to best practices in programming. The code:
+    system_prompt: defaultSystemPrompt,
+    user_message: `Your task is to analyze the provided code snippet, identify any bugs or errors present, and provide a corrected version of the code that resolves these issues. Explain the problems you found in the original code and how your fixes address them. The corrected code should be functional, efficient, and adhere to best practices in programming. The code:
 \n`
-  }
+  },
+]
+
+export const defaultPromptsHeading = [
+  '🏖️ Work-life balance copilot',
+  // '🔄 Awesome translator',
+  '🚀 My awesome tool',
+  '🤖 Work Assistant',
+  // '🌟 Brainstorming Buddy',
+  // '🥷 Clock-Out Ninja',
+  // '📨 Mailbox Maestro'
 ]
 
 export type PlanName = 'free' | 'pro'

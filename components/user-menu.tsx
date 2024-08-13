@@ -92,9 +92,9 @@ export function UserMenu({ user }: UserMenuProps) {
         <DropdownMenuSeparator className="dark:bg-muted" /></div>
         : null}
         <DropdownMenuGroup>
-          <DropdownMenuItem className="cursor-pointer dark:hover:bg-zinc-800" onClick={e => setSettingsDialogOpen(true)}>
+          <DropdownMenuItem className="cursor-pointer dark:hover:bg-zinc-800" onClick={e => { router.push('/settings/prompt')}}>
             <Settings className="mr-2 size-4" />
-            <span>Setting</span>
+            <span>Settings</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuGroup>

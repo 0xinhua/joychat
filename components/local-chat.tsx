@@ -7,7 +7,7 @@ import { ChatList } from '@/components/chat-list'
 import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
-import { useEffect, useRef, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { usePathname, useRouter } from 'next/navigation'
 import useChatStore from '@/store/useChatStore'
@@ -23,9 +23,10 @@ export interface ChatProps extends React.ComponentProps<'div'> {
   id?: string
   title?: string
   loading?: boolean
+  setInitialMessages?: Dispatch<SetStateAction<Message[]>>
 }
 
-export function LocalChat({ id, initialMessages, className, title, loading }: ChatProps) {
+export function LocalChat({ id, initialMessages, className, title, setInitialMessages, loading }: ChatProps) {
   const router = useRouter()
   const path = usePathname()
 
@@ -110,7 +111,7 @@ export function LocalChat({ id, initialMessages, className, title, loading }: Ch
           setChats([newChat, ...chats]);
         }
 
-        setMessages([...(initialMessages || []), ...updatedMessages.current])
+        setMessages(newMessages)
 
         if (!path.includes('chat')) {
           router.replace(`/chat/${id}`)
@@ -155,7 +156,7 @@ export function LocalChat({ id, initialMessages, className, title, loading }: Ch
             <div ref={messagesEndRef} />
           </>
         ) : (
-          <EmptyScreen setInput={setInput} />
+          <EmptyScreen setInput={setInput} setInitialMessages={setInitialMessages}  />
         )}
       </div>
       <ChatPanel

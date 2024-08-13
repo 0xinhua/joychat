@@ -7,7 +7,7 @@ import { ChatList } from '@/components/chat-list'
 import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
-import { useEffect, useRef, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import useChatStore from '@/store/useChatStore'
 import { defaultModel, useLangfuse } from '@/lib/const'
@@ -20,9 +20,10 @@ export interface ChatProps extends React.ComponentProps<'div'> {
   id?: string
   title?: string
   loading?: boolean
+  setInitialMessages?: Dispatch<SetStateAction<Message[]>>
 }
 
-export function Chat({ id, initialMessages, className, title, loading }: ChatProps) {
+export function Chat({ id, initialMessages, setInitialMessages, className, title, loading }: ChatProps) {
 
   const router = useRouter()
   const path = usePathname()
@@ -97,7 +98,7 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
     if (title) {
       document.title = title.toString().slice(0, 50)
     } else {
-      document.title = 'New Chat - JoyChat'
+      document.title = 'AI copilot for work - JoyChat'
     }
   }, [title])
 
@@ -135,7 +136,7 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
             <div ref={messagesEndRef} />
           </div>
         ) : (
-          <EmptyScreen setInput={setInput} />
+          <EmptyScreen setInput={setInput} setInitialMessages={setInitialMessages} />
         )}
       </div>
       <ChatPanel
@@ -158,6 +159,7 @@ export function Chat({ id, initialMessages, className, title, loading }: ChatPro
           }
           latestUserMessage.current = userMessage
           setIsFetching(true)
+          console.log('userMessage', userMessage)
           await append(userMessage)
         }}
       />

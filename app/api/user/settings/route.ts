@@ -13,7 +13,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    const { data: rows, error } = await supabase.rpc('get_system_prompt_by_user_id', {
+    const { data: rows, error } = await supabase.rpc('get_prompt_by_user_id', {
       _user_id: userId
     })
   
@@ -41,16 +41,19 @@ export async function POST(req: Request) {
     return new Response('Unauthorized', { status: 401 })
   }
 
-  const { prompt } = await req.json()
+  const { prompt, customPrompts } = await req.json()
 
-  if (!prompt) {
+  console.log('prompt customPrompts', prompt, customPrompts)
+
+  if (!prompt && !customPrompts) {
     return NextResponse.json({ code: 1, message: 'Prompt is required' })
   }
 
   try {
-    const { error } = await supabase.rpc('upsert_system_prompt', {
+    const { error } = await supabase.rpc('upsert_prompt', {
       _user_id: userId,
-      _prompt: prompt
+      _prompt: prompt,
+      _user_prompts: customPrompts
     })
 
     if (error) {

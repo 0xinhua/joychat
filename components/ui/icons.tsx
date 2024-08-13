@@ -293,6 +293,10 @@ function IconTrash({ className, ...props }: React.ComponentProps<'svg'>) {
       viewBox="0 0 256 256"
       fill="currentColor"
       className={cn('size-4', className)}
+      strokeWidth="2"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...props}
     >
       <path d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16ZM96 40a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm96 168H64V64h128Zm-80-104v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm48 0v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Z" />
@@ -838,7 +842,7 @@ function IconHelp({
   return (
     <svg
       {...props}
-      xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>
     </svg>
   )
@@ -851,7 +855,7 @@ function IconMail({
   return (
     <svg
       {...props}
-      xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)}  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+      xmlns="http://www.w3.org/2000/svg" className={cn("h-5 w-5", className)}  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" strokeLinecap="round" strokeLinejoin="round">
       <rect width="20" height="16" x="2" y="4" rx="2"/>
       <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
     </svg>
@@ -879,6 +883,75 @@ function IconAlert({
     </svg>
   )
 }
+
+function IconPencil({
+  className,
+  ...props
+}: React.ComponentProps<'svg'>) {
+  return (
+    <svg {...props}  className={cn("h-5 w-5", className)} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+      <path d="m15 5 4 4"/>
+    </svg>
+  )
+}
+
+function IconMonitor({
+  className,
+  ...props
+}: React.ComponentProps<'svg'>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" {...props}  className={cn("h-5 w-5", className)} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 17v4"/>
+      <path d="m15.2 4.9-.9-.4"/>
+      <path d="m15.2 7.1-.9.4"/>
+      <path d="m16.9 3.2-.4-.9"/>
+      <path d="m16.9 8.8-.4.9"/>
+      <path d="m19.5 2.3-.4.9"/>
+      <path d="m19.5 9.7-.4-.9"/>
+      <path d="m21.7 4.5-.9.4"/>
+      <path d="m21.7 7.5-.9-.4"/>
+      <path d="M22 13v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"/>
+      <path d="M8 21h8"/>
+      <circle cx="18" cy="6" r="3"/>
+    </svg>
+  )
+}
+
+function IconCircleCheck({
+  className,
+  ...props
+}: React.ComponentProps<'svg'>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" {...props} className={cn("h-5 w-5", className)}  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="m9 12 2 2 4-4"/>
+    </svg>
+  )
+}
+
+function IconLoaderCircle({
+  className,
+  ...props
+}: React.ComponentProps<'svg'>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" {...props} className={cn("h-5 w-5", className)} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+    </svg>
+  )
+}
+
+// function IconPlus({
+//   className,
+//   ...props
+// }: React.ComponentProps<'svg'>) {
+//   return (
+//     <svg xmlns="http://www.w3.org/2000/svg"  {...props} className={cn("h-5 w-5", className)} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+//       <path d="M5 12h14"/>
+//       <path d="M12 5v14"/>
+//     </svg>
+//   )
+// }
 
 export {
   IconEdit,
@@ -933,5 +1006,9 @@ export {
   IconHelp,
   IconMail,
   IconLoading,
-  IconAlert
+  IconAlert,
+  IconPencil,
+  IconMonitor,
+  IconCircleCheck,
+  IconLoaderCircle,
 }
