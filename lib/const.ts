@@ -262,3 +262,6 @@ export const tokenCosts = {
     outputCostPerMillion: 0.600
   }
 }
+
+export const systemPromptMaxLength = 2000
+export const userPromptMaxLength = 4000

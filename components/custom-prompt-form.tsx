@@ -19,7 +19,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { ExternalLink } from "./external-link"
 import useUserSettingStore from "@/store/useSettingStore"
-import { defaultSystemPrompt } from "@/lib/const"
+import { defaultSystemPrompt, systemPromptMaxLength, userPromptMaxLength } from "@/lib/const"
 import { Input } from "./ui/input"
 import { CustomPromptTemplate } from "@/app/(chat)/settings/prompt/prompt-form"
 import { nanoid } from "nanoid"
@@ -34,10 +34,10 @@ const settingFormSchema = z.object({
   system_prompt: z
     .string()
     .min(2, { message: "System prompt must be at least 2 characters.", })
-    .max(1000, { message: "System prompt must be at most 1000 characters." })
+    .max(systemPromptMaxLength, { message: `System prompt must be at most ${systemPromptMaxLength} characters.` })
   , user_message: z.string()
     .min(2, { message: "User prompt must be at least 2 characters.", })
-    .max(2000, { message: "User prompt must be at most 2000 characters." })
+    .max(userPromptMaxLength, { message: `User prompt must be at most ${userPromptMaxLength} characters.` })
   })
 
 type SettingsFormValues = z.infer<typeof settingFormSchema>

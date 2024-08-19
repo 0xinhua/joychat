@@ -40,7 +40,7 @@ export function EmptyScreen({ setInput, setInitialMessages }: Pick<UseChatHelper
           💬 Prompts <Badge className="bg-lime-300 text-primary hover:bg-lime-400 dark:bg-green-400/50 dark:hover:bg-green-400/40 rounded-lg ml-1">New</Badge>
         </h1>
         <p className="mb-2 leading-normal text-muted-foreground dark:text-gray-300">
-          Try a quickstart prompt or customize your own in <Link href='/settings/prompt' className="underline underline-offset-4 decoration-1 hover:decoration-2" title="setting custom prompts">
+          Try a quickstart prompt or customize your own in <Link href='/settings/prompt' className="underline underline-offset-4 hover:decoration-2" title="setting custom prompts">
           <Settings className="size-3.5 mr-0.5 inline" />settings</Link>.
         </p>
         <div className="mt-4 grid gap-3 lg:grid-cols-3 md:grid-cols-2 lg:gap-5">

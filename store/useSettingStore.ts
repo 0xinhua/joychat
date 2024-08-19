@@ -58,7 +58,6 @@ const useUserSettingStore = create<UserSettingState>()(
               throw new Error('Failed to fetch system prompt')
             }
             const json = await response.json()
-            console.log('json', json)
             set({
               systemPrompt: json.data?.system_prompt ? json.data.system_prompt : defaultSystemPrompt, 
               customPrompts: json.data?.user_prompts ? json.data.user_prompts : defaultCustomPrompts,
